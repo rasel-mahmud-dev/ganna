@@ -1,0 +1,48 @@
+
+.navigation{
+  background: #f5f5f5;
+
+  .main-nav{
+    //display: flex;
+    //justify-content: space-between;
+    //align-items: center;
+    display: grid;
+    grid-template-columns: repeat(12, 2fr);
+    justify-content: space-between;
+    padding: 30px;
+  }
+
+  .logo-menu{
+    grid-column: span 4;
+    display: flex;
+    align-items: center;
+    .menu-bar{
+      color: #818181;
+      font-size: 18px;
+    }
+    .logo{
+      svg{
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .search-menu{
+    grid-column: span 4;
+    padding: 0 0px;
+    input{
+      background: rgba(255, 255, 255, 0.4);
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: 1px solid #c9c9c9;
+      width: 100%;
+    }
+  }
+  .right-menu{
+    grid-column: span 4;
+    justify-self: end;
+    color: #313131;
+    font-size: 12px;
+  }
+}
+
