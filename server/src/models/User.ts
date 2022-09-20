@@ -1,3 +1,5 @@
+import connectDatabase from "../services/mysql";
+
 export enum AccountStatus{
   PENDING= "PENDING",
   VERIFIYED= "VERIFIYED"
@@ -9,45 +11,74 @@ enum ROLE {
 }
 
 interface UserType {
-  first_name: string
-  last_name?: string
-  username: string
+  firstName: string
+  lastName?: string
+  username?: string
   email: string
   password?: string
-  created_at: Date
-  updated_at: Date
+  createdAt?: Date
+  updatedAt?: Date
   avatar?: string
-  role: ROLE,
-  accountStatus: AccountStatus
+  role?: ROLE
+  accountStatus?: AccountStatus
   
 }
 
 class User implements UserType{
   
-  first_name: string
-  last_name?: string
-  username: string
+  firstName: string
+  lastName?: string
+  username?: string
   email: string
   password?: string
-  created_at: Date
-  updated_at: Date
+  createdAt?: Date
+  updatedAt?: Date
   avatar?: string
-  role: ROLE
-  accountStatus: AccountStatus
+  role?: ROLE
+  accountStatus?: AccountStatus
   
   static tableName = "users"
 
-  constructor({ first_name, last_name, username, email, password, avatar }: UserType ) {
-    this.first_name = first_name
-    this.last_name = last_name
+  constructor({ firstName, lastName, username, email, password }: UserType ) {
+    this.firstName = firstName
+    this.lastName = lastName
     this.username = username
     this.email = email
     this.password = password
-    this.created_at = new Date()
-    this.updated_at = new Date()
-    this.avatar = avatar
+    this.createdAt = new Date()
+    this.updatedAt = new Date()
     this.role = ROLE.USER
     this.accountStatus = AccountStatus.PENDING
+  }
+  
+  static findOne(valuesObj: {} | any, selectFields?: string) {
+    return new Promise(async (resolve, reject) => {
+      let connection
+      try{
+        connection = await connectDatabase()
+        let tableName = this.tableName
+        
+        let fieldName = ""
+        let value = ""
+        for(let key in valuesObj){
+          fieldName = key
+          value = valuesObj[key]
+        }
+        
+        let sql  = `SELECT ${selectFields ? selectFields : '*' } from ${tableName} where ${fieldName} = "${value}"  `
+        let [r, _]: any = await connection.execute(sql)
+        
+        if(r.length > 0){
+          resolve(r[0])
+        } else {
+          resolve(null)
+        }
+      } catch (ex){
+        reject(ex)
+      } finally {
+        connection?.end()
+      }
+    })
   }
 }
 
