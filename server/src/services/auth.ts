@@ -2,6 +2,8 @@ import User, {UserType} from "../models/User";
 import {genHash} from "./hash";
 import {createUser} from "./user";
 import sqlDate from "../utils/sqlDate";
+import errorMessage from "../errors/errorMessage";
+import {generateToken} from "./jwt";
 
 
 export async function registerService(payload: any){
@@ -40,16 +42,24 @@ export async function registerService(payload: any){
 
 
 
-export async function loginService({email}: {email: string}){
+export async function loginService({email, password}: {email: string, password: string}): Promise<{token: string, user: UserType} | any>{
     try{
-        let user = await User.findOne({email: email})
+        let user = await User.findOne<UserType | null>({email: email})
         if(!user) {
-            let error: any = new Error("You are not registered. Please Register first")
-            error.status = 404
+            return errorMessage("You are not registered. Please Register first", 404)
         }
         
+        const token = generateToken(user.userId as number, user?.role as string)
+        return  {
+            token: token,
+            user: user
+        }
         
-    } catch (ex){
-    
+    } catch (ex: any){
+        let message = ""
+        if(ex.message) {
+           message = ex.message;
+        }
+        errorMessage(message)
     }
 }

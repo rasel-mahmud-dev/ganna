@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from "express";
 
-import {registerService} from "../services/auth";
+import {loginService, registerService} from "../services/auth";
 import {generateToken} from "../services/jwt";
 
 
@@ -16,5 +16,17 @@ export async function registrationController(req: Request, res: Response, next: 
     } catch (ex){
         next(ex)
     }
+}
 
+export async function loginController(req: Request, res: Response, next: NextFunction){
+    try{
+        const {email, password} = req.body;
+        
+        const {token, user} = await loginService({email, password})
+        
+        res.status(201).json({message: "You are Logged", user, token})
+        
+    } catch (ex){
+        next(ex)
+    }
 }

@@ -1,4 +1,5 @@
 import connectDatabase from "../services/mysql";
+import errorMessage from "../errors/errorMessage";
 
 export enum AccountStatus{
   PENDING= "PENDING",
@@ -52,8 +53,8 @@ class User implements UserType{
     this.accountStatus = AccountStatus.PENDING
   }
   
-  static findOne(valuesObj: {} | any, selectFields?: string) {
-    return new Promise(async (resolve, reject) => {
+  static findOne<T>(valuesObj: {} | any, selectFields?: string)  {
+    return new Promise<T | null>(async (resolve, reject) => {
       let connection
       try{
         connection = await connectDatabase()
@@ -74,8 +75,9 @@ class User implements UserType{
         } else {
           resolve(null)
         }
-      } catch (ex){
-        reject(ex)
+      } catch (ex: any){
+        errorMessage(ex.message, )
+        
       } finally {
         connection?.end()
       }
