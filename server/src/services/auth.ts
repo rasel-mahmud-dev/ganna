@@ -1,10 +1,12 @@
-import User from "../models/User";
+import User, {UserType} from "../models/User";
 import {genHash} from "./hash";
+import {createUser} from "./user";
+import sqlDate from "../utils/sqlDate";
 
 
 export async function registerService(payload: any){
     
-    return new Promise(async (resolve, reject)=>{
+    return new Promise<UserType>(async (resolve, reject)=>{
         const { firstName, lastName, email, password } = payload
         
         try{
@@ -24,12 +26,14 @@ export async function registerService(payload: any){
                 password: "",
             })
             newUser.password = await genHash(password);
+            newUser.createdAt = sqlDate(newUser.createdAt)
+            newUser.updatedAt = sqlDate(newUser.updatedAt)
             
-            
-            // resolve(newUser);
+            const returnUser: any = await createUser(newUser)
+            resolve(returnUser);
             
         } catch (ex){
-        
+            reject("Registration fail. Please try again")
         }
     })
 }

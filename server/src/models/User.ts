@@ -10,14 +10,15 @@ enum ROLE {
   USER = "USER"
 }
 
-interface UserType {
+export interface UserType {
+  userId?: number
   firstName: string
   lastName?: string
   username?: string
   email: string
   password?: string
-  createdAt?: Date
-  updatedAt?: Date
+  createdAt?: Date | string
+  updatedAt?: Date | string
   avatar?: string
   role?: ROLE
   accountStatus?: AccountStatus
@@ -25,14 +26,14 @@ interface UserType {
 }
 
 class User implements UserType{
-  
+  userId?: number
   firstName: string
   lastName?: string
   username?: string
   email: string
   password?: string
-  createdAt?: Date
-  updatedAt?: Date
+  createdAt?: Date | string
+  updatedAt?: Date | string
   avatar?: string
   role?: ROLE
   accountStatus?: AccountStatus
@@ -66,7 +67,7 @@ class User implements UserType{
         }
         
         let sql  = `SELECT ${selectFields ? selectFields : '*' } from ${tableName} where ${fieldName} = "${value}"  `
-        let [r, _]: any = await connection.execute(sql)
+        let [r, _]: any = await connection.query(sql)
         
         if(r.length > 0){
           resolve(r[0])
