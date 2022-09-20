@@ -2,6 +2,7 @@ import React from "react";
 import "./styles.scss";
 
 import { FaBars } from "react-icons/all";
+import {Link} from "react-router-dom";
 
 const Navigation = () => {
   return (
@@ -34,7 +35,7 @@ const Navigation = () => {
               <input type="text" placeholder="Search music" />
             </div>
             <div className="right-menu">
-              <li>Log In / Sign Up</li>
+              <li><Link to="/auth/login">Log In / Sign Up</Link></li>
             </div>
           </div>
         </div>
