@@ -17,7 +17,7 @@ export interface UserType {
   lastName?: string
   username?: string
   email: string
-  password?: string
+  password: string
   createdAt?: Date | string
   updatedAt?: Date | string
   avatar?: string
@@ -32,7 +32,7 @@ class User implements UserType{
   lastName?: string
   username?: string
   email: string
-  password?: string
+  password: string
   createdAt?: Date | string
   updatedAt?: Date | string
   avatar?: string

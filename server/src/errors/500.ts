@@ -4,8 +4,9 @@ import logger from "../logger";
 
 
 function capture500Error(err: any, req: Request, res: Response, next: NextFunction){
+
 	if(typeof err === "string"){
-		return res.status(500).json({message: 'Internal server Error' }) ;
+		return res.status(500).json({message: err ? err : 'Internal server Error' }) ;
 	}
 	
 	const errorMessage = err.message || 'Internal server Error'
