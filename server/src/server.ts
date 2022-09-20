@@ -5,6 +5,7 @@ require("dotenv").config()
 
 import app from "./app/app"
 import logger from "./logger";
+import {genHash} from "./services/hash";
 
 
 const PORT = process.env.PORT || 1000;

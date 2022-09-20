@@ -1,29 +1,15 @@
 import {NextFunction, Request, Response} from "express";
-import User from "../models/User";
+
+import {registerService} from "../services/auth";
 
 
-export async function registration(req: Request, res: Response, next: NextFunction){
+export async function registrationController(req: Request, res: Response, next: NextFunction){
     try{
-        const {firstName, lastName, email} = req.body;
+        const {firstName, lastName, email, password} = req.body;
         
-        let user = await User.findOne({email: email})
-        if(user){
-            return res.status(401).json({
-                message: "You are already registered. Please login"
-            })
-        }
-    
-        let uName = lastName ? lastName : ""
+        const user  = await registerService({firstName, lastName, email, password})
         
-        let newUser = new User({
-            firstName: firstName,
-            lastName: uName,
-            username: firstName + " " + uName,
-            email,
-            password: "",
-        })
-        
-        res.send(newUser)
+        res.status(201).json({message: "User created", user})
         
     } catch (ex){
         next(ex)
