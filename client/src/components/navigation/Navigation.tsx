@@ -3,8 +3,13 @@ import "./styles.scss";
 
 import { FaBars } from "react-icons/all";
 import {Link} from "react-router-dom";
+import useStore from "../../store/useStore";
 
 const Navigation = () => {
+  
+  const [state, dispatch] =  useStore()
+
+  
   return (
     <div>
       <header className="navigation">
@@ -35,7 +40,18 @@ const Navigation = () => {
               <input type="text" placeholder="Search music" />
             </div>
             <div className="right-menu">
-              <li><Link to="/auth/login">Log In / Sign Up</Link></li>
+              { state.auth ? (
+                  <li>
+                    <Link to="/auth/login">
+                      <img src={state.auth.avatar} alt=""/>
+                      <h1>{state.auth.firstName}</h1>
+                    </Link>
+                  </li>
+                  ) : (
+                  <li>
+                    <Link to="/auth/login">Log In / Sign Up</Link>
+                  </li>
+              ) }
             </div>
           </div>
         </div>
