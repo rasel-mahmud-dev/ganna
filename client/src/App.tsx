@@ -10,6 +10,7 @@ import {loginWihToken} from "./store/actions/userAction";
 import useStore from "./store/useStore";
 import AddSong from "./pages/admin/AddSong";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import ArtistList from "./pages/admin/ArtistList";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -30,6 +31,7 @@ function App() {
           <Route path="/admin" element={<AdminDashboard />} >
             
             <Route path="add-song" element={<AddSong />} />
+            <Route path="artist" element={<ArtistList />} />
             
           </Route>
         

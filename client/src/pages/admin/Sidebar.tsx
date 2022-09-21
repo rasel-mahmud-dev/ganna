@@ -14,11 +14,11 @@ const Sidebar: FC<Props> = (props) => {
   return (
     <div className={className}>
       {state.auth && (
-        <div>
+        <div className="dashboard-user">
           <div className="avatar">
             <img src={staticPath(state.auth.avatar)} alt="" />
           </div>
-          <h4>
+          <h4 className="username">
             {state.auth.firstName} {state.auth?.lastName}
           </h4>
         </div>
