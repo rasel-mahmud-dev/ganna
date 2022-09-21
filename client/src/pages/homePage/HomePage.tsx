@@ -1,4 +1,5 @@
 import React from 'react';
+import staticPath from "../../utils/staticPath";
 
 
 const HomePage = () => {
@@ -65,7 +66,7 @@ const HomePage = () => {
                     <div className="flex song-list">
                         { new Array(10).fill(1).map(a=>(
                             <div className="song-item">
-                                <img src="https://a10.gaanacdn.com/gn_img/albums/ZaP37RKDy7/P37OlNeX3D/size_m.webp" alt="Pani Di Gal" title="Pani Di Gal" />
+                                <img src={staticPath("cover/size_m_1516707336.webp")} alt="Pani Di Gal" title="Pani Di Gal" />
                                 <p className="song-name">Phele mera pair</p>
                             </div>
                         )) }

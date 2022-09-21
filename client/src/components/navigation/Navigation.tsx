@@ -4,6 +4,7 @@ import "./styles.scss";
 import { FaBars } from "react-icons/all";
 import {Link} from "react-router-dom";
 import useStore from "../../store/useStore";
+import staticPath from "../../utils/staticPath";
 
 const Navigation = () => {
   
@@ -42,9 +43,11 @@ const Navigation = () => {
             <div className="right-menu">
               { state.auth ? (
                   <li>
-                    <Link to="/auth/login">
-                      <img src={state.auth.avatar} alt=""/>
-                      <h1>{state.auth.firstName}</h1>
+                    <Link to="/auth/login" className="flex items-center">
+                      <div>
+                        <img className="auth-avatar flex" src={staticPath(state.auth.avatar)} alt=""/>
+                      </div>
+                      <p>{state.auth.firstName}</p>
                     </Link>
                   </li>
                   ) : (

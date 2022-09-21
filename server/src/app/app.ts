@@ -16,7 +16,7 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
-app.use("/static/", express.static("static"))
+app.use(express.static(path.resolve("src/static")))
 app.use(morgan("dev"))
 
 
