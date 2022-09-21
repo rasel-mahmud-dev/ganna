@@ -7,7 +7,11 @@ export interface ArtistType {
     updatedAt?: string | Date
 }
 
-class Artist implements ArtistType{
+class M{
+
+}
+
+class Artist extends M implements ArtistType{
     artistId?: number
     name: string
     email: string
@@ -18,6 +22,7 @@ class Artist implements ArtistType{
     static tableName = "artists"
     
     constructor({ name, email, avatar }: ArtistType ) {
+        super();
         this.name =  name
         this.email = email
         this.avatar = avatar
