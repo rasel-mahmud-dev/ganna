@@ -1,5 +1,6 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import InputGroup from "../../components/inputGroup/InputGroup";
+import api from "../../axios";
 
 const ArtistList = () => {
     
@@ -36,6 +37,12 @@ const ArtistList = () => {
             alert(errorMessage)
             return;
         }
+        
+        api.post("/api/v1/admin/add-artist", data).then((response)=>{
+            console.log(response)
+        }).catch(ex=>{
+            console.log(ex)
+        })
         
         
         console.log("Ok")
