@@ -3,8 +3,6 @@ import {NextFunction, Request, Response} from "express";
 import {loginService, registerService} from "../services/auth";
 import {generateToken, parseToken} from "../services/jwt";
 import User, {UserType} from "../models/User";
-import {JwtPayload} from "jsonwebtoken";
-
 
 export async function registrationController(req: Request, res: Response, next: NextFunction){
     try{

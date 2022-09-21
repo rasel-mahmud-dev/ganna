@@ -75,8 +75,8 @@ class User implements UserType{
         } else {
           resolve(null)
         }
-      } catch (ex: any){
-        errorMessage(ex.message, )
+      } catch (ex){
+        reject(ex)
         
       } finally {
         connection?.end()
