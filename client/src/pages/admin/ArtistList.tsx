@@ -12,7 +12,11 @@ const ArtistList = () => {
         avatar: ""
     })
     
-    useEffect(()=>{}, [])
+    useEffect(()=>{
+        api.get("api/v1/admin/artists").then(({data, status})=>{
+            console.log(data, status)
+        })
+    }, [])
     
     function handleChange(e: ChangeEvent){
         let el = e.target as HTMLInputElement

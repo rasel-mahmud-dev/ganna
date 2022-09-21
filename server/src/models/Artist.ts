@@ -31,6 +31,8 @@ class Artist extends Common implements ArtistType{
         this.createdAt = sqlDate(new Date())
         this.updatedAt = sqlDate(new Date())
     }
+    
+  
 }
 
 export default Artist

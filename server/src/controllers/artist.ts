@@ -2,17 +2,18 @@ import {NextFunction, Request, Response} from "express";
 import Artist from "../models/Artist";
 
 
-export function getAllArtistController(req: Request, res: Response, next: NextFunction){
+export async function getAllArtistController(req: Request, res: Response, next: NextFunction){
     
     try{
-        const artist = Artist.findOne({artistId: 1})
-        console.log(artist)
-        
+        const artists = await Artist.find<Artist[]>()
+        if(artists) {
+            return res.status(200).json({artists: artists})
+        } else{
+            next("Internal Error")
+        }
     } catch (ex){
-    
+        next(ex)
     }
-    
-    
 }
 
 export async function addArtistController(req: Request, res: Response, next: NextFunction){
