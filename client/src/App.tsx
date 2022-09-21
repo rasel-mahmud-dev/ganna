@@ -8,6 +8,8 @@ import LoginPage from "./pages/login/LoginPage";
 import {Router, Routes, Route} from "react-router-dom"
 import {loginWihToken} from "./store/actions/userAction";
 import useStore from "./store/useStore";
+import AddSong from "./pages/admin/AddSong";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -25,6 +27,11 @@ function App() {
         <Route path="/auth/login" element={ <LoginPage />} />
         
         <Route path="/" element={<HomePage />} />
+          <Route path="/admin" element={<AdminDashboard />} >
+            
+            <Route path="add-song" element={<AddSong />} />
+            
+          </Route>
         
         {/*<Player />*/}
       </Routes>
