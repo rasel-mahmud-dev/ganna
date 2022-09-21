@@ -113,8 +113,7 @@ class Common{
     }
     
     
-    
-    async save(){
+   async save(){
         
         let fieldName = ""
         let values = ""

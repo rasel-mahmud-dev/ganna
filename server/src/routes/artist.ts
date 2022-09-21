@@ -5,8 +5,8 @@ import {addArtistController, deleteArtistController, getAllArtistController} fro
 
 const router = express.Router()
 
-// GET /api/v1/admin/artists
-router.get("/artists", getAllArtistController)
+// GET /api/v1/artists
+router.get("/", getAllArtistController)
 
 
 
@@ -16,7 +16,7 @@ router.post("/add-artist", addArtistController)
 
 
 // DELETE /api/v1/admin/artists
-router.delete("/artists/:id", deleteArtistController)
+router.delete("/:id", deleteArtistController)
 
 
 

@@ -6,9 +6,10 @@ import artist from "../routes/artist";
 
 const router = express.Router()
 
-router.use(song)
+
 router.use("/api/v1/auth", auth)
-router.use("/api/v1/admin/", artist)
+router.use("/api/v1/artists", artist)
+router.use("/api/v1/songs", song)
 
 
 router.get("/", async (req, res, next)=>{

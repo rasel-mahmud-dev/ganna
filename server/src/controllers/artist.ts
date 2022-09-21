@@ -35,6 +35,7 @@ export async function addArtistController(req: Request, res: Response, next: Nex
         next(ex)
     }
 }
+
 export async function deleteArtistController(req: Request, res: Response, next: NextFunction){
     const { id } = req.params;
     

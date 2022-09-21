@@ -14,7 +14,7 @@ const ArtistList = () => {
     })
     
     useEffect(()=>{
-        api.get("api/v1/admin/artists").then(({data, status})=>{
+        api.get("api/v1/artists").then(({data, status})=>{
             if(status === 200){
                 setArtist(data.artists)
             }
@@ -28,6 +28,7 @@ const ArtistList = () => {
             [el.name]: el.value
         })
     }
+    
     
     function handleSubmit(e: React.SyntheticEvent) {
         e.preventDefault();
@@ -45,8 +46,10 @@ const ArtistList = () => {
             return;
         }
         
-        api.post("/api/v1/admin/add-artist", data).then((response)=>{
-            console.log(response)
+        api.post("/api/v1/artists/add-artist", data).then(({status, data})=>{
+            if(status === 201){
+            
+            }
         }).catch(ex=>{
             console.log(ex)
         })
@@ -91,7 +94,7 @@ const ArtistList = () => {
     }
     
     function handleDelete(id: number){
-        api.delete("/api/v1/admin/artists/"+id).then(({status})=>{
+        api.delete("/api/v1/artists/"+id).then(({status})=>{
             if(status === 201){
                 setArtist(artist.filter((a: any)=>a.artistId !== id))
             }

@@ -11,6 +11,7 @@ import useStore from "./store/useStore";
 import AddSong from "./pages/admin/AddSong";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import ArtistList from "./pages/admin/ArtistList";
+import SongList from "./pages/admin/SongList";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -29,10 +30,9 @@ function App() {
         
         <Route path="/" element={<HomePage />} />
           <Route path="/admin" element={<AdminDashboard />} >
-            
             <Route path="add-song" element={<AddSong />} />
+            <Route path="songs" element={<SongList />} />
             <Route path="artist" element={<ArtistList />} />
-            
           </Route>
         
         {/*<Player />*/}

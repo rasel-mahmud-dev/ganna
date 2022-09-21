@@ -1,6 +1,7 @@
 import React, {ChangeEvent, FC, SyntheticEvent, useEffect, useState} from "react";
 import InputGroup from "../../components/inputGroup/InputGroup";
 import SelectGroup from "../../components/selectGroup/SelectGroup";
+import api from "../../axios";
 
 const AddSong = () => {
   
@@ -40,11 +41,35 @@ const AddSong = () => {
     });
   }
   
-  function handleSubmit(e: SyntheticEvent){
-      e.preventDefault();
-  }
-
-  return (
+  function handleSubmit(e: React.SyntheticEvent) {
+        e.preventDefault();
+        // let errorMessage = ""
+        // let dataKey: keyof {email: string, name: string, avatar: string};
+        //
+        // for (dataKey in data) {
+        //     if(!data[dataKey]){
+        //         errorMessage = dataKey + " required"
+        //     }
+        // }
+        //
+        // if(errorMessage){
+        //     alert(errorMessage)
+        //     return;
+        // }
+        //
+        // api.post("/api/v1/admin/add-artist", data).then((response)=>{
+        //     console.log(response)
+        // }).catch(ex=>{
+        //     console.log(ex)
+        // })
+        //
+        //
+        // console.log("Ok")
+        
+    }
+    
+    
+    return (
     <div>
       <form onSubmit={handleSubmit}>
         <h1>Add New Song</h1>
@@ -107,7 +132,6 @@ const AddSong = () => {
            placeholder="Enter song title"
            handleChange={handleChange}
        />
-        
         
         <button className="btn btn-primary">Add Song</button>
       </form>
