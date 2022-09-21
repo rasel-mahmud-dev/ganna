@@ -1,4 +1,4 @@
-import {NextFunction, Request, Response} from "express";
+import {json, NextFunction, Request, Response} from "express";
 import Artist from "../models/Artist";
 
 
@@ -16,6 +16,7 @@ export async function getAllArtistController(req: Request, res: Response, next: 
     }
 }
 
+
 export async function addArtistController(req: Request, res: Response, next: NextFunction){
     const { name, email, avatar } = req.body;
     
@@ -29,6 +30,20 @@ export async function addArtistController(req: Request, res: Response, next: Nex
         artist.artistId = id
         const {tableName, ...other} = artist
         return res.status(201).json({message: "Artist added", artist: other})
+        
+    } catch (ex){
+        next(ex)
+    }
+}
+export async function deleteArtistController(req: Request, res: Response, next: NextFunction){
+    const { id } = req.params;
+    
+    try{
+        const isDeleted = await Artist.deleteOne({artistId:  Number(id)})
+        if(!isDeleted) {
+            return res.status(500).json({message: "Delete fail. try again"})
+        }
+        return res.status(201).json({message: "Artist deleted"})
         
     } catch (ex){
         next(ex)

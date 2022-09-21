@@ -1,6 +1,7 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import InputGroup from "../../components/inputGroup/InputGroup";
 import api from "../../axios";
+import {FiDelete} from "react-icons/all";
 
 const ArtistList = () => {
     
@@ -14,7 +15,9 @@ const ArtistList = () => {
     
     useEffect(()=>{
         api.get("api/v1/admin/artists").then(({data, status})=>{
-            console.log(data, status)
+            if(status === 200){
+                setArtist(data.artists)
+            }
         })
     }, [])
     
@@ -87,9 +90,23 @@ const ArtistList = () => {
         );
     }
     
+    function handleDelete(id: number){
+        api.delete("/api/v1/admin/artists/"+id).then(({status})=>{
+            if(status === 201){
+                setArtist(artist.filter((a: any)=>a.artistId !== id))
+            }
+        })
+    }
+    
     
     return (
         <div>
+            { artist.map((ar: any)=>(
+                <div className="flex justify-between items-center">
+                    <h4>{ar.name}</h4>
+                    <FiDelete className="" onClick={()=>handleDelete(ar.artistId)} />
+                </div>
+            )) }
             {addArtistModal()}
         </div>
     )

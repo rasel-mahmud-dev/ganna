@@ -81,6 +81,37 @@ class Common{
         })
     }
     
+    // delete one by any field
+    static deleteOne<T>(filter: {[key: string]: any})  {
+        return new Promise<T | null>(async (resolve, reject) => {
+            let connection
+            try{
+                connection = await connectDatabase()
+                let tableName = this.tableName
+                
+                let fieldName = ""
+                let value = ""
+                for(let key in filter){
+                    fieldName = key
+                    value = filter[key]
+                }
+                
+                let sql  = `DELETE FROM ${tableName} WHERE ${fieldName} = ${value}`
+                let [r]: any = await connection.query(sql)
+                if(r.affectedRows){
+                    resolve(r.affectedRows)
+                } else {
+                    resolve(null)
+                }
+            } catch (ex){
+                reject(ex)
+                
+            } finally {
+                connection?.end()
+            }
+        })
+    }
+    
     
     
     async save(){

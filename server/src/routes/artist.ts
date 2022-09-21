@@ -1,6 +1,6 @@
 
 import express from "express"
-import {addArtistController, getAllArtistController} from "../controllers/artist";
+import {addArtistController, deleteArtistController, getAllArtistController} from "../controllers/artist";
 
 
 const router = express.Router()
@@ -12,6 +12,11 @@ router.get("/artists", getAllArtistController)
 
 // POST /api/v1/admin/add-artist
 router.post("/add-artist", addArtistController)
+
+
+
+// DELETE /api/v1/admin/artists
+router.delete("/artists/:id", deleteArtistController)
 
 
 
