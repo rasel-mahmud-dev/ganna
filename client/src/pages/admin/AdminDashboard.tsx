@@ -13,13 +13,16 @@ const AdminDashboard = () => {
     
     return (
         <div className="dashboard">
+           
             <Sidebar className="dashboard-sidebar">
                 <div className="slidebar-list">
                     {items.map((item)=>(
                         <div>
+                            <Link to={item.to}>
                             <li>
-                                <Link to={item.to}>{item.name}</Link>
+                                {item.name}
                             </li>
+                                </Link>
                         </div>
                     ))}
                 </div>

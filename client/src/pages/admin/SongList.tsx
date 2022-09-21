@@ -1,8 +1,8 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
-import InputGroup from "../../components/inputGroup/InputGroup";
+import React, { useEffect, useState} from 'react';
 import api from "../../axios";
 import {BiPen, FiDelete} from "react-icons/all";
 import {Link} from "react-router-dom";
+import staticPath from "../../utils/staticPath";
 
 const SongList = () => {
     
@@ -33,12 +33,17 @@ const SongList = () => {
             <div>
                 { songs.map((ar: any)=>(
                     <div className="flex justify-between items-center">
-                    <h4>{ar.title}</h4>
-                    <div>
-                        <Link to={`/admin/update-song/${ar.songId}`}><BiPen /></Link>
-                        <FiDelete className="" onClick={()=>handleDelete(ar.songId)} />
+                            <div>
+                                <img src={staticPath(ar.cover)} alt=""/>
+                            </div>
+                            <div className="flex justify-between items-center w-full">
+                                <h4>{ar.title}</h4>
+                            <div>
+                                <Link to={`/admin/update-song/${ar.songId}`}><BiPen /></Link>
+                                <FiDelete className="" onClick={()=>handleDelete(ar.songId)} />
+                            </div>
+                            </div>
                     </div>
-                </div>
                 )) }
             </div>
         </div>

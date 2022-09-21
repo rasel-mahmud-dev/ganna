@@ -29,7 +29,7 @@ const AddSong = () => {
   const [artists, setArtist] = React.useState([])
   const albums = [
     { albumId: 1, name: "Chorodini Tumi je amar" },
-    { albumId: 2, name: "Jack knight" },
+    { albumId: 2, name: "Dil Ko Karaar Aaya (Reprise)" },
     { albumId: 3, name: "Jubin" },
     { albumId: 4, name: "KK" },
   ];
@@ -84,8 +84,6 @@ const AddSong = () => {
       let findGenreId = genres.find(g=> item.genreId == g.genreId )
       let findAlbumId = albums.find(g=> item.albumId == g.albumId )
   
-      let findAlbumIds = artists.filter(g=> item.artistId.includes(g.artistId))
-      
       setSongData({
         ...songData,
         title: item.title,
@@ -106,8 +104,8 @@ const AddSong = () => {
     if(songDetail) {
    
       let findAlbumIds = artists.filter(g => songDetail.artistId.includes(g.artistId))
-      let categoryAlbumId = categoryAlbums.filter(g => songDetail.artistId.includes(g.categoryAlbumId))
-   
+      let categoryAlbumId = categoryAlbums.filter(g => songDetail.categoryAlbumId.includes(g.categoryAlbumId))
+      
       setSongData({
         ...songData,
         categoryAlbumId: categoryAlbumId,
