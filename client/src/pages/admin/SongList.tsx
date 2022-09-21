@@ -26,7 +26,7 @@ const SongList = () => {
     function handleDelete(id: number){
         api.delete("/api/v1/songs/"+id).then(({status})=>{
             if(status === 201){
-                setSongs(songs.filter((a: any)=>a.artistId !== id))
+                setSongs(songs.filter((a: any)=>a.songId !== id))
             }
         })
     }

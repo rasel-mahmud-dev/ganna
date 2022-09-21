@@ -1,8 +1,8 @@
 import {NextFunction, Request, Response} from "express";
 import Song from "../models/Song";
-import Artist from "../models/Artist";
 
 import Joi from 'joi';
+import Artist from "../models/Artist";
 
 export async function getAllSongController(req: Request, res: Response, next: NextFunction){
     
@@ -41,8 +41,7 @@ export async function addSongController(req: Request, res: Response, next: NextF
     })
     
     
-    try{
-        
+    try {
         const data = {
             title,
             albumId,
@@ -78,6 +77,24 @@ export async function addSongController(req: Request, res: Response, next: NextF
         const {tableName, ...other} = song
         return res.status(201).json({message: "Song added", song: other})
 
+    } catch (ex){
+        next(ex)
+    }
+}
+
+
+
+export async function deleteSongController(req: Request, res: Response, next: NextFunction){
+    
+    const { id } = req.params;
+    
+    try{
+        const isDeleted = await Song.deleteOne({songId:  Number(id)})
+        if(!isDeleted) {
+            return res.status(500).json({message: "Delete fail. try again"})
+        }
+        return res.status(201).json({message: "Song deleted"})
+        
     } catch (ex){
         next(ex)
     }
