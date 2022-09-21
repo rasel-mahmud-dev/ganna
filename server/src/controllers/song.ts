@@ -2,7 +2,21 @@ import {NextFunction, Request, Response} from "express";
 import Song from "../models/Song";
 
 import Joi from 'joi';
-import Artist from "../models/Artist";
+
+export async function getSongController(req: Request, res: Response, next: NextFunction){
+    const { id } = req.params;
+    try{
+        const song = await Song.findOne<Song>({songId: id})
+       
+        if(song) {
+            return res.status(200).json({song: song})
+        } else{
+            return res.status(404).json({song: null})
+        }
+    } catch (ex){
+        next(ex)
+    }
+}
 
 export async function getAllSongController(req: Request, res: Response, next: NextFunction){
     

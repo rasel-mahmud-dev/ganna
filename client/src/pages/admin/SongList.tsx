@@ -1,17 +1,12 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import InputGroup from "../../components/inputGroup/InputGroup";
 import api from "../../axios";
-import {FiDelete} from "react-icons/all";
+import {BiPen, FiDelete} from "react-icons/all";
+import {Link} from "react-router-dom";
 
 const SongList = () => {
     
     const [songs, setSongs] = useState([])
-    
-    const [data, setData] = useState({
-        name: "",
-        email: "",
-        avatar: ""
-    })
     
     useEffect(()=>{
         api.get("api/v1/songs").then(({data, status})=>{
@@ -39,7 +34,10 @@ const SongList = () => {
                 { songs.map((ar: any)=>(
                     <div className="flex justify-between items-center">
                     <h4>{ar.title}</h4>
-                    <FiDelete className="" onClick={()=>handleDelete(ar.songId)} />
+                    <div>
+                        <Link to={`/admin/update-song/${ar.songId}`}><BiPen /></Link>
+                        <FiDelete className="" onClick={()=>handleDelete(ar.songId)} />
+                    </div>
                 </div>
                 )) }
             </div>

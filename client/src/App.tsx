@@ -31,6 +31,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
           <Route path="/admin" element={<AdminDashboard />} >
             <Route path="add-song" element={<AddSong />} />
+            <Route path="update-song/:id" element={<AddSong />} />
             <Route path="songs" element={<SongList />} />
             <Route path="artist" element={<ArtistList />} />
           </Route>

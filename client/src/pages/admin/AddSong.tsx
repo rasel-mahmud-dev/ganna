@@ -8,8 +8,12 @@ import React, {
 import InputGroup from "../../components/inputGroup/InputGroup";
 import SelectGroup from "../../components/selectGroup/SelectGroup";
 import api from "../../axios";
+import {useParams} from "react-router-dom";
 
 const AddSong = () => {
+
+  const params = useParams()
+  
   const [songData, setSongData] = useState<any>({
     title: "Text",
     duration: 3.30,
@@ -45,18 +49,28 @@ const AddSong = () => {
     { genreId: 3, name: "MURSHID" },
     { genreId: 4, name: "ROCK" },
   ];
-
+  
+  
+  
   useEffect(() => {
-    setTimeout(() => {
-      setSongData({
-        ...songData,
-        artistId: [
-          { artistId: 1, name: "Arjit sing" },
-          { artistId: 2, name: "Jack knight" },
-        ],
-      });
-    }, 1000);
-  }, []);
+    // setSongData({
+    //   ...songData,
+    //   artistId: [
+    //     { artistId: 1, name: "Arjit sing" },
+    //     { artistId: 2, name: "Jack knight" },
+    //   ],
+    // });
+  
+    (async function(){
+      const song = await api.get("/api/v1/songs/"+params.id)
+      console.log(song)
+  
+    }())
+    
+    
+  
+  }, [params.id]);
+  
 
   function handleChange(e: React.SyntheticEvent) {
     const ele = e.target as HTMLInputElement;
@@ -106,7 +120,11 @@ const AddSong = () => {
       return;
     }
   
-    api
+    if(params.id){
+    //  update song
+    
+    } else {
+      api
       .post("/api/v1/songs", payload)
       .then((response) => {
         console.log(response);
@@ -114,14 +132,13 @@ const AddSong = () => {
       .catch((ex) => {
         console.log(ex);
       });
-
-    console.log("Ok");
+    }
   }
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <h1>Add New Song</h1>
+        <h1>{params.id ? "Update Song" : "Add New Song"}</h1>
         <InputGroup
           data={songData}
           name="title"
@@ -212,7 +229,7 @@ const AddSong = () => {
           handleChange={handleChange}
         />
 
-        <button className="btn btn-primary">Add Song</button>
+        <button className="btn btn-primary">{params.id ? "Update" : "Add"}</button>
       </form>
     </div>
   );
