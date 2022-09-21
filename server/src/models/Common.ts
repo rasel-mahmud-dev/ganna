@@ -3,11 +3,14 @@ import connectDatabase from "../services/mysql";
 
 class Common{
     
-    // it overrides with extended class Model
+    // it overrides with extended class Model [for static method]
     static tableName = ""
     
-    constructor() {
+    // for instance method
+    tableName: string;
     
+    constructor(tableName: string) {
+        this.tableName = tableName
     }
     
     // find one by any field
@@ -41,6 +44,46 @@ class Common{
             }
         })
     }
+    
+    
+    
+    async save(){
+        
+        let fieldName = ""
+        let values = ""
+        
+        const data = {...this}
+        for (const dataKey in data) {
+            // ignore tableName field
+            if(dataKey !== "tableName") {
+                if (!data[dataKey]) {
+                    delete data[dataKey]
+                } else {
+                    fieldName = fieldName + ", " + dataKey
+                    values = values + `, "${data[dataKey]}"`
+                }
+            }
+        }
+        
+        try{
+    
+            let tableName = this.tableName
+            
+            let sql = `insert into ${tableName}( ${fieldName.slice(2)} ) Values(${values.slice(2)})`
+            
+            const connection = await connectDatabase()
+            let [result] = await connection.execute<any>(sql)
+            if(result["affectedRows"]){
+                return result["insertId"]
+            } else {
+                return null
+            }
+        } catch (ex){
+            throw ex
+        }
+        
+    }
+    
 }
 
 export default Common

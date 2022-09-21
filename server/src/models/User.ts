@@ -40,7 +40,7 @@ class User extends Common implements UserType{
   static tableName = "users"
 
   constructor({ firstName, lastName, username, email, password }: UserType ) {
-    super()
+    super(User.tableName)
     this.firstName = firstName
     this.lastName = lastName
     this.username = username

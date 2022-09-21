@@ -22,7 +22,7 @@ export async function createUser(user: UserType) {
         let sql = 'insert into users(' + fieldName.slice(2)  +' ) Values(' + values.slice(2) + ')'
     
         const connection = await connectDatabase()
-        let [result, err] = await connection.execute<any>(sql)
+        let [result] = await connection.execute<any>(sql)
     
         if(result["affectedRows"]){
             return {

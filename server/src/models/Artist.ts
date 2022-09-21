@@ -1,3 +1,8 @@
+import Common from "./Common";
+import sqlDate from "../utils/sqlDate";
+import {UserType} from "./User";
+import connectDatabase from "../services/mysql";
+
 export interface ArtistType {
     artistId?: number
     name: string
@@ -7,11 +12,8 @@ export interface ArtistType {
     updatedAt?: string | Date
 }
 
-class M{
 
-}
-
-class Artist extends M implements ArtistType{
+class Artist extends Common implements ArtistType{
     artistId?: number
     name: string
     email: string
@@ -22,12 +24,12 @@ class Artist extends M implements ArtistType{
     static tableName = "artists"
     
     constructor({ name, email, avatar }: ArtistType ) {
-        super();
+        super(Artist.tableName);
         this.name =  name
         this.email = email
         this.avatar = avatar
-        this.createdAt = new Date()
-        this.updatedAt = new Date()
+        this.createdAt = sqlDate(new Date())
+        this.updatedAt = sqlDate(new Date())
     }
 }
 
