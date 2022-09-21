@@ -1,14 +1,15 @@
 import React, {ChangeEvent, FormEventHandler, useState} from 'react';
 import "./style.scss";
 import useStore from "../../store/useStore";
-import api from "../../axios";
-import {ACTION_TYPES} from "../../store/types";
+import {loginAction} from "../../store/actions/userAction";
+import {useNavigate} from "react-router-dom";
 
 
 const LoginPage = () => {
     
     const [state, dispatch] =  useStore()
 
+    const navigate = useNavigate();
     
     const [userData, setUserData] = useState<{email: string, password: string}>({
         email: "",
@@ -39,17 +40,12 @@ const LoginPage = () => {
             alert(errorMessage)
             return;
         }
-        
-        const {data, status} = await api.post("/api/v1/auth/login", userData)
-        if(status === 201) {
-            dispatch({
-                type: ACTION_TYPES.LOGIN,
-                payload: {
-                    user: data.user,
-                    token: data.token
-                }
-            })
-        }
+    
+        loginAction(userData, dispatch, (data) => {
+            if(data){
+                navigate("/")
+            }
+        })
     }
     
     return (

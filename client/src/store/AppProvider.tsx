@@ -16,7 +16,9 @@ function reducer(state: AppContextInterface, action: { type: any; payload: any; 
     switch(action.type){
         case ACTION_TYPES.LOGIN:
             const {user, token } = action.payload;
-            localStorage.setItem("token", token)
+            if(token) {
+                localStorage.setItem("token", token)
+            }
             return {
                 ...state,
                 auth: user,
