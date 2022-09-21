@@ -113,7 +113,7 @@ class Common{
     }
     
     
-   async save(){
+    async save(){
         
         let fieldName = ""
         let values = ""
@@ -141,6 +141,40 @@ class Common{
             let [result] = await connection.execute<any>(sql)
             if(result["affectedRows"]){
                 return result["insertId"]
+            } else {
+                return null
+            }
+        } catch (ex){
+            throw ex
+        }
+        
+    }
+    
+    async updateOne(filter: {fieldName: string, value: any}){
+        
+        let keyValue = ""
+        
+        const data = {...this}
+        for (const dataKey in data) {
+            // ignore tableName field
+            if(dataKey !== "tableName" && dataKey !== "createdAt") {
+                keyValue += `${dataKey} = '${data[dataKey]}', `
+            }
+        }
+        
+        try{
+    
+            // trim last comma
+            keyValue = keyValue.slice(0, -2)
+            
+            let tableName = this.tableName
+            
+            let sql = `UPDATE ${tableName} SET ${keyValue} where ${filter.fieldName} = "${filter.value}" `
+            
+            const connection = await connectDatabase()
+            let [result] = await connection.execute<any>(sql)
+            if(result["affectedRows"]){
+                return true
             } else {
                 return null
             }

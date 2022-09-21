@@ -14,23 +14,19 @@ const AddSong = () => {
 
   const params = useParams()
   
+  const [songDetail, setSongDetail] = useState(null);
   const [songData, setSongData] = useState<any>({
     title: "Text",
     duration: 3.30,
     categoryAlbumId: [], // multiple ids
     artistId: [],  // multiple ids
-    albumId: [ { albumId: 1, name: "Chorodini Tumi je amar" },],
+    albumId: [ ],
     genreId: [],
     url: "sad",
     cover: "34",
   });
   
-  const artists = [
-    { artistId: 1, name: "Arjit sing" },
-    { artistId: 2, name: "Jack knight" },
-    { artistId: 3, name: "Jubin" },
-    { artistId: 4, name: "KK" },
-  ];
+  const [artists, setArtist] = React.useState([])
   const albums = [
     { albumId: 1, name: "Chorodini Tumi je amar" },
     { albumId: 2, name: "Jack knight" },
@@ -51,27 +47,76 @@ const AddSong = () => {
   ];
   
   
-  
   useEffect(() => {
-    // setSongData({
-    //   ...songData,
-    //   artistId: [
-    //     { artistId: 1, name: "Arjit sing" },
-    //     { artistId: 2, name: "Jack knight" },
-    //   ],
-    // });
-  
+    
     (async function(){
-      const song = await api.get("/api/v1/songs/"+params.id)
-      console.log(song)
+      
+      api.get("/api/v1/artists").then(({status, data})=>{
+        if(status !== 200){
+          return;
+        }
+        setArtist(data.artists)
+      })
   
+      // api.get("/api/v1/genres").then(({status, data})=>{
+      //   if(status !== 200){
+      //     return;
+      //   }
+      //   setArtist(data.artists)
+      // })
+  
+      
+      
     }())
     
-    
+  }, []);
   
+  useEffect(() => {
+    
+    (async function(){
+      if(!params.id) return
+      const {status, data} = await api.get("/api/v1/songs/"+params.id)
+      if(status !== 200){
+        return;
+      }
+      let item = data.song;
+      setSongDetail(item)
+      let findGenreId = genres.find(g=> item.genreId == g.genreId )
+      let findAlbumId = albums.find(g=> item.albumId == g.albumId )
+  
+      let findAlbumIds = artists.filter(g=> item.artistId.includes(g.artistId))
+      
+      setSongData({
+        ...songData,
+        title: item.title,
+        duration: item.duration,
+        // categoryAlbumId: item.categoryAlbumId,
+        // artistId: item.artistId,
+        albumId: [findAlbumId],
+        genreId: [findGenreId],
+        url: item.url,
+        cover: item.cover
+      })
+    }())
+    
   }, [params.id]);
   
-
+  
+  useEffect(() => {
+    if(songDetail) {
+   
+      let findAlbumIds = artists.filter(g => songDetail.artistId.includes(g.artistId))
+      let categoryAlbumId = categoryAlbums.filter(g => songDetail.artistId.includes(g.categoryAlbumId))
+   
+      setSongData({
+        ...songData,
+        categoryAlbumId: categoryAlbumId,
+        artistId: findAlbumIds,
+      })
+    }
+  }, [artists, songDetail]);
+  
+  
   function handleChange(e: React.SyntheticEvent) {
     const ele = e.target as HTMLInputElement;
     setSongData({
@@ -122,6 +167,18 @@ const AddSong = () => {
   
     if(params.id){
     //  update song
+  
+      api
+      .patch("/api/v1/songs/"+params.id, payload)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((ex) => {
+        console.log(ex);
+      });
+      
+      console.log(payload)
+      
     
     } else {
       api
