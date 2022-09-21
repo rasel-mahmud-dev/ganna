@@ -5,6 +5,7 @@ import "./style.scss"
 interface Props {
     data: any,
     name: string,
+    type?: string
     label: string,
     placeholder: string,
     handleChange: any
@@ -12,13 +13,13 @@ interface Props {
 
 const InputGroup:FC<Props> = (props)=>{
     
-    const {data, name, label, placeholder, handleChange } =  props
+    const {data, name, type = "text", label, placeholder, handleChange } =  props
     
     return (
         <div className="input-group">
              <label className="input-label" htmlFor={name}>{label}</label>
              <input
-                 type="text"
+                 type={type}
                  className="my-input"
                  id={name}
                  placeholder={placeholder}

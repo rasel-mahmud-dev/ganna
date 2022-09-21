@@ -10,6 +10,7 @@
 }
 .items-center{align-items: center}
 .justify-between{justify-content: space-between}
+.w-full{width: 100%}
 
 li, ul{
   padding: 0;
@@ -26,11 +27,11 @@ li, ul{
     border-bottom: 2px solid transparent;
     transition: border-bottom-color .5s;
     &:hover{
-      border-bottom-color: red;
+      border-bottom-color: #ff7150;
     }
   }
   .active{
-    border-bottom: 2px solid red;
+    border-bottom: 2px solid #ff7150;
   }
 }
 .section{
@@ -67,7 +68,7 @@ li, ul{
   border: none;
 }
 .btn-primary{
-  background: #ff4322;
+  background: var(--primary-color);
   color: white;
 }
 

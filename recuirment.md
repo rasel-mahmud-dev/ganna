@@ -62,7 +62,7 @@ User can create their account and save to playlist.
 
 **Song**
  - title
- - time
+ - duration
  - categoryAlbum
  - albumId
  - artistId
