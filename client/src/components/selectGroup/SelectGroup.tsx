@@ -22,7 +22,7 @@ const SelectGroup:FC<Props> = (props)=>{
         name,
         value,
         dataLabel,
-        multiple,
+        multiple=false,
         dataIndex,
         renderOptions,
         label,

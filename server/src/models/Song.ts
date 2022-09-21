@@ -11,7 +11,8 @@ interface SongType {
     createdAt?: string | Date
     updatedAt?: string | Date
     cover?: string
-    audioLink?: string
+    url?: string
+    genreId?: string
 }
 
 
@@ -25,11 +26,12 @@ class Song extends Common implements SongType{
     createdAt?: string | Date
     updatedAt?: string | Date
     cover?: string
-    audioLink?: string
+    url?: string
+    genreId?: string
     
     static tableName = "songs"
     
-    constructor({ title, albumId, artistId, categoryAlbumId, cover, duration, audioLink }: SongType ) {
+    constructor({ title, albumId, artistId, categoryAlbumId, cover, duration, url, genreId }: SongType ) {
         super(Song.tableName);
         this.title =  title
         this.albumId =  albumId
@@ -37,7 +39,8 @@ class Song extends Common implements SongType{
         this.categoryAlbumId = categoryAlbumId
         this.cover = cover
         this.duration = duration
-        this.audioLink = audioLink
+        this.url = url
+        this.genreId = genreId
         this.createdAt = sqlDate(new Date())
         this.updatedAt = sqlDate(new Date())
     }
