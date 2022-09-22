@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import staticPath from "../../utils/staticPath";
 
 // import Swiper core and required modules
@@ -11,6 +11,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import api from "../../axios";
 
 
 const HomePage = () => {
@@ -44,20 +45,33 @@ const HomePage = () => {
         {name: "My Music"},
     ]
     
+    const sections = [
+        { label: "Trending Songs", filterBy: "hit_songs" },
+        { label: "New Releases", filterBy: "createdAt" },
+        { label: "Top Charts" },
+        { label: "Top Searched Artists", filterBy: "view_artists" },
+        { label: "Top Playlists", filterBy: "view_playlist" },
+        { label: "Popular In Hindi" }
+    ]
+    
+    useEffect(()=>{
+        api.post("/api/v1/songs/filter", {filter: sections}).then(res=>{
+            console.log(res)
+        })
+        .catch(ex=>{
+            console.log(ex)
+        })
+    
+    }, [])
+    
+    
     const [activeCat, setActiveCat] = React.useState("All")
     
     function changeCategory(item: {name: string}){
        setActiveCat(item.name)
     }
     
-    const sections = [
-        { label: "Trending Songs" },
-        { label: "New Releases" },
-        { label: "Top Charts" },
-        { label: "Top Searched Artists" },
-        { label: "Top Playlists" },
-        { label: "Popular In Hindi" }
-    ]
+
     
     const a  = (
         <ul >
@@ -69,10 +83,15 @@ const HomePage = () => {
                     srcSet="https://a10.gaanacdn.com/gn_img/showcase/dwN39y83DP/wN39agO3DP/size_l_1610733351.webp"
                     media="(min-width: 1420px)"/><source
                     srcSet="https://a10.gaanacdn.com/gn_img/showcase/dwN39y83DP/wN39agO3DP/size_m_1610733351.webp"
-                    media="(min-width: 992px)"/><source
-                    srcSet="https://a10.gaanacdn.com/gn_img/showcase/dwN39y83DP/wN39agO3DP/size_s_1610733351.webp"/><img
+                    media="(min-width: 992px)"/><
+                        source
+                    srcSet="https://a10.gaanacdn.com/gn_img/showcase/dwN39y83DP/wN39agO3DP/size_s_1610733351.webp"/>
+                   
+                    <img
                     srcSet="https://a10.gaanacdn.com/images/showcase/1610733351_12677.jpg" alt="Hindi Workout Essentials"
-                    title="Hindi Workout Essentials"/></picture></a>
+                    title="Hindi Workout Essentials"/>
+                    
+                </picture></a>
                     </li>
                 <li className="slide animate"
                                                                         ><a

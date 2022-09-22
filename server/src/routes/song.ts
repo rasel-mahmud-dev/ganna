@@ -2,7 +2,7 @@
 import express from "express"
 import {
     addSongController,
-    deleteSongController,
+    deleteSongController, filterHomePageSongController,
     getAllSongController,
     getSongController,
     updateSongController
@@ -27,6 +27,10 @@ router.patch("/:id", updateSongController)
 
 // DELETE :api/v1/songs/:id
 router.delete("/:id", deleteSongController)
+
+
+// POST :api/v1/songs/filter/
+router.post("/filter", filterHomePageSongController)
 
 
 export default router;

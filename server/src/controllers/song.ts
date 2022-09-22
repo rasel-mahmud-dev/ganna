@@ -3,6 +3,7 @@ import Song from "../models/Song";
 
 import Joi from 'joi';
 import songValidator from "../validator/song";
+import connectDatabase from "../services/mysql";
 
 export async function getSongController(req: Request, res: Response, next: NextFunction){
     const { id } = req.params;
@@ -145,6 +146,32 @@ export async function deleteSongController(req: Request, res: Response, next: Ne
             return res.status(500).json({message: "Delete fail. try again"})
         }
         return res.status(201).json({message: "Song deleted"})
+        
+    } catch (ex){
+        next(ex)
+    }
+}
+
+
+
+export async function filterHomePageSongController(req: Request, res: Response, next: NextFunction){
+    
+    const { filter = [] } = req.body;
+    
+    try{
+        const database =  await connectDatabase();
+        
+        filter.forEach( async (item: { label: string, filterBy: string })=>{
+            
+            if(item.filterBy === "hit_songs"){
+                let sql = `SELECT * FROM hit_songs JOIN songs ON songs.songId = hit_songs.songId ORDER BY views DESC `
+                const [result] = await database.query(sql)
+                console.log(result)
+            }
+            
+        })
+        
+        // console.log(filter)
         
     } catch (ex){
         next(ex)
