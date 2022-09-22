@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "./styles.scss";
 
 import {AiFillDashboard, BiUser, FaBars, FaSignOutAlt} from "react-icons/all";
@@ -11,6 +11,11 @@ const Navigation = () => {
   
   const [state, dispatch] =  useStore()
 
+  const [openDropdown, setOpenDropdown] = useState("")
+  
+  function handleDropDown(item: string){
+    setOpenDropdown(item)
+  }
   
   return (
     <div>
@@ -43,14 +48,14 @@ const Navigation = () => {
             </div>
             <div className="right-menu">
               { state.auth ? (
-                  <li className="relative dropdown-parent">
-                    <Link to="/auth/login" className="flex items-center">
+                  <li className="relative" onClick={()=>handleDropDown("auth")}>
+                    <p  className="flex items-center">
                       <div>
                         <img className="auth-avatar flex" src={staticPath(state.auth.avatar)} alt=""/>
                       </div>
                       <p>{state.auth.firstName}</p>
-                    </Link>
-                    <Dropdown isOpen={true}>
+                    </p>
+                    <Dropdown isOpen={openDropdown === "auth"} onClose={()=>setOpenDropdown("")}>
                       <div className="flex flex-col">
                         <Link className="dropdown-item flex items-center" to="/admin/dashboard">
                            <AiFillDashboard />
