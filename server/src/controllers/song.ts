@@ -167,14 +167,14 @@ export async function filterHomePageSongController(req: Request, res: Response, 
     
             (async function(){
                 if(item.filterBy === "hit_songs"){
-                    let sql = `SELECT * FROM hit_songs JOIN songs ON songs.songId = hit_songs.songId ORDER BY views DESC `
+                    let sql = `SELECT * FROM hit_songs JOIN songs ON songs.songId = hit_songs.songId ORDER BY views DESC LIMIT 20`
                     const [result] = await database.query<any>(sql)
                     if(result) {
                         result[item.label] = result
                     }
                 }
                 if(item.filterBy === "createdAt"){
-                    let sql = `SELECT * FROM songs ORDER BY createdAt LIMIT 5 `
+                    let sql = `SELECT * FROM songs ORDER BY createdAt LIMIT 30 `
                     const [result] = await database.query<any>(sql)
                     if(result) {
                         out[item.label] = result
@@ -182,7 +182,14 @@ export async function filterHomePageSongController(req: Request, res: Response, 
                     // console.log(result)
                     // console.log(result)
                 }
-                
+    
+                if(item.filterBy === "hit_artists"){
+                    let sql = `SELECT * FROM hit_artists JOIN artists ON artists.artistId = hit_artists.artistId ORDER BY views DESC LIMIT 20`
+                    const [result] = await database.query<any>(sql)
+                    if(result) {
+                        out[item.label] = result
+                    }
+                }
                 
             }())
             
