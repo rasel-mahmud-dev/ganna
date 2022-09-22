@@ -46,18 +46,18 @@ const Navigation = () => {
             <div className="search-menu">
               <input type="text" placeholder="Search music" />
             </div>
-            <div className="right-menu">
+            <div className="right-menu flex items-center">
               { state.auth ? (
                   <li className="relative"
                       onMouseOver={()=>handleDropDown("auth")}
                       onMouseLeave={()=>handleDropDown("")}
                       onClick={()=>handleDropDown("auth")}>
-                    <p  className="flex items-center">
+                    <span  className="flex items-center">
                       <div>
                         <img className="auth-avatar flex" src={staticPath(state.auth.avatar)} alt=""/>
                       </div>
-                      <p>{state.auth.firstName}</p>
-                    </p>
+                      <span>{state.auth.firstName}</span>
+                    </span>
                     <Dropdown isOpen={openDropdown === "auth"} onClose={()=>setOpenDropdown("")}>
                       <div className="flex flex-col">
                         <Link className="dropdown-item flex items-center" to="/admin/dashboard">

@@ -5,6 +5,7 @@
   top: 0;
   left: 0;
   width: 100%;
+  z-index: 1000;
 
   .main-nav{
     //display: flex;
@@ -35,11 +36,14 @@
     grid-column: span 4;
     padding: 0 0px;
     input{
-      background: rgba(255, 255, 255, 0.4);
+      background: rgb(255, 255, 255);
       padding: 10px 20px;
       border-radius: 20px;
-      border: 1px solid #c9c9c9;
+      border: 1px solid rgba(201, 201, 201, 0.63);
       width: 100%;
+      &::placeholder{
+        color: #a2a2a2;
+      }
     }
   }
   .right-menu{
