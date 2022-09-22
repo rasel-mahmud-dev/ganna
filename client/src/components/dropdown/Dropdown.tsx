@@ -13,7 +13,6 @@ const Dropdown: FC<Props> = ({isOpen, onClose, children}) => {
         e.stopPropagation();
         const el = e.target as HTMLDivElement;
         if(el.classList.contains("dropdown-backdrop")) {
-            console.log("Close")
             onClose()
         }
     }

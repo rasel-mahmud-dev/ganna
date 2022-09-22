@@ -1,10 +1,16 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import InputGroup from "../../components/inputGroup/InputGroup";
 import api from "../../axios";
-import {BiPen, BsPen, BsPencil, CgPen, FaPen, FiDelete, FiEdit, TiPen} from "react-icons/all";
+import { FiDelete, FiEdit} from "react-icons/all";
 import Modal from "../../components/modal/Modal";
+import staticPath from "../../utils/staticPath";
+import "./syle.scss"
+import useStore from "../../store/useStore";
 
 const ArtistList = () => {
+  
+  const [{auth}] = useStore();
+  
   const [artist, setArtist] = useState([]);
 
   const [data, setData] = useState({
@@ -19,10 +25,27 @@ const ArtistList = () => {
   useEffect(() => {
     api.get("api/v1/artists").then(({ data, status }) => {
       if (status === 200) {
+        observationHandler()
         setArtist(data.artists);
       }
     });
   }, []);
+  
+  function observationHandler(){
+    const images = document.querySelectorAll(".lazy")
+      let lazyImageObserver = new IntersectionObserver(function (entries, observer){
+        entries.forEach(entry=>{
+          if (entry.isIntersecting){
+            entry.target.classList.add("lazy-loaded")
+            const img = entry.target.children[0] as HTMLImageElement
+            img.setAttribute("src", img.dataset.source ? img.dataset.source : "")
+            img.removeAttribute("data-source")
+          }
+        })
+      })
+    
+    images.forEach(image=> lazyImageObserver.observe(image) )
+  }
   
   
   function handleOpenUpdateForm(ar: any) {
@@ -138,18 +161,30 @@ const ArtistList = () => {
   return (
     <div>
       
-      <h1>Artist List</h1>
+      <h1>Music Artists</h1>
       <button onClick={()=> {setUpdateArtist(null); setOpenModal(true)}} className="btn btn-primary ">Add Artist</button>
       
-      {artist.map((ar: any) => (
-        <div className="flex justify-between items-center">
-          <h4>{ar.name}</h4>
-          <div>
-            <FiEdit onClick={()=>handleOpenUpdateForm(ar)} />
-            <FiDelete className="" onClick={() => handleDelete(ar.artistId)} />
-          </div>
-        </div>
-      ))}
+      <div className="flex flex-wrap">
+        {artist.map((ar: any) => (
+            <div className="artist-item flex justify-between flex-col items-center">
+              <div className="">
+                <div className="lazy artist-image">
+                    <img className="w-full" data-source={staticPath(ar.avatar)} src="/bitmap.png" alt=""/>
+                </div>
+              </div>
+              <div className="">
+                <h4>{ar.name}</h4>
+                { auth && auth.role === "ADMIN" && (
+                    <div>
+                    <FiEdit onClick={()=>handleOpenUpdateForm(ar)} />
+                    <FiDelete className="" onClick={() => handleDelete(ar.artistId)} />
+                  </div>
+                ) }
+              </div>
+            </div>
+        ))}
+      </div>
+      
       {addArtistModal()}
     </div>
   );

@@ -13,6 +13,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import ArtistList from "./pages/admin/ArtistList";
 import SongList from "./pages/admin/SongList";
 import DashboardHome from "./pages/admin/DashboardHome";
+import Artists from "./pages/artists/Artists";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -37,6 +38,7 @@ function App() {
             <Route path="songs" element={<SongList />} />
             <Route path="artist" element={<ArtistList />} />
           </Route>
+            <Route path="/artists" element={<Artists />} />
         
         {/*<Player />*/}
       </Routes>
