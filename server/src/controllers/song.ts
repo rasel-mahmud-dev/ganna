@@ -158,16 +158,33 @@ export async function filterHomePageSongController(req: Request, res: Response, 
     
     const { filter = [] } = req.body;
     
+    let out: any = {}
+    
     try{
         const database =  await connectDatabase();
         
-        filter.forEach( async (item: { label: string, filterBy: string })=>{
-            
-            if(item.filterBy === "hit_songs"){
-                let sql = `SELECT * FROM hit_songs JOIN songs ON songs.songId = hit_songs.songId ORDER BY views DESC `
-                const [result] = await database.query(sql)
-                console.log(result)
-            }
+        filter.forEach((item: { label: string, filterBy: string })=>{
+    
+            (async function(){
+                if(item.filterBy === "hit_songs"){
+                    let sql = `SELECT * FROM hit_songs JOIN songs ON songs.songId = hit_songs.songId ORDER BY views DESC `
+                    const [result] = await database.query<any>(sql)
+                    if(result) {
+                        result[item.label] = result
+                    }
+                }
+                if(item.filterBy === "createdAt"){
+                    let sql = `SELECT * FROM songs ORDER BY createdAt LIMIT 5 `
+                    const [result] = await database.query<any>(sql)
+                    if(result) {
+                        out[item.label] = result
+                    }
+                    // console.log(result)
+                    // console.log(result)
+                }
+                
+                
+            }())
             
         })
         

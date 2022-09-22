@@ -48,8 +48,8 @@ const HomePage = () => {
     const sections = [
         { label: "Trending Songs", filterBy: "hit_songs" },
         { label: "New Releases", filterBy: "createdAt" },
-        { label: "Top Charts" },
-        { label: "Top Searched Artists", filterBy: "view_artists" },
+        // { label: "Top Charts" },
+        { label: "Top Searched Artists", filterBy: "hit_artists" },
         { label: "Top Playlists", filterBy: "view_playlist" },
         { label: "Popular In Hindi" }
     ]

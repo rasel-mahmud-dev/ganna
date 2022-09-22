@@ -6,6 +6,9 @@ interface HitSongType {
     views: number
 }
 
+/**
+ * this table store song views/play times
+ * */
 
 class HitSong extends Common implements HitSongType{
     id?: number
