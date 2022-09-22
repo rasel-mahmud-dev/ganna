@@ -1,6 +1,11 @@
 
 import express from "express"
-import {addArtistController, deleteArtistController, getAllArtistController} from "../controllers/artist";
+import {
+    addArtistController,
+    deleteArtistController,
+    getAllArtistController,
+    updateArtistController
+} from "../controllers/artist";
 
 
 const router = express.Router()
@@ -10,12 +15,16 @@ router.get("/", getAllArtistController)
 
 
 
-// POST /api/v1/admin/add-artist
+// POST /api/v1/artists/add-artist
 router.post("/add-artist", addArtistController)
 
 
+// POST /api/v1/artists/id
+router.patch("/:id", updateArtistController)
 
-// DELETE /api/v1/admin/artists
+
+
+// DELETE /api/v1/artists/id
 router.delete("/:id", deleteArtistController)
 
 

@@ -48,7 +48,10 @@ const Navigation = () => {
             </div>
             <div className="right-menu">
               { state.auth ? (
-                  <li className="relative" onClick={()=>handleDropDown("auth")}>
+                  <li className="relative"
+                      onMouseOver={()=>handleDropDown("auth")}
+                      onMouseLeave={()=>handleDropDown("")}
+                      onClick={()=>handleDropDown("auth")}>
                     <p  className="flex items-center">
                       <div>
                         <img className="auth-avatar flex" src={staticPath(state.auth.avatar)} alt=""/>

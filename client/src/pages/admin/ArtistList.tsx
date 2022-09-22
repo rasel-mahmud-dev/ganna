@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import InputGroup from "../../components/inputGroup/InputGroup";
 import api from "../../axios";
-import { FiDelete } from "react-icons/all";
+import {BiPen, BsPen, BsPencil, CgPen, FaPen, FiDelete, FiEdit, TiPen} from "react-icons/all";
 import Modal from "../../components/modal/Modal";
 
 const ArtistList = () => {
@@ -14,6 +14,7 @@ const ArtistList = () => {
   });
 
   const [isOpenModal, setOpenModal] = useState(false);
+  const [updateArtist, setUpdateArtist] = useState(null);
 
   useEffect(() => {
     api.get("api/v1/artists").then(({ data, status }) => {
@@ -22,7 +23,22 @@ const ArtistList = () => {
       }
     });
   }, []);
-
+  
+  
+  function handleOpenUpdateForm(ar: any) {
+    setOpenModal(true)
+    setUpdateArtist(ar)
+    let updateDate = {...data}
+    let updateDateKey: keyof typeof updateDate
+    for (updateDateKey in updateDate) {
+      if(ar[updateDateKey]){
+        updateDate[updateDateKey] = ar[updateDateKey];
+      }
+    }
+    setData(updateDate)
+  }
+  
+  
   function handleChange(e: ChangeEvent) {
     let el = e.target as HTMLInputElement;
     setData({
@@ -47,16 +63,28 @@ const ArtistList = () => {
       return;
     }
 
-    api
-      .post("/api/v1/artists/add-artist", data)
-      .then(({ status, data }) => {
+    if(updateArtist) {
+      api
+      .patch("/api/v1/artists/"+updateArtist?.artistId as any, data)
+      .then(({status, data}) => {
         if (status === 201) {
         }
       })
       .catch((ex) => {
         console.log(ex);
       });
-
+    } else {
+      api
+      .post("/api/v1/artists/add-artist", data)
+      .then(({status, data}) => {
+        if (status === 201) {
+        }
+      })
+      .catch((ex) => {
+        console.log(ex);
+      });
+    }
+    
     console.log("Ok");
   }
 
@@ -66,7 +94,7 @@ const ArtistList = () => {
         <div>
           {isOpenModal && (
             <form onSubmit={handleSubmit}>
-              <h1>Add Artist</h1>
+              <h1>{updateArtist ? "Update Artist" : "Add Artist" }</h1>
               <InputGroup
                 data={data}
                 name="name"
@@ -90,7 +118,7 @@ const ArtistList = () => {
                 handleChange={handleChange}
               />
 
-              <button className="btn btn-primary">Add Artist</button>
+              <button className="btn btn-primary">{ updateArtist ? "Update" : "Add"}</button>
             </form>
           )}
         </div>
@@ -106,16 +134,20 @@ const ArtistList = () => {
     });
   }
 
+  
   return (
     <div>
       
       <h1>Artist List</h1>
-      <button onClick={()=>setOpenModal(true)} className="btn btn-primary ">Add Artist</button>
+      <button onClick={()=> {setUpdateArtist(null); setOpenModal(true)}} className="btn btn-primary ">Add Artist</button>
       
       {artist.map((ar: any) => (
         <div className="flex justify-between items-center">
           <h4>{ar.name}</h4>
-          <FiDelete className="" onClick={() => handleDelete(ar.artistId)} />
+          <div>
+            <FiEdit onClick={()=>handleOpenUpdateForm(ar)} />
+            <FiDelete className="" onClick={() => handleDelete(ar.artistId)} />
+          </div>
         </div>
       ))}
       {addArtistModal()}
