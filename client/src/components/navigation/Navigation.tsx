@@ -1,10 +1,11 @@
 import React from "react";
 import "./styles.scss";
 
-import { FaBars } from "react-icons/all";
+import {AiFillDashboard, BiUser, FaBars, FaSignOutAlt} from "react-icons/all";
 import {Link} from "react-router-dom";
 import useStore from "../../store/useStore";
 import staticPath from "../../utils/staticPath";
+import Dropdown from "../dropdown/Dropdown";
 
 const Navigation = () => {
   
@@ -42,13 +43,29 @@ const Navigation = () => {
             </div>
             <div className="right-menu">
               { state.auth ? (
-                  <li>
+                  <li className="relative dropdown-parent">
                     <Link to="/auth/login" className="flex items-center">
                       <div>
                         <img className="auth-avatar flex" src={staticPath(state.auth.avatar)} alt=""/>
                       </div>
                       <p>{state.auth.firstName}</p>
                     </Link>
+                    <Dropdown isOpen={true}>
+                      <div className="flex flex-col">
+                        <Link className="dropdown-item flex items-center" to="/admin/dashboard">
+                           <AiFillDashboard />
+                          <span>Dashboard</span>
+                        </Link>
+                        <Link className="dropdown-item flex items-center" to="/admin/dashboard">
+                          <BiUser />
+                          <span>Profile</span>
+                        </Link>
+                        <span className="dropdown-item flex items-center">
+                          <FaSignOutAlt />
+                          <span> Logout</span>
+                        </span>
+                      </div>
+                    </Dropdown>
                   </li>
                   ) : (
                   <li>

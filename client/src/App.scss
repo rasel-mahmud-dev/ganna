@@ -8,6 +8,8 @@
 .flex{
   display: flex;
 }
+.flex-col{flex-direction: column}
+.relative{position: relative}
 .items-center{align-items: center}
 .justify-between{justify-content: space-between}
 .w-full{width: 100%}
