@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import staticPath from "../../utils/staticPath";
 
 // import Swiper core and required modules
@@ -12,6 +12,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import api from "../../axios";
+import {Link} from "react-router-dom";
 
 
 const HomePage = () => {
@@ -44,7 +45,46 @@ const HomePage = () => {
         {name: "Podcast"},
         {name: "My Music"},
     ]
+   
+    function renderItem(str: string, data: any[]){
+
+        switch (str) {
+            case "Trending Songs":
+            case "New Releases":
+                return (
+                    <div className="flex  song-list flex-wrap">
+                        {data && data.map((a)=>(
+                            <Link to={`/song/${a.title}`}>
+                                <div className="song-item ">
+                                    <div className="card">
+                                        <img src={staticPath(a.cover)} alt="Pani Di Gal" title="Pani Di Gal" />
+                                    </div>
+                                    <p className="song-name">{a.title}</p>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                )
     
+            case "Top Searched Artists":
+                return (
+                    <div className="flex gap-25 flex-wrap">
+                        {data && data.map((a)=>(
+                            <div className="artist-item">
+                                <div className="artist-image cursor-pointer">
+                                    <img className="w-full" src={staticPath(a.avatar)} alt="Pani Di Gal" title="Pani Di Gal" />
+                                </div>
+                                <p className="cursor-pointer text-center">{a.name}</p>
+                            </div>
+                        ))}
+                    </div>
+                )
+                
+                
+            default :
+                return ""
+        }
+    }
     const sections = [
         { label: "Trending Songs", filterBy: "hit_songs" },
         { label: "New Releases", filterBy: "createdAt" },
@@ -53,10 +93,15 @@ const HomePage = () => {
         { label: "Top Playlists", filterBy: "view_playlist" },
         { label: "Popular In Hindi" }
     ]
+    const [sectionData, setSectionData] = useState({})
+    
     
     useEffect(()=>{
         api.post("/api/v1/songs/filter", {filter: sections}).then(res=>{
-            console.log(res)
+            
+            if(res.status === 200) {
+                setSectionData(res.data.result)
+            }
         })
         .catch(ex=>{
             console.log(ex)
@@ -201,8 +246,9 @@ const HomePage = () => {
                     slidesPerView={3}
                     navigation
                     // scrollbar={{ draggable: true }}
-                    onSwiper={(swiper) => console.log(swiper)}
-                    onSlideChange={() => console.log('slide change')}>
+                    // onSwiper={(swiper) => console.log(swiper)}
+                    // onSlideChange={() => console.log('slide change')}>
+                    >
                     { a.props.children.map(ch=>(
                         <SwiperSlide>{ch}</SwiperSlide>
                     )) }
@@ -216,14 +262,9 @@ const HomePage = () => {
             { sections.map(section=>(
                 <div className="section">
                     <h3 className='section-name'>{section.label}</h3>
-                    <div className="flex song-list">
-                        { new Array(10).fill(1).map(a=>(
-                            <div className="song-item">
-                                <img src={staticPath("cover/size_m_1516707336.webp")} alt="Pani Di Gal" title="Pani Di Gal" />
-                                <p className="song-name">Phele mera pair</p>
-                            </div>
-                        )) }
-                    </div>
+                    {/*<div className="flex song-list">*/}
+                        { renderItem(section.label, sectionData[section.label])}
+                    {/*</div>*/}
                 </div>
             )) }
             

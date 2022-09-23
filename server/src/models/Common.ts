@@ -65,6 +65,7 @@ class Common{
                 }
                 
                 let sql  = `SELECT ${selectFields ? selectFields : '*' } from ${tableName} where ${fieldName} = "${value}"  `
+              
                 let [r, _]: any = await connection.query(sql)
                 
                 if(r.length > 0){

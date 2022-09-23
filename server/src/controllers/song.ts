@@ -1,7 +1,7 @@
 import {NextFunction, Request, Response} from "express";
 import Song from "../models/Song";
 
-import Joi from 'joi';
+
 import songValidator from "../validator/song";
 import connectDatabase from "../services/mysql";
 
@@ -16,6 +16,25 @@ export async function getSongController(req: Request, res: Response, next: NextF
             return res.status(404).json({song: null})
         }
     } catch (ex){
+        next(ex)
+    }
+}
+
+export async function getSongByFieldController(req: Request, res: Response, next: NextFunction){
+
+    const { title } = req.query;
+    try{
+        
+        const song = await Song.findOne<Song>({title: title})
+
+        if(song) {
+            return res.status(200).json({song: song})
+        } else{
+         
+            return res.status(404).json({song: null})
+        }
+    } catch (ex){
+
         next(ex)
     }
 }
@@ -152,7 +171,9 @@ export async function deleteSongController(req: Request, res: Response, next: Ne
     }
 }
 
+async function loadData(){
 
+}
 
 export async function filterHomePageSongController(req: Request, res: Response, next: NextFunction){
     
@@ -162,10 +183,12 @@ export async function filterHomePageSongController(req: Request, res: Response, 
     
     try{
         const database =  await connectDatabase();
-        
-        filter.forEach((item: { label: string, filterBy: string })=>{
-    
+
+        filter.forEach((item: { label: string, filterBy: string }, index: number)=>{
+   
+            
             (async function(){
+                
                 if(item.filterBy === "hit_songs"){
                     let sql = `SELECT * FROM hit_songs JOIN songs ON songs.songId = hit_songs.songId ORDER BY views DESC LIMIT 20`
                     const [result] = await database.query<any>(sql)
@@ -182,7 +205,6 @@ export async function filterHomePageSongController(req: Request, res: Response, 
                     // console.log(result)
                     // console.log(result)
                 }
-    
                 if(item.filterBy === "hit_artists"){
                     let sql = `SELECT * FROM hit_artists JOIN artists ON artists.artistId = hit_artists.artistId ORDER BY views DESC LIMIT 20`
                     const [result] = await database.query<any>(sql)
@@ -191,11 +213,16 @@ export async function filterHomePageSongController(req: Request, res: Response, 
                     }
                 }
                 
+                if((index + 1) === filter.length) {
+                    setTimeout(()=>{
+                    
+                    return res.status(200).json({result: out})
+                    }, 1000)
+                }
             }())
             
         })
         
-        // console.log(filter)
         
     } catch (ex){
         next(ex)

@@ -15,6 +15,7 @@ import SongList from "./pages/admin/SongList";
 import DashboardHome from "./pages/admin/DashboardHome";
 import Artists from "./pages/artists/Artists";
 import Footer from "./components/footer/Footer";
+import SongDetail from "./pages/songDetail/SongDetail";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -40,8 +41,9 @@ function App() {
             <Route path="artist" element={<ArtistList />} />
           </Route>
           <Route path="/artists" element={<Artists />} />
+          <Route path="/song/:title" element={<SongDetail />} />
   
-      </Routes>
+        </Routes>
         <Footer />
         <Player />
         
