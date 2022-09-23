@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 import "./style.scss";
 import {
-  AiFillSound, AiOutlineAudioMuted, AiOutlineSound,
-  BiHeart,
-  BiPlay, BsVolumeMute,
+  AiFillSound,
+  BsVolumeMute,
   CgHeart,
   CgPlayTrackNext,
   CgPlayTrackPrev,
-  FaEllipsisH,
   FaEllipsisV,
 } from "react-icons/all";
+
+
 import useStore from "../../store/useStore";
 import staticPath from "../../utils/staticPath";
 import {backend} from "../../axios";
@@ -20,17 +20,9 @@ const Player = () => {
   
   const [{musicDetail}, dispatch] = useStore();
   
-  const [music, setMusic] = useState<HTMLAudioElement>(null)
+  const [music, setMusic] = useState<HTMLAudioElement>()
   
-  
-  useEffect(()=>{
-    if(musicDetail) {
-      handlePlay()
-    }
-    console.log(musicDetail);
-    
-    
-  }, [musicDetail])
+  let intervalRef = useRef()
   
   
   const [state, setState] = useState({
@@ -38,7 +30,51 @@ const Player = () => {
     mute: false,
     volume: 1,
     pause: false,
+    currentTime: 0
   })
+  
+  function progressInterval(){
+    intervalRef.current =  setInterval(() => {
+      setState({
+        ...state,
+        currentTime: music.currentTime
+      
+      })
+    }, 1000)
+  }
+  
+  useEffect(()=>{
+    if(music && state.isPlaying) {
+      progressInterval()
+    }
+    return ()=> clearInterval(intervalRef.current)
+    
+  }, [state.isPlaying])
+  
+  
+  function initiateMusic(){
+    if(musicDetail.url) {
+      const musicDir = `${backend}/songs/${musicDetail.url}`
+      let newMusic = new Audio(musicDir);
+      setMusic(newMusic)
+      newMusic.play()
+      setState({
+        ...state,
+        isPlaying: true,
+        pause: false
+      })
+      return newMusic
+    }
+  }
+  
+  useEffect(()=>{
+    if(musicDetail?.url) {
+      if(!music) {
+        initiateMusic()
+      }
+    }
+  }, [musicDetail])
+
   
   
   function handlePlay(){
@@ -46,17 +82,22 @@ const Player = () => {
     let updateState = {...state}
  
     if(!music) {
-      const musicDir = `${backend}/songs/${musicDetail.url}`
-      let newMusic = new Audio(musicDir);
-      setMusic(newMusic)
+  
+      let newMusic = initiateMusic()
+      if(newMusic) {
+        updateState.currentTime = newMusic.currentTime;
+      }
+   
     } else {
       music.play()
+      updateState.currentTime = music.currentTime;
     }
   
     updateState.isPlaying = true
     updateState.pause = false
     setState(updateState)
   }
+  
   
   function toggleMute(){
     music.muted = !state.mute;
@@ -65,9 +106,10 @@ const Player = () => {
   
   function togglePause(){
     if(state.pause){
-      music.play();
+      music?.play();
     } else {
-      music.pause();
+      clearInterval(intervalRef.current);
+      music?.pause();
     }
     setState({...state, pause: !state.pause})
   }
@@ -96,7 +138,7 @@ const Player = () => {
           <div className="user-action flex items-center">
             <CgHeart />
             <FaEllipsisV />
-            <div className="play-time">{musicDetail ? musicDetail.duration : "00/00.00"}</div>
+            <div className="play-time">{musicDetail ?  `${state.currentTime}/${musicDetail.duration}` : "00/00.00"}</div>
           </div>
         </div>
 
