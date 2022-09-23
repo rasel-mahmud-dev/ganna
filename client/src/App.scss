@@ -17,6 +17,11 @@
 .text-center{text-align: center}
 .border-b{border-bottom: 1px solid rgba(192, 192, 192, 0.71)
 }
+.text-primary{
+  fill: var(--primary-color);
+  color: var(--primary-color);
+}
+
 .gap-25{gap: 25px}
 .cursor-pointer{cursor: pointer}
 li, ul{

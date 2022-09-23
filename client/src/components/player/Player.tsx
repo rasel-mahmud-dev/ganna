@@ -1,44 +1,124 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 import "./style.scss";
 import {
-  AiFillSound, BiHeart,
-  BiPlay, CgHeart,
+  AiFillSound, AiOutlineAudioMuted, AiOutlineSound,
+  BiHeart,
+  BiPlay, BsVolumeMute,
+  CgHeart,
   CgPlayTrackNext,
-  CgPlayTrackPrev, FaEllipsisH, FaEllipsisV,
+  CgPlayTrackPrev,
+  FaEllipsisH,
+  FaEllipsisV,
 } from "react-icons/all";
+import useStore from "../../store/useStore";
+import staticPath from "../../utils/staticPath";
+import {backend} from "../../axios";
+
 
 const Player = () => {
+  
+  const [{musicDetail}, dispatch] = useStore();
+  
+  const [music, setMusic] = useState<HTMLAudioElement>(null)
+  
+  
+  useEffect(()=>{
+    if(musicDetail) {
+      handlePlay()
+    }
+    console.log(musicDetail);
+    
+    
+  }, [musicDetail])
+  
+  
+  const [state, setState] = useState({
+    isPlaying: false,
+    mute: false,
+    volume: 1,
+    pause: false,
+  })
+  
+  
+  function handlePlay(){
+    if(!musicDetail) return;
+    let updateState = {...state}
+ 
+    if(!music) {
+      const musicDir = `${backend}/songs/${musicDetail.url}`
+      let newMusic = new Audio(musicDir);
+      setMusic(newMusic)
+    } else {
+      music.play()
+    }
+  
+    updateState.isPlaying = true
+    updateState.pause = false
+    setState(updateState)
+  }
+  
+  function toggleMute(){
+    music.muted = !state.mute;
+    setState({...state, mute: !state.mute})
+  }
+  
+  function togglePause(){
+    if(state.pause){
+      music.play();
+    } else {
+      music.pause();
+    }
+    setState({...state, pause: !state.pause})
+  }
+
+  const PlayCircle = ()=> <svg
+      style={{width: '25'}}
+      className={`${(musicDetail && musicDetail.url) ? "text-primary" : "" }`}
+                               onClick={handlePlay} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm115.7 272l-176 101c-15.8 8.8-35.7-2.5-35.7-21V152c0-18.4 19.8-29.8 35.7-21l176 107c16.4 9.2 16.4 32.9 0 42z"/></svg>
+  
+  
+  const PlayPauseCircle = ()=> <svg
+      style={{width: '25'}}
+      className={`${(musicDetail && musicDetail.url) ? "text-primary" : "" }`}
+      onClick={togglePause}
+      xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm-16 328c0 8.8-7.2 16-16 16h-48c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16v160zm112 0c0 8.8-7.2 16-16 16h-48c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16v160z"/></svg>
+  
+    
   return (
     <div className="player-container">
       <div className="player-root">
-        
         <div className="flex items-center  player-song-info">
           <div className="song-thumb">
-            <img src="https://a10.gaanacdn.com/gn_img/albums/ZaP37RKDy7/P37OlNeX3D/size_m.webp" />
-            <p className="song-title">Pani Pani ho</p>
+            <img src={staticPath(musicDetail ? musicDetail.cover : "https://a10.gaanacdn.com/gn_img/albums/ZaP37RKDy7/P37OlNeX3D/size_m.webp")}/>
+            <p className="song-title">{ musicDetail ? musicDetail.title : "select music" } </p>
           </div>
-          <div className="user-action items-center">
+          <div className="user-action flex items-center">
             <CgHeart />
             <FaEllipsisV />
-            <div className="play-time">03/4.00</div>
+            <div className="play-time">{musicDetail ? musicDetail.duration : "00/00.00"}</div>
           </div>
-         
-          
         </div>
-        
+
         <div className="flex items-center player-control">
-         
           <li>
             <CgPlayTrackPrev />
-            <BiPlay />
+            { (state.isPlaying && !state.pause)  ? (
+                <PlayPauseCircle />
+            ) : (
+              <PlayCircle />
+            ) }
             <CgPlayTrackNext />
           </li>
         </div>
-        
+
         <div>
           <li>
-            <AiFillSound className="sound-icon" />
+            { state.mute ? (
+                <BsVolumeMute className="sound-icon" onClick={toggleMute} />
+                ) : (
+              <AiFillSound className="sound-icon" onClick={toggleMute} />
+              ) }
           </li>
         </div>
       </div>

@@ -8,7 +8,8 @@ export let dispatch: React.Dispatch<any>;
 // Provider in your app
 
 const sampleAppContext: AppContextInterface = {
-    auth: null
+    auth: null,
+    musicDetail: null
 };
 
 function reducer(state: AppContextInterface, action: { type: any; payload: any; }){
@@ -22,6 +23,13 @@ function reducer(state: AppContextInterface, action: { type: any; payload: any; 
             return {
                 ...state,
                 auth: user,
+            }
+            
+            
+           case ACTION_TYPES.SET_MUSIC_DETAIL:
+            return {
+                ...state,
+                musicDetail: action.payload,
             }
             
         default:

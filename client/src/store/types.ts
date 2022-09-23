@@ -1,3 +1,4 @@
 export enum ACTION_TYPES {
-    LOGIN = "LOGIN"
+    LOGIN = "LOGIN",
+    SET_MUSIC_DETAIL  = "SET_MUSIC_DETAIL"
 }
