@@ -66,13 +66,24 @@
   svg {
     cursor: pointer;
     color: #808080;
-    &:hover{
-      color: #ff3838;;
-    }
   }
-
-
-
-
 }
 
+
+.pause-icon, .play-icon{
+  width: 36px;
+  font-size: 20px;
+}
+.fav-icon{
+  font-size: 20px;
+  display: block;
+  &:hover{
+    color: var(--primary-color)
+  }
+}
+.music-time{
+  .second, .min, .hour{
+    color: #313131;
+    font-weight: 600;
+  }
+}

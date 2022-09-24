@@ -5,7 +5,7 @@ export enum AccountStatus{
   VERIFIYED= "VERIFIYED"
 }
 
-enum ROLE {
+export enum ROLE {
   ADMIN = "ADMIN",
   USER = "USER"
 }
