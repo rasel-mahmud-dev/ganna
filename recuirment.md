@@ -44,15 +44,25 @@ User can create their account and save to playlist.
 ### Models
 
 **Artist**
+- artistId
 - name
 - email
 - avatar
 - createdAt
+- updatedAt
 
-**AlbumId**
+
+**HitArtist** [view count of artist ]
+ - id
+ - artistId
+ - views
+
+
+**AlbumId** [song album]
 - name
 - cover
 - createdAt
+
 
 **CategoryAlbumId** 
 - name
@@ -61,35 +71,52 @@ User can create their account and save to playlist.
 
 
 **Song**
- - title
- - duration
- - categoryAlbum
- - albumId
- - artistId
- - createdAt
- - cover
+  - songId
+  - title
+  - duration
+  - categoryAlbumId
+  - albumId
+  - artistId
+  - createdAt
+  - updatedAt
+  - cover
+  - url
+  - genreId
 
-**User** 
-- username
-- email
-- password
-- avatar
-- role: Admin, User
-- createdAt
-- accountStatus
+**HitSong** [count play times song]
+ - id
+ - songId
+ - views
+
+**User**
+  - userId
+  - firstName
+  - lastName
+  - username
+  - email
+  - password
+  - createdAt
+  - updatedAt
+  - avatar
+  - role: Admin, User
+
 
 **Profile** 
 - userId
 - favoriteSinger: []
 
-**Playlist** 
+**Playlist**  [create playlist]
+- playlistId
 - name
 - userId
-- songIds = []
+- userId // null for admin created Playlist
+- songId = []
 
 **Favorites** 
+- favoriteId
 - userId
-- songIds = []
+- songId
+- createdAt
 
 
 ### Endpoint

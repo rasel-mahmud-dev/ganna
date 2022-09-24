@@ -6,15 +6,27 @@ export async function getAllFavoriteController(req: RequestWithAuth, res: Respon
     
     try{
         const sql = `
-            SELECT f.*, s.title, s.duration, s.cover, s.artistId, s.url
+            SELECT f.*, s.title, s.duration, s.cover, s.artistId, s.url,  a.name as artistName
                 FROM favorites f
                 JOIN songs s ON s.songId = f.songId
-                    WHERE userId = ${req.user.userId}
+                    JOIN artists a on JSON_CONTAINS(s.artistId, CAST(a.artistId as JSON))
+                        WHERE userId = ${req.user.userId}
         `
         
         const favorites = await Favorite.query<Favorite[]>(sql)
+        
         if(favorites) {
-            return res.status(200).json({favorites})
+            let uu: any = []
+            favorites.forEach((fav: any)=>{
+                let index =  uu.findIndex((u: any)=>u.songId === fav.songId );
+                if(index === -1) {
+                    uu.push(fav)
+                } else {
+                    uu[index].artists = [uu[index].artistName, fav.artistName]
+                }
+            })
+            
+            return res.status(200).json({favorites: uu})
         } else{
             next("Internal Error")
         }

@@ -54,7 +54,9 @@ const FavoriteMusic = () => {
                                         <p className="track ml-4">{fav.title}</p>
                                    </div>
                               </td>
-                               <td>    <p className="track">{fav.title}</p></td>
+                               <td>
+                                   <p className="track">{fav?.artists && fav?.artists.map((a: string)=> a + ", " )}</p>
+                               </td>
                                <td>
                                    <div className="track">
                                         {fav.duration }
