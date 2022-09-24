@@ -8,18 +8,15 @@ import useStore from "../../store/useStore";
 
 const FavoriteMusic = () => {
     
-    const [_, dispatch]  = useStore()
+    const [{favorites}, dispatch]  = useStore()
     
-    const [favorites, setFavorites] = useState([])
     
     useEffect(()=>{
-        api.get("/api/v1/favorite/all").then(({status, data})=>{
-            setFavorites(data.favorites)
-        })
+    
     }, [])
     
     
-    function handlePlayPrepare(song: any, list: any){
+    function handlePlayPrepare(song: any, index: number, list: any){
         let playlistName = "Favorites"
         
         dispatch({
@@ -27,6 +24,7 @@ const FavoriteMusic = () => {
             payload: {
                 items: list,
                 playlistName,
+                playIndex: index
             }
         })
     }
@@ -46,10 +44,10 @@ const FavoriteMusic = () => {
                     </tr>
                     </thead>
                     <tbody>
-                       { favorites.map((fav: any)=>(
+                       { favorites.map((fav: any, index: number)=>(
                            <tr className="tr">
                               <td>
-                                   <div className="flex items-center" onClick={()=>handlePlayPrepare(fav, favorites)}>
+                                   <div className="flex items-center" onClick={()=>handlePlayPrepare(fav,  index,favorites)}>
                                         <img src={staticPath(fav.cover)} />
                                         <p className="track ml-4">{fav.title}</p>
                                    </div>

@@ -19,6 +19,8 @@ import SongDetail from "./pages/songDetail/SongDetail";
 import LeftSidebar from "./components/leftSidebar/LeftSidebar";
 import {ACTION_TYPES} from "./store/types";
 import FavoriteMusic from "./pages/favoriteMusic/FavoriteMusic";
+import {fetchFavoriteListAction} from "./store/actions/songAction";
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -26,11 +28,13 @@ function App() {
   
   useEffect(()=>{
       loginWihToken(dispatch)
+    
+    fetchFavoriteListAction(dispatch)
+    
   }, [])
   
   
   function handleCloseSidebar(){
-    console.log("ASDDDDDDDDD")
     dispatch({
       type: ACTION_TYPES.TOGGLE_LEFT_SIDEBAR
     })

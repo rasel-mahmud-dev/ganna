@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
-import AppContext, {AppContextInterface} from "./AppContext";
-import {dispatch} from "./AppProvider";
+import AppContext from "./AppContext";
+import {AppContextInterface, dispatch} from "./AppProvider";
 
 
 function useStore(): [AppContextInterface, React.Dispatch<any>] {

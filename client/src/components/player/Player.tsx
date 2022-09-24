@@ -18,10 +18,10 @@ import api, {backend} from "../../axios";
 
 const Player = () => {
   
-  const [{musicDetail, player}, dispatch] = useStore();
+  const [{musicDetail, favorites, player}, dispatch] = useStore();
   
   
-  const [music, setMusic] = useState<HTMLAudioElement>()
+  let [music, setMusic] = useState<HTMLAudioElement>()
   
   let intervalRef = useRef()
   
@@ -31,7 +31,8 @@ const Player = () => {
     mute: false,
     volume: 1,
     pause: false,
-    currentTime: 0
+    currentTime: 0,
+    song: {}
   })
   
   
@@ -41,6 +42,7 @@ const Player = () => {
         if(music.duration <= music.currentTime){
           clearInterval(intervalRef.current)
         }
+        console.log("ASDSDSDSDSDSDSDSD")
         setState((prevState) => {
           return {
             ...prevState,
@@ -88,18 +90,21 @@ const Player = () => {
   
   
   useEffect(()=>{
+    
+    // music = document.createElement("audio")
+    music?.pause()
+    music?.remove()
+    
     if(player && player.items.length){
-      let firstMusic = player.items[0];
-      
-      console.log(firstMusic)
-      
-      if(firstMusic.url) {
-        const musicDir = `${backend}/songs/${firstMusic.url}`
+      let playSong = player.items[player.playIndex];
+      if(playSong.url) {
+        const musicDir = `${backend}/songs/${playSong.url}`
         let newMusic = new Audio(musicDir);
         setMusic(newMusic)
         newMusic.play()
         setState({
           ...state,
+          song: playSong,
           isPlaying: true,
           pause: false,
           currentTime: newMusic.currentTime
@@ -111,7 +116,7 @@ const Player = () => {
   
   // click music play icon to play
   function handlePlay(){
-    if(!musicDetail) return;
+    if(!state.song) return;
     let updateState = {...state}
  
     if(!music) {
@@ -200,31 +205,38 @@ const Player = () => {
     
     }
   }
+  const { song } = state
   
   const PlayCircle = ()=> <svg
   
-      className={`play-icon ${(musicDetail && musicDetail.url) ? "text-primary" : "" }`}
+      className={`play-icon ${(song && song.url) ? "text-primary" : "" }`}
                                onClick={handlePlay} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm115.7 272l-176 101c-15.8 8.8-35.7-2.5-35.7-21V152c0-18.4 19.8-29.8 35.7-21l176 107c16.4 9.2 16.4 32.9 0 42z"/></svg>
   
   const PlayPauseCircle = ()=> <svg
-      className={`pause-icon ${(musicDetail && musicDetail.url) ? "text-primary" : "" }`}
+      className={`pause-icon ${(song && song.url) ? "text-primary" : "" }`}
       onClick={handlePause}
       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm-16 328c0 8.8-7.2 16-16 16h-48c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16v160zm112 0c0 8.8-7.2 16-16 16h-48c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16v160z"/></svg>
   
   const time = parseTime(state.currentTime)
-    
+
+  
+  function isFavorites(songId: string){
+    return favorites.findIndex((f: any)=>f.songId === songId) !== -1
+  }
+  
+
   return (
     <div className="player-container">
       <div className="player-root">
         <div className="flex items-center  player-song-info">
           <div className="song-thumb">
-            <img src={staticPath(musicDetail ? musicDetail.cover : "https://a10.gaanacdn.com/gn_img/albums/ZaP37RKDy7/P37OlNeX3D/size_m.webp")}/>
-            <p className="song-title">{ musicDetail ? musicDetail.title : "select music" } </p>
+            <img src={staticPath(song ? song.cover : "https://a10.gaanacdn.com/gn_img/albums/ZaP37RKDy7/P37OlNeX3D/size_m.webp")}/>
+            <p className="song-title">{ song ? song.title : "select music" } </p>
           </div>
           <div className="user-action flex items-center">
-            <CgHeart className="fav-icon" onClick={()=> addToFavorite(true) } />
+            <CgHeart className={`fav-icon ${isFavorites(song.songId) ? "text-primary" : ""}`} onClick={()=> addToFavorite(true) } />
             <FaEllipsisV />
-            <div className="play-time">{musicDetail ?  (
+            <div className="play-time">{song ?  (
                 <div className="music-time">
          
                     <span className="hour">{time.h}</span>
@@ -235,8 +247,8 @@ const Player = () => {
                   <span  className="mx-1">:
                       <span className="second">{time.second < 10 ? "0"+time.second : time.second}</span>
                     </span>
-                    /
-                  {musicDetail.duration.toString().includes(".") ? musicDetail.duration : musicDetail.duration + ":00"}
+                    / { song?.duration }
+                  {/*{song && song?.duration.toString().includes(".") ? song.duration : song.duration + ":00"}*/}
                 </div>
             ) : "00/00.00"}</div>
           </div>

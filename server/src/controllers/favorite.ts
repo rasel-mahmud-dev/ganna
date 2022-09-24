@@ -20,9 +20,14 @@ export async function getAllFavoriteController(req: RequestWithAuth, res: Respon
             favorites.forEach((fav: any)=>{
                 let index =  uu.findIndex((u: any)=>u.songId === fav.songId );
                 if(index === -1) {
+                    fav.artists = [fav.artistName]
                     uu.push(fav)
                 } else {
-                    uu[index].artists = [uu[index].artistName, fav.artistName]
+                    if(uu[index].artists){
+                        uu[index].artists.push(fav.artistName)
+                    } else {
+                        uu[index].artists = [uu[index].artistName, fav.artistName]
+                    }
                 }
             })
             

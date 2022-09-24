@@ -1,34 +1,8 @@
 import {createContext} from "react";
-
-
-export interface AppContextInterface {
-    
-    auth: {
-        firstName: string;
-        lastName?: string;
-        avatar?: string;
-        email: string;
-        role?: string;
-    } | null
-    
-    musicDetail: null | object
-    isOpenLeftSidebar: boolean,
-    player: {
-        playlistName: string,
-        items: any[]
-    }
-}
+import {AppContextInterface} from "./AppProvider";
 
 
 
-const AppContext = createContext<AppContextInterface | null>({
-    auth: null,
-    musicDetail: null,
-    isOpenLeftSidebar: false,
-    player: {
-        playlistName: "",
-        items: []
-    }
-})
+const AppContext = createContext<AppContextInterface | null>(null)
 
 export default AppContext
