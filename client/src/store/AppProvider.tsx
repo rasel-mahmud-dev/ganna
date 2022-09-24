@@ -9,8 +9,14 @@ export let dispatch: React.Dispatch<any>;
 
 const sampleAppContext: AppContextInterface = {
     auth: null,
-    musicDetail: null
+    musicDetail: null,
+    isOpenLeftSidebar: false,
+    player: {
+        playlistName: "",
+        items: []
+    }
 };
+
 
 function reducer(state: AppContextInterface, action: { type: any; payload: any; }){
     
@@ -26,10 +32,26 @@ function reducer(state: AppContextInterface, action: { type: any; payload: any; 
             }
             
             
-           case ACTION_TYPES.SET_MUSIC_DETAIL:
+        case ACTION_TYPES.SET_MUSIC_DETAIL:
             return {
                 ...state,
                 musicDetail: action.payload,
+            }
+            
+        case ACTION_TYPES.TOGGLE_LEFT_SIDEBAR:
+            return {
+                ...state,
+                isOpenLeftSidebar: !state.isOpenLeftSidebar,
+            }
+            
+        case ACTION_TYPES.SET_PREPARE_PLAYLIST:
+            const {items, playlistName} = action.payload
+            return {
+                ...state,
+                player:  {
+                    playlistName,
+                    items
+                }
             }
             
         default:

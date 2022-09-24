@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 import useStore from "../../store/useStore";
 import staticPath from "../../utils/staticPath";
 import Dropdown from "../dropdown/Dropdown";
+import {ACTION_TYPES} from "../../store/types";
 
 const Navigation = () => {
   
@@ -17,16 +18,23 @@ const Navigation = () => {
     setOpenDropdown(item)
   }
   
+  function toggleLeftSidebar(){
+    dispatch({
+      type: ACTION_TYPES.TOGGLE_LEFT_SIDEBAR
+    })
+  }
+  
+  
   return (
     <div>
       <header className="navigation">
         <div className="container">
           <div className="main-nav">
             <div className="logo-menu">
-              <FaBars className="menu-bar" />
+              <FaBars className="menu-bar" onClick={toggleLeftSidebar} />
               <div className="logo">
                 <a className="flex" href="/">
-                  <svg width="87" height="22" viewBox="0 0 87 22">
+                  <svg width="87" height="22" viewBox="0 0 87 22" >
                     <g fill="none" fill-rule="evenodd">
                       <path
                         className="svg_color_brand"

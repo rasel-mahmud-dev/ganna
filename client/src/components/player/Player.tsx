@@ -18,7 +18,8 @@ import api, {backend} from "../../axios";
 
 const Player = () => {
   
-  const [{musicDetail}, dispatch] = useStore();
+  const [{musicDetail, player}, dispatch] = useStore();
+  
   
   const [music, setMusic] = useState<HTMLAudioElement>()
   
@@ -50,6 +51,7 @@ const Player = () => {
     }
   }
   
+  
   useEffect(()=>{
     if(music && state.isPlaying) {
       progressInterval()
@@ -75,14 +77,37 @@ const Player = () => {
     }
   }
   
+  
+  // useEffect(()=>{
+  //   if(musicDetail?.url) {
+  //     if(!music) {
+  //       initiateMusic()
+  //     }
+  //   }
+  // }, [musicDetail])
+  
+  
   useEffect(()=>{
-    if(musicDetail?.url) {
-      if(!music) {
-        initiateMusic()
+    if(player && player.items.length){
+      let firstMusic = player.items[0];
+      
+      console.log(firstMusic)
+      
+      if(firstMusic.url) {
+        const musicDir = `${backend}/songs/${firstMusic.url}`
+        let newMusic = new Audio(musicDir);
+        setMusic(newMusic)
+        newMusic.play()
+        setState({
+          ...state,
+          isPlaying: true,
+          pause: false,
+          currentTime: newMusic.currentTime
+        })
       }
     }
-  }, [musicDetail])
-
+  }, [player])
+  
   
   // click music play icon to play
   function handlePlay(){

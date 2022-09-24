@@ -1,4 +1,7 @@
-
+p,h1,h3,h2,h4{
+  padding: 0;
+  margin: 0;
+}
 .container{
   //max-width: 1200px;
   margin: auto;
@@ -9,6 +12,8 @@
   display: flex;
 }
 .mx-1{margin-left: 1px;margin-right: 1px;}
+.ml-4{margin-left: 4px}
+.mr-4{margin-right: 4px}
 .flex-col{flex-direction: column}
 .relative{position: relative}
 .items-center{align-items: center}
@@ -16,6 +21,8 @@
 .w-full{width: 100%}
 .flex-wrap{flex-wrap: wrap}
 .text-center{text-align: center}
+.text-start{text-align: start}
+.text-end{text-align: end}
 .border-b{border-bottom: 1px solid rgba(192, 192, 192, 0.71)
 }
 .text-primary{

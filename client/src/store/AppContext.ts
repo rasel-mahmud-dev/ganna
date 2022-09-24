@@ -12,13 +12,23 @@ export interface AppContextInterface {
     } | null
     
     musicDetail: null | object
+    isOpenLeftSidebar: boolean,
+    player: {
+        playlistName: string,
+        items: any[]
+    }
 }
 
 
 
 const AppContext = createContext<AppContextInterface | null>({
     auth: null,
-    musicDetail: null
+    musicDetail: null,
+    isOpenLeftSidebar: false,
+    player: {
+        playlistName: "",
+        items: []
+    }
 })
 
 export default AppContext

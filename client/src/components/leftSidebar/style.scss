@@ -1,0 +1,42 @@
+
+.left-sidebar__backdrop{
+  width: 100%;
+  height: 100vh;
+  background: rgba(49, 49, 49, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.left-sidebar{
+  width: 290px;
+  position: fixed;
+  top: 0px;
+  left: 0;
+  background: white;
+  height: 100vh;
+  box-shadow: 7px 0px 19px #2020205e;
+  z-index: 1001;
+  .border-b{
+    border-bottom-color: #cfcfcf6e;
+  }
+  .label{
+    font-size: 16px;
+    font-weight: 400;
+    margin-left: 8px;
+  }
+  .first-section{
+    padding: 10px 0 0 25px;
+    h4{
+      margin: 0;
+    }
+  }
+  .section{
+    padding: 25px 30px;
+    h4{
+      margin: 0;
+    }
+  }
+}

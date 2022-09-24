@@ -49,6 +49,27 @@ class Common{
         })
     }
     
+    // raw query
+    static query<T>(sql: string)  {
+        return new Promise<T | null>(async (resolve, reject) => {
+            let connection
+            try{
+                connection = await connectDatabase()
+                let [result]: any = await connection.query(sql)
+                if(result.length > 0){
+                    resolve(result)
+                } else {
+                    resolve(null)
+                }
+            } catch (ex){
+                reject(ex)
+                
+            } finally {
+                connection?.end()
+            }
+        })
+    }
+    
     // find one by any field
     static findOne<T>(valuesObj: {} | any, selectFields?: string)  {
         return new Promise<T | null>(async (resolve, reject) => {

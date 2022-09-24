@@ -6,15 +6,17 @@ import { ROLE } from "../models/User";
 
 const router = express.Router();
 
+
 // GET /api/v1/favorite/all
-router.get("/all", getAllFavoriteController)
+// @ts-ignore
+router.get("/all", auth([ROLE.USER, ROLE.ADMIN]), getAllFavoriteController)
 
 
 // POST /api/v1/favorite
 // router.post("/", auth([ROLE.USER, ROLE.ADMIN], addFavoriteController), (req, res,next)=>{
 
 // @ts-ignore
-router.post("/", auth([ROLE.USER, ROLE.USER]), addFavoriteController)
+router.post("/", auth([ROLE.USER, ROLE.ADMIN]), addFavoriteController)
 
 
 // DELETE /api/v1/favorite/id

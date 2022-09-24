@@ -16,18 +16,32 @@ import DashboardHome from "./pages/admin/DashboardHome";
 import Artists from "./pages/artists/Artists";
 import Footer from "./components/footer/Footer";
 import SongDetail from "./pages/songDetail/SongDetail";
+import LeftSidebar from "./components/leftSidebar/LeftSidebar";
+import {ACTION_TYPES} from "./store/types";
+import FavoriteMusic from "./pages/favoriteMusic/FavoriteMusic";
 
 function App() {
   const [count, setCount] = useState(0);
-    const [_, dispatch]  = useStore();
+    const [{isOpenLeftSidebar}, dispatch]  = useStore();
   
   useEffect(()=>{
       loginWihToken(dispatch)
   }, [])
   
+  
+  function handleCloseSidebar(){
+    console.log("ASDDDDDDDDD")
+    dispatch({
+      type: ACTION_TYPES.TOGGLE_LEFT_SIDEBAR
+    })
+  }
+  
   return (
     <div className="App">
       <Navigation />
+      
+      <LeftSidebar onClose={handleCloseSidebar} isOpenLeftSidebar={isOpenLeftSidebar} />
+      
       <Routes>
         
         <Route path="/auth/login" element={ <LoginPage />} />
@@ -41,6 +55,7 @@ function App() {
             <Route path="artist" element={<ArtistList />} />
           </Route>
           <Route path="/artists" element={<Artists />} />
+          <Route path="/favorite" element={<FavoriteMusic />} />
           <Route path="/song/:title" element={<SongDetail />} />
   
         </Routes>

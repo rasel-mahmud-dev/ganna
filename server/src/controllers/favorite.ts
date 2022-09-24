@@ -1,11 +1,18 @@
 import { NextFunction, Request, Response} from "express";
 import Favorite from "../models/Favorite";
+import {RequestWithAuth} from "../types";
 
-
-export async function getAllFavoriteController(req: Request, res: Response, next: NextFunction){
+export async function getAllFavoriteController(req: RequestWithAuth, res: Response, next: NextFunction){
     
     try{
-        const favorites = await Favorite.find<Favorite[]>()
+        const sql = `
+            SELECT f.*, s.title, s.duration, s.cover, s.artistId, s.url
+                FROM favorites f
+                JOIN songs s ON s.songId = f.songId
+                    WHERE userId = ${req.user.userId}
+        `
+        
+        const favorites = await Favorite.query<Favorite[]>(sql)
         if(favorites) {
             return res.status(200).json({favorites})
         } else{
@@ -15,7 +22,6 @@ export async function getAllFavoriteController(req: Request, res: Response, next
         next(ex)
     }
 }
-
 
 export async function addFavoriteController(req: Request, res: Response, next: NextFunction){
    
@@ -38,10 +44,6 @@ export async function addFavoriteController(req: Request, res: Response, next: N
         next(ex)
     }
 }
-
-
-
-
 
 export async function deleteFavoriteController(req: Request, res: Response, next: NextFunction){
     const { id } = req.params;
