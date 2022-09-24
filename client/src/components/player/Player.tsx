@@ -33,14 +33,21 @@ const Player = () => {
     currentTime: 0
   })
   
+  
   function progressInterval(){
-    intervalRef.current =  setInterval(() => {
-      setState({
-        ...state,
-        currentTime: music.currentTime
-      
-      })
-    }, 1000)
+    if(music) {
+      intervalRef.current = setInterval(() => {
+        if(music.duration <= music.currentTime){
+          clearInterval(intervalRef.current)
+        }
+        setState((prevState) => {
+          return {
+            ...prevState,
+            currentTime: music.currentTime
+          }
+        })
+      }, 1000)
+    }
   }
   
   useEffect(()=>{
@@ -61,7 +68,8 @@ const Player = () => {
       setState({
         ...state,
         isPlaying: true,
-        pause: false
+        pause: false,
+        currentTime: newMusic.currentTime
       })
       return newMusic
     }
@@ -82,36 +90,74 @@ const Player = () => {
     let updateState = {...state}
  
     if(!music) {
-  
-      let newMusic = initiateMusic()
-      if(newMusic) {
-        updateState.currentTime = newMusic.currentTime;
-      }
-   
+      initiateMusic()
     } else {
       music.play()
       updateState.currentTime = music.currentTime;
     }
-  
+    
+    clearInterval(intervalRef.current);
+    progressInterval();
+    
     updateState.isPlaying = true
     updateState.pause = false
     setState(updateState)
   }
   
+  function parseTime(count: number){
+    let h = 0;
+    let min = 0;
+    let second = 0
+    let remain = 0;
+    
+    if(count >= 3600){
   
-  function toggleMute(){
-    music.muted = !state.mute;
-    setState({...state, mute: !state.mute})
+      h = count / 3600;
+      remain = count % 3600;
+      
+      if(remain > 60){
+        // remain minutes
+        min = remain / 60
+        // remain second
+        remain = remain % 60;
+        second = remain;
+      } else {
+        second = remain;
+      }
+      
+    } else if(count >= 60){
+      // remain minutes
+      min = count / 60
+      console.log(min)
+      // remain second
+      remain = remain % 60;
+      second = remain;
+    } else {
+      second = count;
+    }
+    return {
+      second: Math.round(second),
+      min: Math.round(min),
+      h
+    }
   }
   
-  function togglePause(){
-    if(state.pause){
-      music?.play();
-    } else {
+  
+  function toggleMute(){
+    if(music) {
+      music.muted = !state.mute;
+      setState({...state, mute: !state.mute})
+    }
+  }
+  
+  function handlePause(){
+    let updateState = {...state}
+    if(music) {
       clearInterval(intervalRef.current);
+      updateState.pause = true
       music?.pause();
     }
-    setState({...state, pause: !state.pause})
+    setState(updateState)
   }
 
   const PlayCircle = ()=> <svg
@@ -119,13 +165,13 @@ const Player = () => {
       className={`${(musicDetail && musicDetail.url) ? "text-primary" : "" }`}
                                onClick={handlePlay} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm115.7 272l-176 101c-15.8 8.8-35.7-2.5-35.7-21V152c0-18.4 19.8-29.8 35.7-21l176 107c16.4 9.2 16.4 32.9 0 42z"/></svg>
   
-  
   const PlayPauseCircle = ()=> <svg
       style={{width: '25'}}
       className={`${(musicDetail && musicDetail.url) ? "text-primary" : "" }`}
-      onClick={togglePause}
+      onClick={handlePause}
       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm-16 328c0 8.8-7.2 16-16 16h-48c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16v160zm112 0c0 8.8-7.2 16-16 16h-48c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16v160z"/></svg>
   
+  const time = parseTime(state.currentTime)
     
   return (
     <div className="player-container">
@@ -138,7 +184,15 @@ const Player = () => {
           <div className="user-action flex items-center">
             <CgHeart />
             <FaEllipsisV />
-            <div className="play-time">{musicDetail ?  `${state.currentTime}/${musicDetail.duration}` : "00/00.00"}</div>
+            <div className="play-time">{musicDetail ?  (
+                <div>
+                  <span>{time.h}</span>
+                  <span>:{time.min < 10 ? "0"+time.min : time.min}</span>
+                  <span>:{time.second < 10 ? "0"+time.second : time.second}</span>
+                    /
+                  {musicDetail.duration.toString().includes(".") ? musicDetail.duration : musicDetail.duration + ":00"}
+                </div>
+            ) : "00/00.00"}</div>
           </div>
         </div>
 
