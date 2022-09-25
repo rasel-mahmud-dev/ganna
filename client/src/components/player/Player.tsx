@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {SyntheticEvent, useEffect, useRef, useState} from "react";
 
 import "./style.scss";
 import {
@@ -14,6 +14,7 @@ import {
 import useStore from "../../store/useStore";
 import staticPath from "../../utils/staticPath";
 import api, {backend} from "../../axios";
+import {ACTION_TYPES} from "../../store/types";
 
 
 const Player = () => {
@@ -29,6 +30,7 @@ const Player = () => {
   const [state, setState] = useState({
     isPlaying: false,
     mute: false,
+    duration: 0,
     volume: 1,
     pause: false,
     currentTime: 0,
@@ -42,7 +44,7 @@ const Player = () => {
         if(music.duration <= music.currentTime){
           clearInterval(intervalRef.current)
         }
-        console.log("ASDSDSDSDSDSDSDSD")
+
         setState((prevState) => {
           return {
             ...prevState,
@@ -68,12 +70,14 @@ const Player = () => {
       const musicDir = `${backend}/songs/${musicDetail.url}`
       let newMusic = new Audio(musicDir);
       setMusic(newMusic)
-      newMusic.play()
-      setState({
-        ...state,
-        isPlaying: true,
-        pause: false,
-        currentTime: newMusic.currentTime
+      newMusic.play().then((_)=>{
+        setState({
+          ...state,
+          isPlaying: true,
+          pause: false,
+          duration: newMusic.duration,
+          currentTime: newMusic.currentTime
+        })
       })
       return newMusic
     }
@@ -101,17 +105,54 @@ const Player = () => {
         const musicDir = `${backend}/songs/${playSong.url}`
         let newMusic = new Audio(musicDir);
         setMusic(newMusic)
-        newMusic.play()
-        setState({
-          ...state,
-          song: playSong,
-          isPlaying: true,
-          pause: false,
-          currentTime: newMusic.currentTime
+        newMusic.play().then(r=>{
+          setState({
+            ...state,
+            song: playSong,
+            isPlaying: true,
+            duration: newMusic.duration,
+            pause: false,
+            currentTime: newMusic.currentTime
+          })
+        }).catch(ex=>{
+        
         })
+        
       }
     }
   }, [player])
+  
+  
+  // handler next song
+  function playNextSong(){
+    let nextIndex = player.playIndex + 1
+    if(nextIndex > (player.items.length - 1)){
+      nextIndex = 0
+    }
+    dispatch({
+      type: ACTION_TYPES.SET_PREPARE_PLAYLIST,
+      payload: {
+        ...player,
+        playIndex: nextIndex
+      }
+    })
+  }
+  
+  
+  // handle previous song
+  function playPrevSong(){
+    let prevIndex = player.playIndex - 1
+    if(prevIndex <= 0){
+      prevIndex = 0
+    }
+    dispatch({
+      type: ACTION_TYPES.SET_PREPARE_PLAYLIST,
+      payload: {
+        ...player,
+        playIndex: prevIndex
+      }
+    })
+  }
   
   
   // click music play icon to play
@@ -128,7 +169,6 @@ const Player = () => {
     
     clearInterval(intervalRef.current);
     progressInterval();
-    
     updateState.isPlaying = true
     updateState.pause = false
     setState(updateState)
@@ -224,13 +264,45 @@ const Player = () => {
     return favorites.findIndex((f: any)=>f.songId === songId) !== -1
   }
   
+  function progressWidth(){
+    let percent = (state.currentTime / state.duration) * 100;
+    return Math.round(percent) + "%";
+  }
+  
+  function seekPosition(e: any){
+    clearInterval(intervalRef.current)
+    // console.log(px1 , state.duration)
+    // 1200 = 5
+    // 1    = 5/1200
+    // 60   = (5/1200)*60
+    
+    let a = (e.target.offsetWidth / e.pageX)
+    let min =  (4 / a ) * 60
+    if(music) {
+      music.currentTime = min
+      setState({
+        ...state,
+        currentTime: min
+      })
+    }
+  }
+  
 
+  
   return (
     <div className="player-container">
+      
+    
+      
       <div className="player-root">
+        
+          <div onClick={seekPosition} className="seekbar">
+            <div className="seekbar_progress" style={{width: progressWidth()}}></div>
+          </div>
+        
         <div className="flex items-center  player-song-info">
           <div className="song-thumb">
-            <img src={staticPath(song ? song.cover : "https://a10.gaanacdn.com/gn_img/albums/ZaP37RKDy7/P37OlNeX3D/size_m.webp")}/>
+            <img src={staticPath(song ? song.cover : "https://a10.gaanacdn.com/gn_img/albums/ZaP37RKDy7/P37OlNeX3D/size_m.webp")} alt="" />
             <p className="song-title">{ song ? song.title : "select music" } </p>
           </div>
           <div className="user-action flex items-center">
@@ -256,13 +328,13 @@ const Player = () => {
 
         <div className="flex items-center player-control">
           <li>
-            <CgPlayTrackPrev />
+            <CgPlayTrackPrev onClick={playPrevSong} />
             { (state.isPlaying && !state.pause)  ? (
                 <PlayPauseCircle />
             ) : (
               <PlayCircle />
             ) }
-            <CgPlayTrackNext />
+            <CgPlayTrackNext onClick={playNextSong} />
           </li>
         </div>
 

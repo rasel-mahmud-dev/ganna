@@ -8,7 +8,7 @@ import useStore from "../../store/useStore";
 
 const FavoriteMusic = () => {
     
-    const [{favorites}, dispatch]  = useStore()
+    const [{favorites, player}, dispatch]  = useStore()
     
     
     useEffect(()=>{
@@ -45,7 +45,7 @@ const FavoriteMusic = () => {
                     </thead>
                     <tbody>
                        { favorites.map((fav: any, index: number)=>(
-                           <tr className="tr">
+                           <tr className={`tr  ${player.playlistName === "Favorites" && player.playIndex === index ? "active-item" : ""} `}>
                               <td>
                                    <div className="flex items-center" onClick={()=>handlePlayPrepare(fav,  index,favorites)}>
                                         <img src={staticPath(fav.cover)} />

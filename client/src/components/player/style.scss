@@ -10,13 +10,40 @@
 
 .player-root{
   width: 100%;
-  padding: 0 20px;
+  padding: 0 0px;
   box-sizing: border-box;
   border-top: 1px solid #c7c7c7;
   box-shadow: 1px 3px 14px 0 #8b8b8bd9;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  .seekbar{
+    height: 3px;
+    width: 100%;
+    background: #e3e3e3;
+    position: absolute;
+    top: 1px;
+    cursor: pointer;
+    &_progress{
+      background: var(--primary-color);
+      height: 3px;
+      width: 0;
+      position: relative;
+      transition: width 0.2s linear;
+      &:after{
+        content: "";
+        width: 10px;
+        height: 10px;
+        background: var(--primary-color);
+        border-radius: 10px;
+        position: absolute;
+        right: 0%;
+        top: 50%;
+        transform: translate(0%, -50%);
+      }
+    }
+  }
 
   .player-song-info{
     flex: 3;
