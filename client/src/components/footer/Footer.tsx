@@ -1,5 +1,6 @@
 import React from "react";
 import "./style.scss";
+import {Link} from "react-router-dom";
 
 const Footer = () => {
   const sections = [
@@ -37,21 +38,21 @@ const Footer = () => {
     },
     {
       Artists: [
-        "Arijit Singh",
-        "Neha Kakkar",
-        "Honey Singh",
-        "Atif Aslam",
-        "A R Rahman",
-        "Lata Mangeshkar",
-        "Kishore Kumar",
-        "Armaan Malik",
-        "Sunidhi Chauhan",
-        "Nusrat Fateh Ali Khan",
-        "Mohammed Rafi",
-        "Guru Randhawa",
-        "Justin Bieber",
-        "BTS",
-        "View all",
+        {to: "/artists/", name: "Arijit Singh"},
+        {to: "/artists/", name: "Neha Kakkar"},
+        {to: "/artists/", name: "Honey Singh"},
+        {to: "/artists/", name: "Atif Aslam"},
+        {to: "/artists/", name: "A R Rahman"},
+        {to: "/artists/", name: "Lata Mangeshkar"},
+        {to: "/artists/", name: "Kishore Kumar"},
+        {to: "/artists/", name: "Armaan Malik"},
+        {to: "/artists/", name: "Sunidhi Chauhan"},
+        {to: "/artists/", name: "Nusrat Fateh Ali Khan"},
+        {to: "/artists/", name: "Mohammed Rafi"},
+        {to: "/artists/", name: "Guru Randhawa"},
+        {to: "/artists/", name: "Justin Bieber"},
+        {to: "/artists/", name: "BTS"},
+        {to: "/artists/", name: "View all"},
       ],
     },
     {
@@ -111,7 +112,7 @@ const Footer = () => {
                   <span className="list-label">{key}</span>
                   {section[key]?.map((item) => (
                     <div>
-                      <span className="list-item">{item}</span>
+                      <span className="list-item">{ key === "Artists" ? <Link to={item.to + item.name}>{item.name}</Link> : item}</span>
                     </div>
                   ))}
                 </div>

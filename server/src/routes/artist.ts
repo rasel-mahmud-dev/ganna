@@ -3,7 +3,7 @@ import express from "express"
 import {
     addArtistController,
     deleteArtistController,
-    getAllArtistController,
+    getAllArtistController, getArtistDetailsController,
     updateArtistController
 } from "../controllers/artist";
 
@@ -12,6 +12,9 @@ const router = express.Router()
 
 // GET /api/v1/artists
 router.get("/", getAllArtistController)
+
+
+router.get("/details/:name", getArtistDetailsController)
 
 
 

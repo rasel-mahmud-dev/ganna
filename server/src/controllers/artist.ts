@@ -1,7 +1,6 @@
-import {json, NextFunction, Request, Response} from "express";
+import { NextFunction, Request, Response} from "express";
 import Artist from "../models/Artist";
 import Song from "../models/Song";
-import songValidator from "../validator/song";
 import artistValidator from "../validator/artist";
 
 
@@ -11,6 +10,37 @@ export async function getAllArtistController(req: Request, res: Response, next: 
         const artists = await Artist.find<Artist[]>()
         if(artists) {
             return res.status(200).json({artists: artists})
+        } else{
+            next("Internal Error")
+        }
+    } catch (ex){
+        next(ex)
+    }
+}
+
+export async function getArtistDetailsController(req: Request, res: Response, next: NextFunction){
+    
+    const {name} = req.params
+    
+    try {
+        let sql = `SELECT * FROM artists WHERE name = "${name}"`
+        let  artist: any = await Artist.query(sql);
+        if(!artist || !artist.length){
+            return res.status(404).json({message: "Artist not found"})
+        }
+        
+        artist = artist[0]
+        
+        sql = `SELECT * FROM songs s
+             JOIN artists a on JSON_CONTAINS(s.artistId, CAST(a.artistId as JSON))
+                WHERE JSON_CONTAINS(s.artistId, CAST(${artist.artistId} as JSON))`
+        
+        const songs = await Song.query(sql)
+        
+        
+        
+        if(songs) {
+            return res.status(200).json({songs: songs})
         } else{
             next("Internal Error")
         }

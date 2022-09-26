@@ -266,28 +266,30 @@ const Player = () => {
   
   function progressWidth(){
     let percent = (state.currentTime / state.duration) * 100;
-    return Math.round(percent) + "%";
+    return percent + "%";
   }
   
   function seekPosition(e: any){
     clearInterval(intervalRef.current)
     // console.log(px1 , state.duration)
-    // 1200 = 5
-    // 1    = 5/1200
-    // 60   = (5/1200)*60
+    // 1200px = 5s
+    // 1px    = 5/1200s/px
+    // 600px   = (5/1200)*600s
     
-    let a = (e.target.offsetWidth / e.pageX)
-    let min =  (4 / a ) * 60
+    let onePx = (state.duration / e.target.offsetWidth);
+    let s = (onePx * e.pageX)
+    
     if(music) {
-      music.currentTime = min
+      music.currentTime = s
       setState({
         ...state,
-        currentTime: min
+        currentTime: s
       })
+      progressInterval()
     }
   }
   
-
+  
   
   return (
     <div className="player-container">

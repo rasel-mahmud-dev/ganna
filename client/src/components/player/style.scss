@@ -30,7 +30,7 @@
       height: 3px;
       width: 0;
       position: relative;
-      transition: width 0.2s linear;
+      transition: width .2s linear;
       &:after{
         content: "";
         width: 10px;
@@ -38,7 +38,7 @@
         background: var(--primary-color);
         border-radius: 10px;
         position: absolute;
-        right: 0%;
+        right: 0;
         top: 50%;
         transform: translate(0%, -50%);
       }

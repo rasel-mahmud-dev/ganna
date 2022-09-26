@@ -20,6 +20,7 @@ import LeftSidebar from "./components/leftSidebar/LeftSidebar";
 import {ACTION_TYPES} from "./store/types";
 import FavoriteMusic from "./pages/favoriteMusic/FavoriteMusic";
 import {fetchFavoriteListAction} from "./store/actions/songAction";
+import Details from "./pages/artists/Details";
 
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
             <Route path="artist" element={<ArtistList />} />
           </Route>
           <Route path="/artists" element={<Artists />} />
+          <Route path="/artists/:name" element={<Details />} />
           <Route path="/favorite" element={<FavoriteMusic />} />
           <Route path="/song/:title" element={<SongDetail />} />
   
