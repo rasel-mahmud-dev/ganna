@@ -31,16 +31,36 @@ export async function getArtistDetailsController(req: Request, res: Response, ne
         
         artist = artist[0]
         
-        sql = `SELECT * FROM songs s
+        sql = `SELECT s.*, a.name as artistName FROM songs s
+
              JOIN artists a on JSON_CONTAINS(s.artistId, CAST(a.artistId as JSON))
+             
                 WHERE JSON_CONTAINS(s.artistId, CAST(${artist.artistId} as JSON))`
         
-        const songs = await Song.query(sql)
+        const songs: any = await Song.query(sql)
+        let uu: any = []
         
         
+        if(songs){
+            songs.forEach((song: any)=>{
+                let index =  uu.findIndex((u: any)=>u.songId === song.songId );
         
-        if(songs) {
-            return res.status(200).json({songs: songs})
+                if(index === -1) {
+                    song.artists = [song.artistName]
+                    uu.push(song)
+                   
+                } else {
+                    if(uu[index].artists){
+                        uu[index].artists.push(song.artistName)
+                    } else {
+                        uu[index].artists = [uu[index].artistName, song.artistName]
+                    }
+                }
+            })
+        }
+        
+        if(artist) {
+            return res.status(200).json({songs: uu, artist: artist})
         } else{
             next("Internal Error")
         }

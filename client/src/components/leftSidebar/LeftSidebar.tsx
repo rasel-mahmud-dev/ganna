@@ -15,7 +15,7 @@ const LeftSidebar = (props) => {
         }
     }
   
-  return isOpenLeftSidebar ? (
+  return  (
     <div>
       <div className="left-sidebar__backdrop" onClick={clickOnBackdrop}></div>
       <div className="left-sidebar">
@@ -42,7 +42,7 @@ const LeftSidebar = (props) => {
           
       </div>
     </div>
-  ) : "";
+  )
 };
 
 export default LeftSidebar;

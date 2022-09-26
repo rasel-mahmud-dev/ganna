@@ -13,6 +13,7 @@ p,h1,h3,h2,h4{
 }
 .mx-1{margin-left: 1px;margin-right: 1px;}
 .ml-4{margin-left: 4px}
+.mt-10{margin-top: 50px}
 .mr-4{margin-right: 4px}
 .flex-col{flex-direction: column}
 .relative{position: relative}
@@ -36,6 +37,13 @@ li, ul{
   padding: 0;
   margin: 0;
   list-style: none;
+}
+
+.app-root{
+
+}
+.app-content{
+  margin-left: 290px
 }
 
 .item-category{

@@ -1,5 +1,5 @@
 
-.left-sidebar__backdrop{
+.left-sidebar__backdrop__{
   width: 100%;
   height: 100vh;
   background: rgba(49, 49, 49, 0.6);
@@ -17,7 +17,7 @@
   left: 0;
   background: white;
   height: 100vh;
-  box-shadow: 7px 0px 19px #2020205e;
+  //box-shadow: 7px 0px 19px #2020205e;
   z-index: 1001;
   .border-b{
     border-bottom-color: #cfcfcf6e;

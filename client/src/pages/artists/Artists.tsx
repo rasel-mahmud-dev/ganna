@@ -4,6 +4,7 @@ import api from "../../axios";
 import staticPath from "../../utils/staticPath";
 
 import "./style.scss"
+import {Link} from "react-router-dom";
 
 const Artists = () => {
     
@@ -35,7 +36,6 @@ const Artists = () => {
     }
     
     
-    
     return (
         <div className="container">
       
@@ -43,7 +43,8 @@ const Artists = () => {
      
           <div className="artist-list flex flex-wrap">
             {artist.map((ar: any) => (
-                <div className="artist-item flex justify-between flex-col items-center">
+                <Link to={`/artists/${ar.name}`}>
+                    <div className="artist-item flex justify-between flex-col items-center">
                   <div className="">
                     <div className="lazy artist-image">
                         <img className="w-full" data-source={staticPath(ar.avatar)} src="/bitmap.png" alt=""/>
@@ -53,6 +54,7 @@ const Artists = () => {
                     <h4>{ar.name}</h4>
                   </div>
                 </div>
+                </Link>
             ))}
           </div>
       
