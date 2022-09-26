@@ -1,0 +1,6 @@
+@mixin getDown($px){
+  @media (max-width: $px){
+    @content;
+  }
+}
+

@@ -21,18 +21,22 @@ export interface AppContextInterface {
     playlistName: string;
     items: any[];
     playIndex: number;
+    isPlaying: boolean
   };
   favorites: any[]
+  isPlay: boolean
 }
 
 const sampleAppContext: AppContextInterface = {
   auth: null,
   musicDetail: null,
   isOpenLeftSidebar: false,
+  isPlay: false,
   player: {
     playlistName: "",
     items: [],
     playIndex: 0,
+    isPlaying: false
   },
   favorites: []
 };
@@ -64,10 +68,20 @@ function reducer(
         isOpenLeftSidebar: !state.isOpenLeftSidebar,
       };
 
+    case ACTION_TYPES.SET_PLAYER_SLATS:
+      return {
+        ...state,
+        isPlay: action.payload.isPlay
+      };
+
     case ACTION_TYPES.SET_PREPARE_PLAYLIST:
       return {
         ...state,
-        player: action.payload,
+        isPlay: true,
+        player: {
+          ...state.player,
+          ...action.payload
+        },
       };
 
     case ACTION_TYPES.FETCH_FAVORITES_SONG:

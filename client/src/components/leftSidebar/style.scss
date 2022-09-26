@@ -1,3 +1,4 @@
+@import "src/sass/-mixin";
 
 .left-sidebar__backdrop__{
   width: 100%;
@@ -13,12 +14,18 @@
 .left-sidebar{
   width: 290px;
   position: fixed;
-  top: 0px;
+  top: 54px;
   left: 0;
   background: white;
   height: 100vh;
-  //box-shadow: 7px 0px 19px #2020205e;
+  //box-shadow: 7px 0px 19px #
   z-index: 1001;
+
+
+  @include getDown(700px){
+    display: none;
+  }
+
   .border-b{
     border-bottom-color: #cfcfcf6e;
   }

@@ -19,6 +19,8 @@ import {ACTION_TYPES} from "../../store/types";
 
 const Player = () => {
   
+  
+  
   const [{musicDetail, favorites, player}, dispatch] = useStore();
   
   
@@ -59,11 +61,48 @@ const Player = () => {
   useEffect(()=>{
     if(music && state.isPlaying) {
       progressInterval()
+     
     }
     return ()=> clearInterval(intervalRef.current)
     
   }, [state.isPlaying])
   
+  
+  useEffect(()=>{
+    
+    let isPlaying = false
+    
+    if(state.isPlaying && !state.pause) {
+      isPlaying = true
+    }
+    
+    if(state.pause) {
+      dispatch({
+        type: ACTION_TYPES.SET_PLAYER_SLATS,
+        payload: {
+          isPlay: false
+        }
+      })
+    } else if(state.isPlaying && !state.pause){
+      dispatch({
+        type: ACTION_TYPES.SET_PLAYER_SLATS,
+        payload: {
+          isPlay: true
+        }
+      })
+    }
+    
+    // dispatch({
+    //   type: ACTION_TYPES.SET_PREPARE_PLAYLIST,
+    //   payload: {
+    //     isPlaying: isPlaying
+    //   }
+    // })
+
+    
+  }, [state.pause])
+  
+
   
   function initiateMusic(){
     if(musicDetail.url) {
@@ -76,21 +115,12 @@ const Player = () => {
           isPlaying: true,
           pause: false,
           duration: newMusic.duration,
-          currentTime: newMusic.currentTime
+          currentTime: 0
         })
       })
       return newMusic
     }
   }
-  
-  
-  // useEffect(()=>{
-  //   if(musicDetail?.url) {
-  //     if(!music) {
-  //       initiateMusic()
-  //     }
-  //   }
-  // }, [musicDetail])
   
   
   useEffect(()=>{
@@ -106,13 +136,14 @@ const Player = () => {
         let newMusic = new Audio(musicDir);
         setMusic(newMusic)
         newMusic.play().then(r=>{
+          newMusic.currentTime = 0;
           setState({
             ...state,
             song: playSong,
             isPlaying: true,
             duration: newMusic.duration,
             pause: false,
-            currentTime: newMusic.currentTime
+            currentTime: 0
           })
         }).catch(ex=>{
         
@@ -294,7 +325,6 @@ const Player = () => {
   return (
     <div className="player-container">
       
-    
       
       <div className="player-root">
         

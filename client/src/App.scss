@@ -1,3 +1,5 @@
+@import "src/sass/-mixin";
+
 p,h1,h3,h2,h4{
   padding: 0;
   margin: 0;
@@ -6,6 +8,9 @@ p,h1,h3,h2,h4{
   //max-width: 1200px;
   margin: auto;
   padding: 0 50px;
+  @include getDown(700px){
+    padding: 0 10px;
+  }
 }
 
 .flex{
@@ -14,7 +19,9 @@ p,h1,h3,h2,h4{
 .mx-1{margin-left: 1px;margin-right: 1px;}
 .ml-4{margin-left: 4px}
 .mt-10{margin-top: 50px}
+.mt-1{margin-top: 5px}
 .mr-4{margin-right: 4px}
+.mr-1{margin-right: 5px}
 .flex-col{flex-direction: column}
 .relative{position: relative}
 .items-center{align-items: center}
@@ -43,7 +50,26 @@ li, ul{
 
 }
 .app-content{
-  margin-left: 290px
+  margin-left: 290px;
+  @include getDown(700px){
+    margin-left: 0;
+  }
+}
+
+.circle-icon{
+  padding: 8px;
+
+  border-radius: 50%;
+  display: inline-block;
+  color: #484848;
+  background: rgba(217, 217, 217, 0.86);
+  svg{display: flex}
+  cursor: pointer;
+
+  &:hover{
+    color: #634cff;
+    background: rgba(99, 76, 255, 0.25)
+  }
 }
 
 .item-category{
@@ -116,6 +142,10 @@ li, ul{
 .btn-primary{
   background: var(--primary-color);
   color: white;
+  transition: background-color .2s;
+  &:hover{
+    background: #6250e7;
+  }
 }
 
 

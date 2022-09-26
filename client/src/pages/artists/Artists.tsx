@@ -13,19 +13,27 @@ const Artists = () => {
     useEffect(() => {
         api.get("api/v1/artists").then(({ data, status }) => {
             if (status === 200) {
-                observationHandler()
                 setArtist(data.artists);
             }
         });
     }, []);
     
+    useEffect(()=>{
+        if(artist && artist.length){
+            observationHandler()
+        }
+    }, [artist])
+    
+    
     function observationHandler(){
         const images = document.querySelectorAll(".lazy")
+        
         let lazyImageObserver = new IntersectionObserver(function (entries, observer){
             entries.forEach(entry=>{
                 if (entry.isIntersecting){
                     entry.target.classList.add("lazy-loaded")
                     const img = entry.target.children[0] as HTMLImageElement
+                    
                     img.setAttribute("src", img.dataset.source ? img.dataset.source : "")
                     img.removeAttribute("data-source")
                 }

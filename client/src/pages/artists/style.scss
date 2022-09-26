@@ -1,3 +1,5 @@
+@import "src/sass/-mixin";
+
 .artist-list{
   column-gap: 20px;
   row-gap: 20px;
@@ -11,4 +13,83 @@
     font-size: 14px;
     margin-top: 5px;
   }
+  .lazy{
+    img {
+      width: 40px;
+    }
+  }
+  .lazy-loaded{
+    img {
+      width: 100%;
+    }
+  }
+}
+
+.artist-detail{
+
+  .artist-detail-info{
+    @include getDown(700px){
+      flex-direction: column;
+      .artist-photo{
+        display: flex;justify-content: center;
+      }
+      .artist-meta{
+        display: flex;
+        justify-content: center;
+      }
+    }
+
+  }
+
+  .artist-photo{
+    margin-right: 10px;
+    img{
+
+    }
+  }
+
+  .artist-name{
+    font-size: 16px;
+    @include getDown(700px){
+      text-align: center;
+      margin-top: 20px;
+      margin-bottom: 5px;
+    }
+  }
+  .artist-desc{
+    font-size: 14px;
+    color: rgba(52, 52, 52, 0.73);
+    @include getDown(700px){
+      text-align: center;
+    }
+  }
+
+  .artist-meta{
+    margin-top: 20px;
+    column-gap: 30px;
+    .artist-meta-span {
+      h4 {
+        color: #737373;
+        font-size: 15px;
+        margin-left: 5px;
+      }
+
+      svg {
+        color: #634cff;
+      }
+      &:nth-child(1){
+        svg{
+          color: #ff3352;
+        }
+      }
+    }
+  }
+
+  .play-all-btn{
+    padding: 10px 100px;
+    margin-top: 15px;
+    border-radius: 50px;
+    font-size: 15px;
+  }
+
 }
