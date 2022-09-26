@@ -24,7 +24,8 @@ export interface AppContextInterface {
     isPlaying: boolean
   };
   favorites: any[]
-  isPlay: boolean
+  isPlay: boolean,
+  alertMessage?: string
 }
 
 const sampleAppContext: AppContextInterface = {
@@ -38,6 +39,7 @@ const sampleAppContext: AppContextInterface = {
     playIndex: 0,
     isPlaying: false
   },
+  alertMessage: "",
   favorites: []
 };
 
@@ -72,6 +74,12 @@ function reducer(
       return {
         ...state,
         isPlay: action.payload.isPlay
+      };
+
+    case ACTION_TYPES.SET_ALERT_MESSAGE:
+      return {
+        ...state,
+        alertMessage: action.payload
       };
 
     case ACTION_TYPES.SET_PREPARE_PLAYLIST:

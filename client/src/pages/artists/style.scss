@@ -93,3 +93,33 @@
   }
 
 }
+
+.cover-root{
+  width: 80px;
+  height: 80px;
+  background-color: red;
+  .icon-in-cover{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  img{
+    width: 100%;
+  }
+  .circle-icon {
+    opacity: 0;
+    background-color: white;
+    //box-shadow: 0 0 17px 12px #2a2a2ab8;
+    svg{
+      color: #0e0e0e;
+    }
+  }
+
+  &:hover{
+    .circle-icon{
+      opacity: 1;
+    }
+  }
+}
+

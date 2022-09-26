@@ -21,10 +21,11 @@ import { ACTION_TYPES } from "./store/types";
 import FavoriteMusic from "./pages/favoriteMusic/FavoriteMusic";
 import { fetchFavoriteListAction } from "./store/actions/songAction";
 import Details from "./pages/artists/Details";
+import Alert from "./components/alert/Alert";
 
 function App() {
   const [count, setCount] = useState(0);
-  const [{ isOpenLeftSidebar }, dispatch] = useStore();
+  const [{ isOpenLeftSidebar, alertMessage }, dispatch] = useStore();
 
   useEffect(() => {
     loginWihToken(dispatch);
@@ -40,6 +41,8 @@ function App() {
 
   return (
     <div className="App">
+      
+      { alertMessage && <Alert message={alertMessage}  /> }
       <Navigation />
 
       <div className="app-root">

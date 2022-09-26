@@ -70,12 +70,7 @@ const Player = () => {
   
   useEffect(()=>{
     
-    let isPlaying = false
-    
-    if(state.isPlaying && !state.pause) {
-      isPlaying = true
-    }
-    
+
     if(state.pause) {
       dispatch({
         type: ACTION_TYPES.SET_PLAYER_SLATS,
@@ -91,15 +86,6 @@ const Player = () => {
         }
       })
     }
-    
-    // dispatch({
-    //   type: ACTION_TYPES.SET_PREPARE_PLAYLIST,
-    //   payload: {
-    //     isPlaying: isPlaying
-    //   }
-    // })
-
-    
   }, [state.pause])
   
 
@@ -146,7 +132,20 @@ const Player = () => {
             currentTime: 0
           })
         }).catch(ex=>{
-        
+          dispatch({
+            type: ACTION_TYPES.SET_ALERT_MESSAGE,
+            payload: ex.message
+          })
+  
+          setState({
+            ...state,
+            song: playSong,
+            isPlaying: false,
+            duration: 0,
+            pause: false,
+            currentTime: 0
+          })
+          
         })
         
       }

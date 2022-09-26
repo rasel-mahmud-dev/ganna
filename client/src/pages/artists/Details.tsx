@@ -29,13 +29,13 @@ const Details = (props) => {
     }, [params.name])
     
     
-    function togglePlaySong(){
+    function togglePlaySong(index?: number){
         dispatch({
             type: ACTION_TYPES.SET_PREPARE_PLAYLIST,
             payload: {
                 playlistName: "Artist Song list",
                 items: artistDetail.songs,
-                playIndex: 0,
+                playIndex: index ? index : 0,
             }
         })
     }
@@ -72,7 +72,7 @@ const Details = (props) => {
                                 
                             </div>
                             
-                            <button onClick={togglePlaySong} className="btn btn-primary play-all-btn flex items-center">
+                            <button onClick={()=>togglePlaySong()} className="btn btn-primary play-all-btn flex items-center">
                                 { isPlay ? (
                                     <>
                                         <FaPause className="mr-1" />
@@ -102,11 +102,16 @@ const Details = (props) => {
                             </tr>
                             </thead>
                             <tbody>
-                                { artistDetail.songs.map(song=>(
+                                { artistDetail.songs.map((song: any, index: number)=>(
                                     <tr>
                                         <td>
                                             <div className="flex items-center">
-                                                <img src={staticPath(song.cover)} alt=""/>
+                                                <div className="relative cover-root">
+                                                    <img src={staticPath(song.cover)} alt=""/>
+                                                    <div className="circle-icon icon-in-cover" onClick={()=>togglePlaySong(index)}>
+                                                        <FaPlay />
+                                                    </div>
+                                                </div>
                                                 <span>{song.title}</span>
                                             </div>
                                         </td>
