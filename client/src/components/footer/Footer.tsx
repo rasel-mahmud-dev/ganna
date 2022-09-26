@@ -100,11 +100,11 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="container">
-        <h1 className="text-center title">Bas Bajna Chahiye Gaana</h1>
+        <h1 className="text-center title mt-10">Bas Bajna Chahiye Gaana</h1>
         <p className="text-center desc">Gaana is the one-stop solution for all your music needs. Gaana offers you free, unlimited access to over 30 million Hindi Songs, Bollywood Music, English MP3 songs, Regional Music & Mirchi Play.</p>
         <div className="border-b"></div>
-        <h4 className="text-center">Quicklinks</h4>
-        <div className="footer-category-list">
+        
+        <div className="footer-category-list mt-5" >
           {sections.map((section) => (
             <div className="flex">
               {Object.keys(section).map((key) => (
@@ -120,9 +120,6 @@ const Footer = () => {
             </div>
           ))}
         </div>
-
-        <h1>Quicklinks</h1>
-   
       </div>
     </footer>
   );

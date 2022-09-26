@@ -70,12 +70,14 @@ const HomePage = () => {
                 return (
                     <div className="flex gap-25 flex-wrap">
                         {data && data.map((a)=>(
-                            <div className="artist-item">
+                            <Link to={`artists/${a.name}`}>
+                                <div className="artist-item">
                                 <div className="artist-image cursor-pointer">
                                     <img className="w-full" src={staticPath(a.avatar)} alt="Pani Di Gal" title="Pani Di Gal" />
                                 </div>
                                 <p className="cursor-pointer text-center">{a.name}</p>
                             </div>
+                            </Link>
                         ))}
                     </div>
                 )
@@ -231,14 +233,14 @@ const HomePage = () => {
     
     return (
         <div className="container">
-           <ul className="flex item-category">
+           <ul className="flex item-category ">
                {items.map((item=>(
                    <li onClick={()=>changeCategory(item)} className={`${activeCat === item.name ? "active" : ""}`}>{item.name}</li>
                )))}
            </ul>
     
             
-            <div className="home-slider">
+            <div className="home-slider mt-2">
                 <Swiper
                     // install Swiper modules
                     modules={[Navigation,  A11y]}

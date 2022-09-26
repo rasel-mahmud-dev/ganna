@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import "./styles.scss";
 
 import {AiFillDashboard, BiUser, FaBars, FaSignOutAlt} from "react-icons/all";
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import useStore from "../../store/useStore";
 import staticPath from "../../utils/staticPath";
 import Dropdown from "../dropdown/Dropdown";
@@ -33,7 +33,7 @@ const Navigation = () => {
             <div className="logo-menu">
               <FaBars className="menu-bar" onClick={toggleLeftSidebar} />
               <div className="logo">
-                <a className="flex" href="/">
+                <NavLink className="flex"  to="/">
                   <svg width="87" height="22" viewBox="0 0 87 22" >
                     <g fill="none" fill-rule="evenodd">
                       <path
@@ -48,7 +48,7 @@ const Navigation = () => {
                       ></path>
                     </g>
                   </svg>
-                </a>
+                </NavLink>
               </div>
             </div>
             <div className="search-menu">

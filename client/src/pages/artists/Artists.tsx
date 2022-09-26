@@ -47,9 +47,9 @@ const Artists = () => {
     return (
         <div className="container">
       
-          <h1>Music Artists</h1>
+          <h1 className="mt-2">Music Artists</h1>
      
-          <div className="artist-list flex flex-wrap">
+          <div className="artist-list flex flex-wrap mt-5">
             {artist.map((ar: any) => (
                 <Link to={`/artists/${ar.name}`}>
                     <div className="artist-item flex justify-between flex-col items-center">

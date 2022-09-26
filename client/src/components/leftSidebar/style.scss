@@ -47,3 +47,14 @@
     }
   }
 }
+
+.sidebar-avatar{
+  display: flex;
+  margin: auto;
+  background-color: var(--primary-color);
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 100%;
+  justify-content: center;
+}

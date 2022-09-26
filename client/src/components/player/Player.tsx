@@ -27,13 +27,14 @@ const Player = () => {
   let [music, setMusic] = useState<HTMLAudioElement>()
   
   let intervalRef = useRef()
+  let volumeBarRef = useRef<HTMLDivElement>(null)
   
   
   const [state, setState] = useState({
     isPlaying: false,
     mute: false,
     duration: 0,
-    volume: 1,
+    volume: 0.5,
     pause: false,
     currentTime: 0,
     song: {}
@@ -319,6 +320,26 @@ const Player = () => {
     }
   }
   
+  function volumeChangeHandler(e){
+    e.stopPropagation();
+    
+    if(!volumeBarRef.current) return;
+    
+    let rect = volumeBarRef.current.getBoundingClientRect();
+    let height =   e.pageY - rect.top;
+  
+    
+    if(music) {
+      music.volume = height / 100
+    }
+  
+    setState({
+      ...state,
+      volume: height / 100
+    })
+  
+    
+  }
   
   
   return (
@@ -370,12 +391,19 @@ const Player = () => {
         </div>
 
         <div>
-          <li>
+          <li className="relative">
             { state.mute ? (
                 <BsVolumeMute className="sound-icon" onClick={toggleMute} />
                 ) : (
               <AiFillSound className="sound-icon" onClick={toggleMute} />
               ) }
+              
+            {/*<div className="volume-bar">*/}
+            {/*  <div className="range" ref={volumeBarRef} onClick={volumeChangeHandler} >*/}
+            {/*    <div className="current" style={{height: state.volume  + "px"}}></div>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
+            
           </li>
         </div>
       </div>

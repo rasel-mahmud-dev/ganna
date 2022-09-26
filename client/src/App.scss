@@ -20,6 +20,8 @@ p,h1,h3,h2,h4{
 .ml-4{margin-left: 4px}
 .mt-10{margin-top: 50px}
 .mt-1{margin-top: 5px}
+.mt-2{margin-top: 10px}
+.mt-5{margin-top: 25px}
 .mr-4{margin-right: 4px}
 .mr-1{margin-right: 5px}
 .flex-col{flex-direction: column}
@@ -94,7 +96,21 @@ li, ul{
     font-size: 22px;
     font-weight: 600;
   }
+
+  .section-item{
+    padding: 6px 0px;
+    a{
+      font-size: 14px;
+      color: #7e7e7e;
+      &:hover{
+        color: #4851ff;
+        font-weight: 500;
+      }
+    }
+  }
+
 }
+
 
 .song-list{
   display: flex;

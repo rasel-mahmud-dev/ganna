@@ -25,7 +25,7 @@ import Alert from "./components/alert/Alert";
 
 function App() {
   const [count, setCount] = useState(0);
-  const [{ isOpenLeftSidebar, alertMessage }, dispatch] = useStore();
+  const [{ isOpenLeftSidebar, auth, alertMessage }, dispatch] = useStore();
 
   useEffect(() => {
     loginWihToken(dispatch);
@@ -47,6 +47,7 @@ function App() {
 
       <div className="app-root">
         <LeftSidebar
+            auth={auth}
           onClose={handleCloseSidebar}
           isOpenLeftSidebar={isOpenLeftSidebar}
         />
