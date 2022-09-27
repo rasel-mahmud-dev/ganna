@@ -1,13 +1,24 @@
-import React, {SyntheticEvent} from "react";
+import React, {SyntheticEvent, useEffect, useState} from "react";
 
 import "./style.scss";
 import {BiUser} from "react-icons/all";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import staticPath from "../../utils/staticPath";
 
 const LeftSidebar = (props) => {
     
+    const location = useLocation();
+    
     const {isOpenLeftSidebar,  auth, onClose} = props;
+    const [isAdminRoute, setAdminRoute] = useState(false)
+    
+    useEffect(()=>{
+        if(location.pathname.includes("/admin/")){
+            setAdminRoute(true)
+        } else {
+            setAdminRoute(false)
+        }
+    }, [location.pathname])
     
     function clickOnBackdrop(e: SyntheticEvent){
         let el = e.target as HTMLDivElement
@@ -25,6 +36,14 @@ const LeftSidebar = (props) => {
         {label: "Lyrics", to: ""},
         {label: "Music Labels", to: ""},
         {label: "Genres", to: "/genres"}
+    ]
+    
+    const adminItems = [
+        {label: "Songs", to: "/admin/songs"},
+        {label: "Add Songs", to: "/admin/add-songs"},
+        {label: "Genres", to: "/admin/genres"},
+        {label: "Album", to: "/admin/albums"},
+        {label: "Artist", to: "/admin/artist"},
     ]
   
   return  (
@@ -45,6 +64,18 @@ const LeftSidebar = (props) => {
                   <h4 className="label">Login / Sign Up</h4>
               </div>
 
+              ) }
+          </div>
+          
+          <div className="items-center section">
+              { isAdminRoute && auth && (
+                  adminItems.map(item=>(
+                      <div>
+                      <li className="section-item">
+                          <Link to={item.to}> {item.label}</Link>
+                      </li>
+                  </div>
+                  ))
               ) }
           </div>
           

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, {ChangeEvent, FC, useEffect, useState} from "react";
 import InputGroup from "../../components/inputGroup/InputGroup";
 import api from "../../axios";
 import { FiDelete, FiEdit} from "react-icons/all";
@@ -7,7 +7,11 @@ import staticPath from "../../utils/staticPath";
 import "./syle.scss"
 import useStore from "../../store/useStore";
 
-const ArtistList = () => {
+interface Props{
+
+}
+
+const ArtistList: FC<Props> = (props) => {
   
   const [{auth}] = useStore();
   
@@ -18,6 +22,7 @@ const ArtistList = () => {
     email: "",
     avatar: "",
   });
+  
 
   const [isOpenModal, setOpenModal] = useState(false);
   const [updateArtist, setUpdateArtist] = useState(null);
@@ -161,10 +166,14 @@ const ArtistList = () => {
   return (
     <div>
       
-      <h1>Music Artists</h1>
-      <button onClick={()=> {setUpdateArtist(null); setOpenModal(true)}} className="btn btn-primary ">Add Artist</button>
+     <div className="flex items-center justify-between mt-5">
+        <h1 className="">Music Artists</h1>
+        <button
+            onClick={()=> {setUpdateArtist(null); setOpenModal(true)}}
+            className="btn btn-primary ">Add Artist</button>
+     </div>
       
-      <div className="flex flex-wrap">
+      <div className="mt-10 flex flex-wrap gap-25">
         {artist.map((ar: any) => (
             <div className="artist-item flex justify-between flex-col items-center">
               <div className="">

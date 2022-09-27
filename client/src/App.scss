@@ -164,9 +164,10 @@ li, ul{
 
 
 // ************** dashboard ******************
-.dashboard{
+.dashboard {
   display: flex;
-  .dashboard-sidebar{
+
+  .dashboard-sidebar {
     width: 250px;
     background: #eeeeee;
     height: 100vh;
@@ -174,13 +175,15 @@ li, ul{
     position: fixed;
     padding: 15px;
     top: 64px;
+
     .dashboard-user {
-      .username{
+      .username {
         text-align: center;
         padding: 0;
         margin: 5px 0 0;
         color: var(--primary-color);
       }
+
       .avatar {
         margin: auto;
         width: 80px;
@@ -199,16 +202,19 @@ li, ul{
     }
 
 
-    .slidebar-list{
+    .slidebar-list {
       margin-top: 20px;
       display: flex;
       flex-direction: column;
-      li{
+
+      li {
         padding: 4px 8px;
-        &:hover{
+
+        &:hover {
           background: rgba(118, 135, 248, 0.45);
         }
-        a{
+
+        a {
           color: #3f3f3f;
           font-size: 14px;
         }
@@ -217,14 +223,14 @@ li, ul{
 
   }
 
-  .content{
+
+  .content-route {
     width: 100%;
-    margin-left: 250px;
-    .content-route{
-      padding: 0 20px;
-    }
+    padding: 0 20px;
+    margin-left: 15px;
   }
 }
+
 
 .my-input{
   width: 100%;

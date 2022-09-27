@@ -1,14 +1,13 @@
 import React, {
-  ChangeEvent,
-  FC,
-  SyntheticEvent,
   useEffect,
   useState,
 } from "react";
+
 import InputGroup from "../../components/inputGroup/InputGroup";
 import SelectGroup from "../../components/selectGroup/SelectGroup";
 import api from "../../axios";
 import {useParams} from "react-router-dom";
+
 
 const AddSong = () => {
 

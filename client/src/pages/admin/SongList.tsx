@@ -4,6 +4,7 @@ import {BiPen, FiDelete} from "react-icons/all";
 import {Link} from "react-router-dom";
 import staticPath from "../../utils/staticPath";
 
+
 const SongList = () => {
     
     const [songs, setSongs] = useState([])
@@ -16,8 +17,7 @@ const SongList = () => {
         })
     }, [])
     
-
-
+    
     function handleDelete(id: number){
         api.delete("/api/v1/songs/"+id).then(({status})=>{
             if(status === 201){
@@ -26,11 +26,10 @@ const SongList = () => {
         })
     }
     
-    
     return (
         <div>
-            <h1 className="">All Songs</h1>
-            <div>
+            <h1 className="mt-2">All Songs</h1>
+            <div className="mt-5">
                 { songs.map((ar: any)=>(
                     <div className="flex justify-between items-center">
                             <div>

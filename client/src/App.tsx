@@ -46,10 +46,11 @@ function App() {
       <Navigation />
 
       <div className="app-root">
+        
         <LeftSidebar
             auth={auth}
-          onClose={handleCloseSidebar}
-          isOpenLeftSidebar={isOpenLeftSidebar}
+            onClose={handleCloseSidebar}
+            isOpenLeftSidebar={isOpenLeftSidebar}
         />
 
         <div className="app-content">

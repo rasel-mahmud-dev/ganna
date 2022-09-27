@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link, Outlet} from "react-router-dom";
-import Sidebar from "./Sidebar";
+
 
 const AdminDashboard = () => {
     const items = [
@@ -13,24 +13,9 @@ const AdminDashboard = () => {
     
     return (
         <div className="dashboard">
-           
-            <Sidebar className="dashboard-sidebar">
-                <div className="slidebar-list">
-                    {items.map((item)=>(
-                        <div>
-                            <Link to={item.to}>
-                            <li>
-                                {item.name}
-                            </li>
-                                </Link>
-                        </div>
-                    ))}
-                </div>
-            </Sidebar>
-            <div className="content">
-                <div className="content-route">
-                     <Outlet />
-                </div>
+            
+            <div className="content-route">
+                <Outlet />
             </div>
         </div>
     );
