@@ -58,7 +58,8 @@
   }
   .artist-desc{
     font-size: 14px;
-    color: rgba(52, 52, 52, 0.73);
+    font-weight: 500;
+    color: rgba(89, 89, 89, 0.73);
     @include getDown(700px){
       text-align: center;
     }

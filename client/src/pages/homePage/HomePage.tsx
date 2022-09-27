@@ -75,7 +75,7 @@ const HomePage = () => {
                                 <div className="artist-image cursor-pointer">
                                     <img className="w-full" src={staticPath(a.avatar)} alt="Pani Di Gal" title="Pani Di Gal" />
                                 </div>
-                                <p className="cursor-pointer text-center">{a.name}</p>
+                                <p className="song-name cursor-pointer text-center">{a.name}</p>
                             </div>
                             </Link>
                         ))}
@@ -263,7 +263,7 @@ const HomePage = () => {
     
             { sections.map(section=>(
                 <div className="section">
-                    <h3 className='section-name'>{section.label}</h3>
+                    <h3 className='section-name mb-2'>{section.label}</h3>
                     {/*<div className="flex song-list">*/}
                         { renderItem(section.label, sectionData[section.label])}
                     {/*</div>*/}

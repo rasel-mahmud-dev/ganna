@@ -21,6 +21,7 @@ p,h1,h3,h2,h4{
 .mt-10{margin-top: 50px}
 .mt-1{margin-top: 5px}
 .mt-2{margin-top: 10px}
+.mb-2{margin-bottom: 10px}
 .mt-5{margin-top: 25px}
 .mr-4{margin-right: 4px}
 .mr-1{margin-right: 5px}
@@ -121,20 +122,17 @@ li, ul{
       img{
         width: 100%;
       }
-    .song-name{
-      margin: 0;
-      padding: 0;
-      font-size: 14px;
-      margin-top: 5px;
-      color: #424242
-
-
-
-
-
-    }
   }
 }
+
+.song-name{
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  margin-top: 5px;
+  color: #424242
+}
+
 .card{
   border-radius: 8px;
   //box-shadow: 0 1px 7px 1px rgba(62, 62, 62, 0.66);
