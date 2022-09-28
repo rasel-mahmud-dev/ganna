@@ -25,6 +25,7 @@ import Alert from "./components/alert/Alert";
 import AlbumList from "./pages/admin/albumList/AlbumList";
 import Geners from "./pages/genres/Geners";
 import PlayList from "./pages/playList/PlayList";
+import RegistrationPage from "./pages/registration/Registration";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -59,6 +60,7 @@ function App() {
         <div className="app-content">
           <Routes>
             <Route path="/auth/login" element={<LoginPage />} />
+            <Route path="/auth/registration" element={<RegistrationPage />} />
 
             <Route path="/" element={<HomePage />} />
             <Route path="/admin" element={<AdminDashboard />}>

@@ -6,10 +6,10 @@ import {Link, useNavigate} from "react-router-dom";
 import InputGroup from "../../components/inputGroup/InputGroup";
 
 
-const LoginPage = () => {
+const RegistrationPage = () => {
     
-    const [_, dispatch] = useStore();
-
+    const [state, dispatch] =  useStore()
+    
     const navigate = useNavigate();
     
     const [userData, setUserData] = useState<{email: string, password: string}>({
@@ -41,7 +41,7 @@ const LoginPage = () => {
             alert(errorMessage)
             return;
         }
-    
+        
         loginAction(userData, dispatch, (data) => {
             if(data){
                 navigate("/")
@@ -51,9 +51,28 @@ const LoginPage = () => {
     
     return (
         <div className="login-form">
-            <h1 className="mt-5">Login Here</h1>
+            <h1 className="mt-5">Registration form </h1>
             <form onSubmit={handleSubmit} className="mt-5">
-               
+                
+                 <InputGroup
+                     name="firstName"
+                     label="First Name"
+                     data={userData}
+                     type="text"
+                     placeholder="firstname"
+                     handleChange={handleChange}
+                 />
+                
+                 <InputGroup
+                     name="lastName"
+                     label="Last Name"
+                     data={userData}
+                     type="text"
+                     placeholder="lastname"
+                     handleChange={handleChange}
+                 />
+                
+                
                 <InputGroup
                     name="email"
                     label="You Email"
@@ -70,14 +89,14 @@ const LoginPage = () => {
                     placeholder="Enter Password"
                     handleChange={handleChange}
                 />
+ 
+                <p>Already has an account? <Link to="/auth/login"> login here</Link> </p>
                 
-                <p>Not an account? <Link to="/auth/registration"> create an account</Link> </p>
-                
-                <button type="submit" className="btn btn-primary mt-2">Login</button>
+                <button type="submit" className="btn btn-primary mt-2">Create</button>
                 
             </form>
   </div>
     );
 };
 
-export default LoginPage;
+export default RegistrationPage;

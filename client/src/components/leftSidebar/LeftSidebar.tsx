@@ -63,7 +63,9 @@ const LeftSidebar = (props) => {
     
                   <div className="flex items-center">
                   <BiUser />
-                  <h4 className="label">Login / Sign Up</h4>
+                  <Link to="/auth/login" className="label">
+                      Login / Sign Up
+                  </Link>
               </div>
 
               ) }
