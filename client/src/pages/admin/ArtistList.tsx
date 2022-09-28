@@ -4,7 +4,7 @@ import api from "../../axios";
 import { FiDelete, FiEdit} from "react-icons/all";
 import Modal from "../../components/modal/Modal";
 import staticPath from "../../utils/staticPath";
-import "./syle.scss"
+import "./style.scss"
 import useStore from "../../store/useStore";
 
 interface Props{
@@ -166,33 +166,33 @@ const ArtistList: FC<Props> = (props) => {
   return (
     <div>
       
-     <div className="flex items-center justify-between mt-5">
-        <h1 className="">Music Artists</h1>
-        <button
-            onClick={()=> {setUpdateArtist(null); setOpenModal(true)}}
-            className="btn btn-primary ">Add Artist</button>
-     </div>
-      
-      <div className="mt-10 flex flex-wrap gap-25">
-        {artist.map((ar: any) => (
-            <div className="artist-item flex justify-between flex-col items-center">
-              <div className="">
-                <div className="lazy artist-image">
-                    <img className="w-full" data-source={staticPath(ar.avatar)} src="/bitmap.png" alt=""/>
+       <div className="flex items-center justify-between mt-5">
+          <h1 className="">Music Artists</h1>
+          <button
+              onClick={()=> {setUpdateArtist(null); setOpenModal(true)}}
+              className="btn btn-primary ">Add Artist</button>
+       </div>
+        
+        <div className="mt-10 flex flex-wrap gap-25">
+          {artist.map((ar: any) => (
+              <div className="artist-item flex justify-between flex-col items-center">
+                <div className="">
+                  <div className="lazy artist-image">
+                      <img className="w-full" data-source={staticPath(ar.avatar)} src="/bitmap.png" alt=""/>
+                  </div>
+                </div>
+                <div className="">
+                  <h4>{ar.name}</h4>
+                  { auth && auth.role === "ADMIN" && (
+                      <div>
+                      <FiEdit onClick={()=>handleOpenUpdateForm(ar)} />
+                      <FiDelete className="" onClick={() => handleDelete(ar.artistId)} />
+                    </div>
+                  ) }
                 </div>
               </div>
-              <div className="">
-                <h4>{ar.name}</h4>
-                { auth && auth.role === "ADMIN" && (
-                    <div>
-                    <FiEdit onClick={()=>handleOpenUpdateForm(ar)} />
-                    <FiDelete className="" onClick={() => handleDelete(ar.artistId)} />
-                  </div>
-                ) }
-              </div>
-            </div>
-        ))}
-      </div>
+          ))}
+        </div>
       
       {addArtistModal()}
     </div>

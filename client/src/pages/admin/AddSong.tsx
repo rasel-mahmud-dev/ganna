@@ -11,6 +11,31 @@ import {useParams} from "react-router-dom";
 
 const AddSong = () => {
 
+  const age = "234";
+  // console.log(age)
+  
+  function getName(name: string){
+    console.log(name)
+  }
+  
+  
+  getName("SAD");
+  
+  const btn = document.querySelector(".btn");
+  let count = 0;
+  
+  function render(num: number){
+    console.log(num)
+  }
+  
+  btn.addEventListener("click", ()=>{
+    // if count 1 then fire render function
+    if(count == 1){
+      render(count)
+    }
+  })
+  
+  
   const params = useParams()
   
   const [songDetail, setSongDetail] = useState(null);
@@ -44,6 +69,7 @@ const AddSong = () => {
     { genreId: 3, name: "MURSHID" },
     { genreId: 4, name: "ROCK" },
   ];
+  let id = genres[0].genreId;
   
   
   useEffect(() => {
@@ -63,8 +89,6 @@ const AddSong = () => {
       //   }
       //   setArtist(data.artists)
       // })
-  
-      
       
     }())
     
@@ -101,7 +125,6 @@ const AddSong = () => {
   
   useEffect(() => {
     if(songDetail) {
-   
       let findAlbumIds = artists.filter(g => songDetail.artistId.includes(g.artistId))
       let categoryAlbumId = categoryAlbums.filter(g => songDetail.categoryAlbumId.includes(g.categoryAlbumId))
       
@@ -175,7 +198,6 @@ const AddSong = () => {
       });
       
       console.log(payload)
-      
     
     } else {
       api

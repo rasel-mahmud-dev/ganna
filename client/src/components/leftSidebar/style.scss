@@ -12,7 +12,7 @@
 }
 
 .left-sidebar{
-  width: 290px;
+  width: 250px;
   position: fixed;
   top: 54px;
   left: 0;
@@ -21,6 +21,9 @@
   //box-shadow: 7px 0px 19px #
   z-index: 1001;
 
+  @include getDown(1000px){
+    width: 200px;
+  }
 
   @include getDown(700px){
     display: none;

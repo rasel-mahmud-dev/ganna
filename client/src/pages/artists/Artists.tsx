@@ -31,6 +31,9 @@ const Artists = () => {
         let lazyImageObserver = new IntersectionObserver(function (entries, observer){
             entries.forEach(entry=>{
                 if (entry.isIntersecting){
+    
+                    if(entry.target.classList.contains("lazy-loaded")) return;
+                    
                     entry.target.classList.add("lazy-loaded")
                     const img = entry.target.children[0] as HTMLImageElement
                     
@@ -55,7 +58,7 @@ const Artists = () => {
                     <div className="artist-item flex justify-between flex-col items-center">
                   <div className="">
                     <div className="lazy artist-image">
-                        <img className="w-full" data-source={staticPath(ar.avatar)} src="/bitmap.png" alt=""/>
+                        <img className="w-full" data-source={staticPath(ar.avatar)} src={staticPath("cover/default-cover.jpg")} alt=""/>
                     </div>
                   </div>
                   <div className="">

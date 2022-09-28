@@ -22,6 +22,7 @@ import FavoriteMusic from "./pages/favoriteMusic/FavoriteMusic";
 import { fetchFavoriteListAction } from "./store/actions/songAction";
 import Details from "./pages/artists/Details";
 import Alert from "./components/alert/Alert";
+import AlbumList from "./pages/admin/albumList/AlbumList";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -64,6 +65,7 @@ function App() {
               <Route path="update-song/:id" element={<AddSong />} />
               <Route path="songs" element={<SongList />} />
               <Route path="artist" element={<ArtistList />} />
+              <Route path="albums" element={<AlbumList />} />
             </Route>
             <Route path="/artists" element={<Artists />} />
             <Route path="/artists/:name" element={<Details />} />
