@@ -6,6 +6,7 @@ export interface AlbumType {
     name: string
     cover?: string
     createdAt?: string | Date
+    artists?: []
 }
 
 class Album extends Common implements AlbumType{
@@ -13,13 +14,15 @@ class Album extends Common implements AlbumType{
     name: string
     cover?: string
     createdAt?: string | Date
+    artists?: []
     
     static tableName = "albums"
     
-    constructor({ name, cover }: AlbumType ) {
+    constructor({ name, cover, artists }: AlbumType ) {
         super(Album.tableName);
         this.name =  name
         this.cover = cover
+        this.artists = artists
         this.createdAt = sqlDate(new Date())
     }
 }

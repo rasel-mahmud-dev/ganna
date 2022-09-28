@@ -25,7 +25,8 @@ export interface AppContextInterface {
   };
   favorites: any[]
   isPlay: boolean,
-  alertMessage?: string
+  alertMessage?: string,
+  artists: any[] | null
 }
 
 const sampleAppContext: AppContextInterface = {
@@ -33,6 +34,7 @@ const sampleAppContext: AppContextInterface = {
   musicDetail: null,
   isOpenLeftSidebar: false,
   isPlay: false,
+  artists: null,
   player: {
     playlistName: "",
     items: [],
@@ -62,6 +64,12 @@ function reducer(
       return {
         ...state,
         musicDetail: action.payload,
+      };
+      
+    case ACTION_TYPES.SET_ARTISTS:
+      return {
+        ...state,
+        artists: action.payload,
       };
 
     case ACTION_TYPES.TOGGLE_LEFT_SIDEBAR:
