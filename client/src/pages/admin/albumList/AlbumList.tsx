@@ -9,13 +9,16 @@ import staticPath from "../../../utils/staticPath";
 
 import "./style.scss";
 import {FaPen, FaTrash} from "react-icons/all";
+import {isAdmin} from "../../../utils/isAdmin";
 
 
 const AlbumList = () => {
-  const [{artists}, dispatch] = useStore()
+  const [{auth, artists}, dispatch] = useStore()
+  
+  const admin =  isAdmin(auth)
   
   const [albumList, setAlbumList] = useState([]);
-
+  
   useEffect(() => {
     api.get("/api/v1/albums").then(({ status, data }) => {
       if (status === 200) {
@@ -173,7 +176,6 @@ const AlbumList = () => {
     });
   }
   
-  
   function updateHandler(album: any) {
     setState({
       ...state,
@@ -197,18 +199,19 @@ const AlbumList = () => {
     setData(updateDate)
   }
   
+  
   return (
     <div className="">
       <div className="flex items-center justify-between mt-5">
         <h1 className="">Album list</h1>
-        <button
+        { admin &&  <button
           onClick={() => {
             setState({ ...state, isUpdate: "", openForm: true });
           }}
           className="btn btn-primary "
         >
           Add Album
-        </button>
+        </button> }
       </div>
       
       {state.openForm && addAlbumModal()}
@@ -221,7 +224,7 @@ const AlbumList = () => {
                   <tr>
                       <th className="text-center">Name</th>
                       <th className="text-start">Artist</th>
-                      <th className="text-start">Actions</th>
+                    { admin && <th className="text-start">Actions</th> }
                   </tr>
                   </thead>
                   <tbody>
@@ -238,13 +241,13 @@ const AlbumList = () => {
                              <td>
                                  <p className="track">{album?.artists && album?.artists.map((a: string)=> a + ", " )}</p>
                              </td>
-                           
-                           <td>
+  
+                           { admin && <td>
                                  <div className="flex items-center gap-x-4">
                                    <FaPen onClick={()=>updateHandler(album)} />
                                    <FaTrash onClick={()=>handleDeleteAlbum(album.albumId)} />
                                  </div>
-                             </td>
+                             </td> }
                            
                           </tr>
                      )) }

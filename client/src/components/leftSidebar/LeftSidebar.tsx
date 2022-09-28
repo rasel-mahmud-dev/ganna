@@ -33,7 +33,7 @@ const LeftSidebar = (props) => {
         {label: "Old Songs", to: ""},
         {label: "Album", to: "/albums"},
         {label: "Artist", to: "/artists"},
-        {label: "Lyrics", to: ""},
+        {label: "Top Playlist", to: "/playlist"},
         {label: "Music Labels", to: ""},
         {label: "Genres", to: "/genres"}
     ]
@@ -49,7 +49,9 @@ const LeftSidebar = (props) => {
   return  (
     <div>
       <div className="left-sidebar__backdrop" onClick={clickOnBackdrop}></div>
-      <div className="left-sidebar">
+        <div className="left-sidebar">
+            
+             <div className="sidebar-content">
           
           <div className="first-section">
               { auth ? (
@@ -58,8 +60,8 @@ const LeftSidebar = (props) => {
                       <h4 className='text-center'>{auth.username}</h4>
                   </div>
               ) : (
-              
-              <div className="flex items-center">
+    
+                  <div className="flex items-center">
                   <BiUser />
                   <h4 className="label">Login / Sign Up</h4>
               </div>
@@ -82,7 +84,7 @@ const LeftSidebar = (props) => {
           <div className="flex items-center border-b section">
              <div>
                  <h4>Music</h4>
-                 <li className="section-item"><Link to="/">Playlist</Link></li>
+                 <li className="section-item"><Link to="/playlist">Playlist</Link></li>
                  <li className="section-item"><Link to="/favorite">Favorite</Link></li>
              </div>
           </div>
@@ -102,6 +104,9 @@ const LeftSidebar = (props) => {
           
           
       </div>
+        
+        </div>
+        
     </div>
   )
 };

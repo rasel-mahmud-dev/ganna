@@ -50,6 +50,24 @@
     }
   }
 }
+.sidebar-content{
+  height: calc(100vh - (54px  + 73px));
+  background-color: rgba(208, 208, 208, 0.21);
+  overflow-y: auto;
+  &::-webkit-scrollbar{
+    background-color: #fafafa;
+    width: 6px;
+
+  }
+  &::-webkit-scrollbar-thumb{
+    background-color: rgba(121, 109, 229, 0.12);
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  &::-webkit-scrollbar-track{
+    background-color: #fafafa;
+  }
+}
 
 .sidebar-avatar{
   display: flex;

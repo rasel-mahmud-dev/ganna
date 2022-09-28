@@ -23,6 +23,8 @@ import { fetchFavoriteListAction } from "./store/actions/songAction";
 import Details from "./pages/artists/Details";
 import Alert from "./components/alert/Alert";
 import AlbumList from "./pages/admin/albumList/AlbumList";
+import Geners from "./pages/genres/Geners";
+import PlayList from "./pages/playList/PlayList";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -65,11 +67,16 @@ function App() {
               <Route path="update-song/:id" element={<AddSong />} />
               <Route path="songs" element={<SongList />} />
               <Route path="artist" element={<ArtistList />} />
+              <Route path="playlist" element={<PlayList />} />
               <Route path="albums" element={<AlbumList />} />
+              <Route path="genres" element={<Geners />} />
             </Route>
             <Route path="/artists" element={<Artists />} />
             <Route path="/artists/:name" element={<Details />} />
             <Route path="/favorite" element={<FavoriteMusic />} />
+            <Route path="albums" element={<AlbumList />} />
+            <Route path="/genres" element={<Geners />} />
+            <Route path="/playlist" element={<PlayList />} />
             <Route path="/song/:title" element={<SongDetail />} />
           </Routes>
           <Footer />
