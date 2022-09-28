@@ -57,12 +57,6 @@ export async function updateAlbumController(req: Request, res: Response, next: N
         
         const data = { name, artistIds, cover }
         
-        // use validate for song data before save database
-        let result = await albumValidatorAsync(data)
-        if(result.error){
-            return res.status(409).json({message: result.error.details[0].message})
-        }
-        
         const album = new Album(data)
         
         let isUpdated = await album.updateOne({fieldName: 'albumId', value: id})

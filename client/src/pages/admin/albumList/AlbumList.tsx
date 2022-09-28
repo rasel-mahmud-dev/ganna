@@ -77,6 +77,13 @@ const AlbumList = () => {
       .patch("/api/v1/albums/"+state.isUpdate as any, payload)
       .then(({status, data}) => {
         if (status === 201) {
+          let findItem: any = albumList.find((a: any)=>a.albumId === state.isUpdate)
+          if(findItem){
+            findItem.name = data.album.name
+            findItem.cover = data.album.cover
+            findItem.artistIds = data.album.artistIds
+          }
+          setAlbumList(albumList)
         }
       })
       .catch((ex) => {
@@ -106,6 +113,7 @@ const AlbumList = () => {
   }
 
   function addAlbumModal() {
+    console.log(data.artistIds)
     return (
       <Modal
         isOpen={state.openForm}
@@ -166,6 +174,28 @@ const AlbumList = () => {
   }
   
   
+  function updateHandler(album: any) {
+    setState({
+      ...state,
+      isUpdate: album.albumId,
+      openForm: true
+    })
+  
+    let updateDate: any = {...data}
+    
+    for (let albumKey in updateDate) {
+      updateDate[albumKey] = album[albumKey]
+      
+      if(albumKey === "artistIds"){
+        if(album[albumKey] && album[albumKey].length){
+          if(artists) {
+            updateDate[albumKey] = artists.filter((a: any) => album[albumKey].includes(a.artistId));
+          }
+        }
+      }
+    }
+    setData(updateDate)
+  }
   
   return (
     <div className="">
@@ -187,40 +217,39 @@ const AlbumList = () => {
         <div>
           
           <table className="favorite-table">
-                    <thead>
-                    <tr>
-                        <th className="text-center">Name</th>
-                        <th className="text-start">Artist</th>
-                        <th className="text-start">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                       { albumList.map((album: any, index: number)=>(
-                           <tr className={`tr   `}>
-                              <td>
-                                   <div className="flex items-center" >
-                                        <div className="album-cover">
-                                          <img src={staticPath(album.cover)} />
-                                        </div>
-                                        <p className="track ml-4">{album.name}</p>
-                                   </div>
-                              </td>
-                               <td>
-                                   <p className="track">{album?.artists && album?.artists.map((a: string)=> a + ", " )}</p>
-                               </td>
-                             
+                  <thead>
+                  <tr>
+                      <th className="text-center">Name</th>
+                      <th className="text-start">Artist</th>
+                      <th className="text-start">Actions</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                     { albumList.map((album: any, index: number)=>(
+                         <tr className={`tr   `}>
+                            <td>
+                                 <div className="flex items-center" >
+                                      <div className="album-cover">
+                                        <img src={staticPath(album.cover)} />
+                                      </div>
+                                      <p className="track ml-4">{album.name}</p>
+                                 </div>
+                            </td>
                              <td>
-                                   <div className="flex items-center gap-x-4">
-                                     <FaTrash onClick={()=>handleDeleteAlbum(album.albumId)} />
-                                     <FaPen onClick={()=>setState({...state, isUpdate: album.albumId, openForm: true})} />
-                                   </div>
-                               </td>
-                             
-                            </tr>
-                       )) }
-                    </tbody>
-                </table>
-          
+                                 <p className="track">{album?.artists && album?.artists.map((a: string)=> a + ", " )}</p>
+                             </td>
+                           
+                           <td>
+                                 <div className="flex items-center gap-x-4">
+                                   <FaPen onClick={()=>updateHandler(album)} />
+                                   <FaTrash onClick={()=>handleDeleteAlbum(album.albumId)} />
+                                 </div>
+                             </td>
+                           
+                          </tr>
+                     )) }
+                  </tbody>
+              </table>
         </div>
 
     </div>
