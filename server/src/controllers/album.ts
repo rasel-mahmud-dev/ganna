@@ -1,6 +1,7 @@
 import {NextFunction, Request, Response} from "express";
 import Album from "../models/Album";
 import albumValidatorAsync from "../validator/album";
+import Artist from "../models/Artist";
 
 export async function getAllAlbums(req: Request, res: Response, next: NextFunction){
     
@@ -71,6 +72,22 @@ export async function updateAlbumController(req: Request, res: Response, next: N
         album.albumId = Number(id)
         const {tableName, ...other} = album
         return res.status(201).json({message: "Album is updated", album: other})
+        
+    } catch (ex){
+        next(ex)
+    }
+}
+
+
+export async function deleteAlbumController(req: Request, res: Response, next: NextFunction){
+    const { id } = req.params;
+    
+    try{
+        const isDeleted = await Album.deleteOne({albumId:  Number(id)})
+        if(!isDeleted) {
+            return res.status(500).json({message: "Delete fail. try again"})
+        }
+        return res.status(201).json({message: "Album deleted"})
         
     } catch (ex){
         next(ex)
