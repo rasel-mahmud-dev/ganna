@@ -24,6 +24,12 @@ const Navigation = () => {
     })
   }
   
+  function handleLogout(){
+    dispatch({
+      type: ACTION_TYPES.LOGIN,
+      payload: null
+    })
+  }
   
   return (
     <div>
@@ -76,7 +82,7 @@ const Navigation = () => {
                           <BiUser />
                           <span>Profile</span>
                         </Link>
-                        <span className="dropdown-item flex items-center">
+                        <span className="dropdown-item flex items-center" onClick={handleLogout}>
                           <FaSignOutAlt />
                           <span> Logout</span>
                         </span>

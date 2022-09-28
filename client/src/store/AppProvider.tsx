@@ -51,14 +51,22 @@ function reducer(
 ) {
   switch (action.type) {
     case ACTION_TYPES.LOGIN:
-      const { user, token } = action.payload;
-      if (token) {
-        localStorage.setItem("token", token);
+      if(action.payload) {
+        const {user, token} = action.payload;
+        if (token) {
+          localStorage.setItem("token", token);
+        }
+        return {
+          ...state,
+          auth: user,
+        };
+      } else {
+        localStorage.removeItem("token")
+        return  {
+          ...state,
+          auth: null
+        }
       }
-      return {
-        ...state,
-        auth: user,
-      };
 
     case ACTION_TYPES.SET_MUSIC_DETAIL:
       return {
