@@ -1,59 +1,59 @@
-import React, {ChangeEvent, FormEventHandler, useState} from 'react';
-import "./style.scss";
-import useStore from "../../store/useStore";
-import {loginAction} from "../../store/actions/userAction";
-import {Link, useNavigate} from "react-router-dom";
-import InputGroup from "../../components/inputGroup/InputGroup";
-
+import React, { ChangeEvent, FormEventHandler, useState } from 'react'
+import './style.scss'
+import useStore from '../../store/useStore'
+import { loginAction } from '../../store/actions/userAction'
+import { Link, useNavigate } from 'react-router-dom'
+import InputGroup from '../../components/inputGroup/InputGroup'
 
 const LoginPage = () => {
-    
-    const [_, dispatch] = useStore();
+    const [_, dispatch] = useStore()
 
-    const navigate = useNavigate();
-    
-    const [userData, setUserData] = useState<{email: string, password: string}>({
-        email: "",
-        password: ""
+    const navigate = useNavigate()
+
+    const [userData, setUserData] = useState<{
+        email: string
+        password: string
+    }>({
+        email: '',
+        password: '',
     })
-    
-    function handleChange(e: ChangeEvent){
+
+    function handleChange(e: ChangeEvent) {
         let ele = e.target as HTMLInputElement
         setUserData({
             ...userData,
-            [ele.name]: ele.value
+            [ele.name]: ele.value,
         })
     }
-    
-    async function handleSubmit(e: React.SyntheticEvent){
-        e.preventDefault();
-        
-        let errorMessage = ""
-        let userDataKey: keyof {email: string, password: string};
-        
+
+    async function handleSubmit(e: React.SyntheticEvent) {
+        e.preventDefault()
+
+        let errorMessage = ''
+        let userDataKey: keyof { email: string; password: string }
+
         for (userDataKey in userData) {
-            if(!userData[userDataKey]){
-                errorMessage = ""
+            if (!userData[userDataKey]) {
+                errorMessage = ''
             }
         }
-        
-        if(errorMessage){
+
+        if (errorMessage) {
             alert(errorMessage)
-            return;
+            return
         }
-    
+
         loginAction(userData, dispatch, (data) => {
-            if(data){
-                navigate("/")
+            if (data) {
+                navigate('/')
             }
         })
     }
-    
+
     return (
         <div className="login-form">
             <h1 className="mt-5">Login Here</h1>
             <form onSubmit={handleSubmit} className="mt-5">
-               
                 <InputGroup
                     name="email"
                     label="You Email"
@@ -70,14 +70,17 @@ const LoginPage = () => {
                     placeholder="Enter Password"
                     handleChange={handleChange}
                 />
-                
-                <p>Not an account? <Link to="/auth/registration"> create an account</Link> </p>
-                
-                <button type="submit" className="btn btn-primary mt-2">Login</button>
-                
-            </form>
-  </div>
-    );
-};
 
-export default LoginPage;
+                <p>
+                    Not an account? <Link to="/auth/registration"> create an account</Link>{' '}
+                </p>
+
+                <button type="submit" className="btn btn-primary mt-2">
+                    Login
+                </button>
+            </form>
+        </div>
+    )
+}
+
+export default LoginPage
