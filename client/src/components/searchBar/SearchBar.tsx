@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState } from 'react'
+import React, { SyntheticEvent, useRef, useState } from 'react'
 import { BiSearch, MdClear } from 'react-icons/all'
 
 import './searchBar.scss'
@@ -8,11 +8,14 @@ const SearchBar = () => {
         open: false,
     })
 
-    function handleClickOnSearch(e) {
+    const inputRef = useRef<HTMLInputElement>(null)
+
+    function handleClickOnSearch() {
         setState({
             ...state,
             open: true,
         })
+        inputRef.current?.click()
     }
 
     function handleCloseSearchMenu(e: SyntheticEvent) {
@@ -34,6 +37,14 @@ const SearchBar = () => {
                                 <BiSearch className="search-icon" />
                                 <span className="search-label">Search music</span>
                             </div>
+
+                            <input
+                                ref={inputRef}
+                                className="user-search-input"
+                                type="text"
+                                placeholder="Search Music, Artists, Playlist"
+                            />
+
                             <div className={`search-input-control ${state.open ? 'search-input-control--open' : ''}`}>
                                 <span className="search-reset">Clear</span>
                                 <MdClear onClick={handleCloseSearchMenu} className="search-clear" />

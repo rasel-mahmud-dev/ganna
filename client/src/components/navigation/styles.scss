@@ -14,7 +14,7 @@
     display: grid;
     grid-template-columns: repeat(12, 2fr);
     justify-content: space-between;
-    padding: 8px 30px;
+    padding: 15px 30px;
   }
 
   .logo-menu{
@@ -32,7 +32,9 @@
     }
   }
 
-
+    .searchbar-container{
+        //position: relative;
+    }
 
   .right-menu{
     grid-column: span 4;

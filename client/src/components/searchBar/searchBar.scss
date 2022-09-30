@@ -11,6 +11,9 @@
     width: 500px;
     padding: 0 0px;
     z-index: 1010;
+    top: 6px;
+
+    position: absolute;
     input{
         background: rgb(255, 255, 255);
         padding: 10px 20px;
@@ -24,7 +27,7 @@
 }
 .search-menu--expand{
     width: 1000px;
-    position: fixed;
+    //position: fixed;
     box-sizing: border-box;
     left: 50%;
     transform: translateX(-50%);
@@ -51,6 +54,20 @@
         align-items: center;
         padding: 8px 0;
     }
+
+    .user-search-input{
+        //display: none;
+        opacity: 0;
+        width: 81%;
+        position: absolute;
+        left: 26px;
+        outline: none;
+        border: none;
+        background: transparent;
+        transition: opacity .3s ease;
+        transition-delay: .3s ;
+    }
+
 
     .search-input-demo{
         position: relative;
@@ -113,6 +130,11 @@
 
     .search-input-demo{
         left: 10px;
+    }
+
+    .user-search-input{
+        opacity: 1;
+        display: block;
     }
 
     .search-icon{

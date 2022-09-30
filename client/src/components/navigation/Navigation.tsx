@@ -7,7 +7,7 @@ import useStore from '../../store/useStore'
 import staticPath from '../../utils/staticPath'
 import Dropdown from '../dropdown/Dropdown'
 import { ACTION_TYPES } from '../../store/types'
-import SearchBar from "../searchBar/SearchBar";
+import SearchBar from '../searchBar/SearchBar'
 
 const Navigation = () => {
     const [state, dispatch] = useStore()
@@ -57,7 +57,9 @@ const Navigation = () => {
                                 </NavLink>
                             </div>
                         </div>
-                        <SearchBar />
+                        <div className="searchbar-container">
+                            <SearchBar />
+                        </div>
                         <div className="right-menu flex items-center">
                             {state.auth ? (
                                 <li
