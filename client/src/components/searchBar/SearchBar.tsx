@@ -1,12 +1,52 @@
-import React, { SyntheticEvent, useRef, useState } from 'react'
+import React, { SyntheticEvent, useEffect, useRef, useState } from 'react'
 import { BiSearch, MdClear } from 'react-icons/all'
 
 import './searchBar.scss'
+import api from '../../axios'
+import staticPath from '../../utils/staticPath'
 
 const SearchBar = () => {
+    const timeOutRef = useRef<number>()
+
     const [state, setState] = useState({
         open: false,
+        searchValue: '',
+        result: {
+            songs: [],
+            artists: [],
+        },
     })
+
+    function handleChange(e: SyntheticEvent) {
+        setState({
+            ...state,
+            searchValue: (e.target as HTMLInputElement).value,
+        })
+    }
+
+    useEffect(() => {
+        if (state.searchValue) {
+            timeOutRef.current && clearTimeout(timeOutRef.current)
+            timeOutRef.current = setTimeout(() => {
+                handleSearch()
+            }, 1000)
+        }
+    }, [state.searchValue])
+
+    function handleSearch() {
+        const value = state.searchValue
+
+        api.post('/api/v1/songs/search', { text: value }).then(({ data, status }) => {
+            if (status === 200) {
+                setState({
+                    ...state,
+                    result: data,
+                })
+            }
+        })
+    }
+
+    console.log(state)
 
     const inputRef = useRef<HTMLInputElement>(null)
 
@@ -39,6 +79,8 @@ const SearchBar = () => {
                             </div>
 
                             <input
+                                value={state.searchValue}
+                                onChange={handleChange}
                                 ref={inputRef}
                                 className="user-search-input"
                                 type="text"
@@ -52,19 +94,42 @@ const SearchBar = () => {
                         </div>
 
                         <div className={`search-content ${state.open ? 'search-content-open' : ''}`}>
-                            <h4 className="">TRENDING</h4>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet aut, blanditiis dolor
-                                dolores ea eum eveniet exercitationem fuga, id ipsam iusto libero molestias mollitia,
-                                nulla praesentium quaerat qui sed sunt tempora ut? Alias, autem, commodi cupiditate
-                                dicta dolore doloribus eaque, enim fugiat provident sapiente suscipit totam velit.
-                                Adipisci aliquam amet eveniet explicabo laboriosam non placeat vel. Adipisci
-                                consequuntur cupiditate delectus dignissimos expedita fugiat fugit illum incidunt
-                                maxime, optio recusandae repellendus sint voluptas? A commodi dicta doloremque,
-                                doloribus et eveniet fugit ipsum laborum, minima neque nulla perferendis porro quaerat
-                                quis quisquam quos repudiandae similique suscipit totam ullam vel veritatis vitae
-                                voluptate.
-                            </p>
+                            <div className="search-result-out">
+                                <div>
+                                    <h4 className="">Songs</h4>
+                                    {state.result?.songs &&
+                                        state.result?.songs.map((song: any) => (
+                                            <div>
+                                                <h4 className="">{song.title}</h4>
+                                            </div>
+                                        ))}
+                                </div>
+
+                                <div>
+                                    <h4 className="">Artists</h4>
+                                    <div className="search-artist-list">
+                                        {state.result?.artists &&
+                                            state.result?.artists.map((artist: any) => (
+                                                <div className="search-artist">
+                                                    <img src={staticPath(artist.avatar)} alt="" />
+                                                    <h4 className="artist-name">{artist.name}</h4>
+                                                </div>
+                                            ))}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h4 className="">Albums</h4>
+                                    <div className="search-album-list">
+                                        {state.result?.albums &&
+                                            state.result?.albums.map((album: any) => (
+                                                <div className="search-album">
+                                                    <h4 className="album-name">{album.name}</h4>
+                                                </div>
+                                            ))}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

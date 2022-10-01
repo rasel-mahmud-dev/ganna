@@ -4,13 +4,17 @@ import {
     addSongController,
     deleteSongController, filterHomePageSongController,
     getAllSongController, getSongByFieldController,
-    getSongController,
+    getSongController, searchSongController,
     updateSongController
 } from "../controllers/song";
 const router = express.Router()
 
 // GET: /api/v1/songs/find-by-field?title=ASD
 router.get("/find-by-field", getSongByFieldController)
+
+
+// POST: /api/v1/songs/search
+router.post("/search", searchSongController)
 
 
 // GET: api/v1/songs

@@ -153,7 +153,7 @@
     transition: height .3s ease, opacity .3s ease;;
     transition-delay: .4s;
 }
-.search-content-open{
+.search-content-open {
     height: 500px;
     opacity: 1;
     overflow: hidden;
@@ -161,5 +161,36 @@
     padding-top: 15px;
     margin-top: 3px;
     padding-bottom: 10px;
+}
 
+
+/***** Result Printing **********/
+.search-result-out{
+    display: grid;
+    grid-template-columns: 3fr 2fr 1fr;
+}
+
+.search-artist-list {
+    display: flex;
+    flex-wrap: wrap;
+        column-gap: 10px;
+    .search-artist {
+        width: 80px;
+        img {
+            width: 100%;
+            border-radius: 100px;
+        }
+        .artist-name{
+            font-size: 14px;
+            font-weight: 400;
+            text-align:center;
+        }
+    }
+}
+
+.search-album-list {
+    .search-album{
+        font-size: 14px;
+        font-weight: 400;
+    }
 }
