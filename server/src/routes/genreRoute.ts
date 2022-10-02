@@ -7,7 +7,7 @@ const router = express.Router();
 // GET /api/v1/genres
 router.get("/", getAllGenres);
 
-// POST /api/v1/genres/add-genres
+// POST /api/v1/genres/add-genre
 router.post("/add-genre", addGenre);
 
 // POST /api/v1/genres/id
