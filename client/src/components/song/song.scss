@@ -1,0 +1,52 @@
+.song{
+
+    .card:hover{
+        .card-overlay {
+            background: rgb(255 255 255 / 20%);
+            .play-btn {
+                opacity: 1;
+                svg {
+                    font-size: 100px;
+                }
+            }
+        }
+    }
+
+   .card-overlay {
+       background: transparent;
+       width: 100%;
+       position: absolute;
+       height: 100%;
+       top: 50%;
+       left: 50%;
+       transform: translate(-50%, -50%);
+       transition: background-color .2s ease;
+
+       .play-btn {
+           cursor: pointer;
+           opacity: 0;
+           position: absolute;
+           width: 20px;
+           height: 20px;
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           top: 50%;
+           left: 50%;
+           transform: translate(-50%, -50%);
+           background: rgba(37, 37, 37, 0.52);
+           padding: 15px;
+           border-radius: 100%;
+           transition: font-size .5s, opacity .2s;
+
+           svg {
+               transition: font-size 1s ease;
+               font-size: 0;
+               color: white;
+
+           }
+       }
+   }
+
+}
+

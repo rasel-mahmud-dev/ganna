@@ -4,7 +4,7 @@ Ganna is an online music listener app. it use for listen any music. also has
 multiple album artist, album.
 User can create their account and save to playlist.
 
-## CLIENT
+# CLIENT
 ## Functional requirement.
 - Navigation bar
 - Homepage
@@ -22,9 +22,11 @@ User can create their account and save to playlist.
   - update song
   - delete song
   - delete user
+  - add artist
+  - add genre
+  - add playlist for everyone
 
-
-## BACKEND
+# BACKEND
 ## Functional requirement.
 - Local Authentication.
     - Hash password
@@ -34,7 +36,7 @@ User can create their account and save to playlist.
 - Add song user favorite list.
 - add song to new playlist.
 - Admin can add, delete, update song 
-
+- Admin also can add genres, albums, artists, playlist,  
 
 ## Database requirement.
 - MySql
@@ -69,19 +71,23 @@ User can create their account and save to playlist.
 - cover
 - createdAt
 
+**Genre** 
+  - genreId
+  - name
+  - createdAt
 
 **Song**
   - songId
   - title
   - duration
   - categoryAlbumId
-  - albumId
-  - artistId
+  - albumId => albumId[]
+  - artistId => ArtistId[]
   - createdAt
   - updatedAt
   - cover
   - url
-  - genreId
+  - genreId => GenreId[]
 
 **HitSong** [count play times song]
  - id
@@ -133,3 +139,24 @@ Admin endpoint
  - POST /admin/user [private]
  - PATCH /admin/userId [private]
  - DELETE /admin/userId [private]
+
+
+Genres endpoint
+- GET /genres
+- POST /genres/add-genre [private]
+- PATCH /genres/genreId [private]
+- DELETE /genres/genreId [private]
+
+
+Artist endpoint
+- GET /artists
+- POST /artists/add-artist [private]
+- PATCH /artists/artistId [private] update artist
+- DELETE /artists/artistId [private]
+
+
+Favorite endpoint
+- GET /favorite/all [private]
+- POST /favorite [private]
+- PATCH /favorite/favoriteId [private]
+- DELETE /favorite/favoriteId [private]

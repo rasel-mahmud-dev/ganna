@@ -328,6 +328,14 @@ const Player = () => {
         })
     }
 
+    function getNextSong() {
+        if (player && player.items) {
+            return player.items[player.playIndex + 1]
+        }
+    }
+
+    const nextSong = getNextSong()
+
     return (
         <div className="player-container">
             <div className="player-root">
@@ -404,7 +412,9 @@ const Player = () => {
                     <li className="relative flex items-center">
                         <div>
                             <span>Up Next</span>
-                            <h4>Shu Thayo</h4>
+                            <h4 className={`${nextSong ? '' : 'disable-text'}`}>
+                                {nextSong ? nextSong.title : 'No song next'}
+                            </h4>
                         </div>
                         <Link to="/player">
                             <FaAngleUp />

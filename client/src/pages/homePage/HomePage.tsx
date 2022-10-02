@@ -12,7 +12,8 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 import api from '../../axios'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import Song from '../../components/song/Song'
 
 const HomePage = () => {
     const items = [
@@ -46,6 +47,8 @@ const HomePage = () => {
         { name: 'My Music' },
     ]
 
+    const navigate = useNavigate()
+
     function renderItem(str: string, data: any[]) {
         switch (str) {
             case 'Trending Songs':
@@ -54,14 +57,11 @@ const HomePage = () => {
                     <div className="flex  song-list flex-wrap">
                         {data &&
                             data.map((a) => (
-                                <Link to={`/song/${a.title}`}>
-                                    <div className="song-item ">
-                                        <div className="card">
-                                            <img src={staticPath(a.cover)} alt="Pani Di Gal" title="Pani Di Gal" />
-                                        </div>
-                                        <p className="song-name">{a.title}</p>
-                                    </div>
-                                </Link>
+                                <Song
+                                    onClickPlay={() => navigate(`/song/${a.title}`)}
+                                    cover={a.cover}
+                                    title={a.title}
+                                />
                             ))}
                     </div>
                 )

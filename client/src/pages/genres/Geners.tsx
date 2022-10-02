@@ -7,7 +7,7 @@ import InputGroup from '../../components/inputGroup/InputGroup'
 import { BiPen, BiTrash } from 'react-icons/all'
 
 const Geners = () => {
-    const [genres, setGenres] = useState([])
+    const [genres, setGenres] = useState<any>([])
 
     const [updateItem, setUpdateItem] = useState<{ name: string; genreId: number } | null>(null)
 
@@ -50,6 +50,7 @@ const Geners = () => {
             api.post('/api/v1/genres/add-genre', { name })
                 .then(({ status, data }) => {
                     if (status === 201) {
+                        setGenres([...genres, data.genre])
                     }
                 })
                 .catch((ex) => {
