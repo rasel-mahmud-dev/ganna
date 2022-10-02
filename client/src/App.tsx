@@ -25,6 +25,7 @@ import AlbumList from './pages/admin/albumList/AlbumList'
 import Geners from './pages/genres/Geners'
 import PlayList from './pages/playList/PlayList'
 import RegistrationPage from './pages/registration/Registration'
+import CurrentPlayQueue from './pages/currentPlayQueue/CurrentPlayQueue'
 
 function App() {
     const [count, setCount] = useState(0)
@@ -33,7 +34,9 @@ function App() {
     useEffect(() => {
         loginWihToken(dispatch)
 
+        // if (auth) {
         fetchFavoriteListAction(dispatch)
+        // }
     }, [])
 
     function handleCloseSidebar() {
@@ -73,6 +76,7 @@ function App() {
                         <Route path="/genres" element={<Geners />} />
                         <Route path="/playlist" element={<PlayList />} />
                         <Route path="/song/:title" element={<SongDetail />} />
+                        <Route path="/player" element={<CurrentPlayQueue />} />
                     </Routes>
                     <Footer />
                 </div>

@@ -39,7 +39,7 @@ const LeftSidebar = (props) => {
 
     const adminItems = [
         { label: 'Songs', to: '/admin/songs' },
-        { label: 'Add Songs', to: '/admin/add-songs' },
+        { label: 'Add Song', to: '/admin/add-song' },
         { label: 'Genres', to: '/admin/genres' },
         { label: 'Album', to: '/admin/albums' },
         { label: 'Artist', to: '/admin/artist' },

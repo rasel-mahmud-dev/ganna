@@ -120,195 +120,14 @@ const HomePage = () => {
         setActiveCat(item.name)
     }
 
-    const a = (
-        <ul>
-            <li className="slide animate">
-                <a
-                    className="_a default_bg"
-                    aria-label="banner images"
-                    href="/playlist/gaana-dj-hindi-workout-essentials"
-                >
-                    <picture>
-                        <source
-                            srcSet="https://a10.gaanacdn.com/gn_img/showcase/dwN39y83DP/wN39agO3DP/size_l_1610733351.webp"
-                            media="(min-width: 1420px)"
-                        />
-                        <source
-                            srcSet="https://a10.gaanacdn.com/gn_img/showcase/dwN39y83DP/wN39agO3DP/size_m_1610733351.webp"
-                            media="(min-width: 992px)"
-                        />
-                        <source srcSet="https://a10.gaanacdn.com/gn_img/showcase/dwN39y83DP/wN39agO3DP/size_s_1610733351.webp" />
-
-                        <img
-                            srcSet="https://a10.gaanacdn.com/images/showcase/1610733351_12677.jpg"
-                            alt="Hindi Workout Essentials"
-                            title="Hindi Workout Essentials"
-                        />
-                    </picture>
-                </a>
-            </li>
-            <li className="slide animate">
-                <a
-                    className="_a default_bg"
-                    aria-label="banner images"
-                    href="/playlist/gaana-dj-workout-on-punjabi-beat"
-                >
-                    <picture>
-                        <source
-                            srcSet="https://a10.gaanacdn.com/gn_img/showcase/ZaP374RWDy/ZaP372BKDy/size_l_1641541612.webp"
-                            media="(min-width: 1420px)"
-                        />
-                        <source
-                            srcSet="https://a10.gaanacdn.com/gn_img/showcase/ZaP374RWDy/ZaP372BKDy/size_m_1641541612.webp"
-                            media="(min-width: 992px)"
-                        />
-                        <source srcSet="https://a10.gaanacdn.com/gn_img/showcase/ZaP374RWDy/ZaP372BKDy/size_s_1641541612.webp" />
-                        <img
-                            srcSet="https://a10.gaanacdn.com/images/showcase/1641541612_199.jpg"
-                            alt="Workout Punjabi Beat"
-                            title="Workout Punjabi Beat"
-                        />
-                    </picture>
-                </a>
-            </li>
-            <li className="slide animate">
-                <a className="_a default_bg" aria-label="banner images" href="/playlist/gaana-dj-new-indie-pop-hot-50">
-                    <picture>
-                        <source
-                            srcSet="https://a10.gaanacdn.com/gn_img/showcase/jBr3gLyWR1/Br3gm5QbR1/size_l_1662536030.webp"
-                            media="(min-width: 1420px)"
-                        />
-                        <source
-                            srcSet="https://a10.gaanacdn.com/gn_img/showcase/jBr3gLyWR1/Br3gm5QbR1/size_m_1662536030.webp"
-                            media="(min-width: 992px)"
-                        />
-                        <source srcSet="https://a10.gaanacdn.com/gn_img/showcase/jBr3gLyWR1/Br3gm5QbR1/size_s_1662536030.webp" />
-                        <img
-                            srcSet="https://a10.gaanacdn.com/images/showcase/1662536030_13079.jpg"
-                            alt="New Indie Releases"
-                            title="New Indie Releases"
-                        />
-                    </picture>
-                </a>
-            </li>
-            <li className="slide animate">
-                <a
-                    className="_a default_bg"
-                    aria-label="banner images"
-                    href="/playlist/gaana-dj-new-release-hot-20-punjabi"
-                >
-                    <picture>
-                        <source
-                            srcSet="https://a10.gaanacdn.com/gn_img/showcase/XzVWRLKdqR/zVWRJ71Wdq/size_l_1658294455.webp"
-                            media="(min-width: 1420px)"
-                        />
-                        <source
-                            srcSet="https://a10.gaanacdn.com/gn_img/showcase/XzVWRLKdqR/zVWRJ71Wdq/size_m_1658294455.webp"
-                            media="(min-width: 992px)"
-                        />
-                        <source srcSet="https://a10.gaanacdn.com/gn_img/showcase/XzVWRLKdqR/zVWRJ71Wdq/size_s_1658294455.webp" />
-                        <img
-                            srcSet="https://a10.gaanacdn.com/images/showcase/1658294455_6713.jpg"
-                            alt="New Releases Punjabi"
-                            title="New Releases Punjabi"
-                        />
-                    </picture>
-                </a>
-            </li>
-            <li className="slide animate">
-                <a className="_a default_bg" aria-label="banner images" href="/playlist/gaana-dj-slow-romantic-hindi">
-                    <div className="LazyLoad is-visible">
-                        <picture>
-                            <source
-                                srcSet="https://a10.gaanacdn.com/gn_img/showcase/MmqK5EKwRO/MmqK5XXbwR/size_l_1651817274.webp"
-                                media="(min-width: 1420px)"
-                            />
-                            <source
-                                srcSet="https://a10.gaanacdn.com/gn_img/showcase/MmqK5EKwRO/MmqK5XXbwR/size_m_1651817274.webp"
-                                media="(min-width: 992px)"
-                            />
-                            <source srcSet="https://a10.gaanacdn.com/gn_img/showcase/MmqK5EKwRO/MmqK5XXbwR/size_s_1651817274.webp" />
-                            <img
-                                srcSet="https://a10.gaanacdn.com/images/showcase/1651817274_720.jpg"
-                                alt="Slow Romantic Hindi"
-                                title="Slow Romantic Hindi"
-                            />
-                        </picture>
-                    </div>
-                </a>
-            </li>
-
-            <li className="slide animate">
-                <a className="_a default_bg" aria-label="banner images" href="/playlist/gaana-dj-best-of-a-p-dhillon">
-                    <div className="LazyLoad is-visible">
-                        <picture>
-                            <source
-                                srcSet="https://a10.gaanacdn.com/gn_img/showcase/a7LWBkzbzX/7LWBBRDWzX/size_l_1657699648.webp"
-                                media="(min-width: 1420px)"
-                            />
-                            <source
-                                srcSet="https://a10.gaanacdn.com/gn_img/showcase/a7LWBkzbzX/7LWBBRDWzX/size_m_1657699648.webp"
-                                media="(min-width: 992px)"
-                            />
-                            <source srcSet="https://a10.gaanacdn.com/gn_img/showcase/a7LWBkzbzX/7LWBBRDWzX/size_s_1657699648.webp" />
-                            <img
-                                srcSet="https://a10.gaanacdn.com/images/showcase/1657699648_13453.jpg"
-                                alt="Best of A P Dhillon"
-                                title="Best of A P Dhillon"
-                            />
-                        </picture>
-                    </div>
-                </a>
-            </li>
-
-            <li className="slide animate">
-                <a className="_a default_bg" aria-label="banner images" href="/playlist/gaana-dj-sad-songs-hindi">
-                    <div className="LazyLoad is-visible">
-                        <picture>
-                            <source
-                                srcSet="https://a10.gaanacdn.com/gn_img/showcase/81l3Me3rMx/1l3MZnPWrM/size_l_1651060182.webp"
-                                media="(min-width: 1420px)"
-                            />
-                            <source
-                                srcSet="https://a10.gaanacdn.com/gn_img/showcase/81l3Me3rMx/1l3MZnPWrM/size_m_1651060182.webp"
-                                media="(min-width: 992px)"
-                            />
-                            <source srcSet="https://a10.gaanacdn.com/gn_img/showcase/81l3Me3rMx/1l3MZnPWrM/size_s_1651060182.webp" />
-                            <img
-                                srcSet="https://a10.gaanacdn.com/images/showcase/1651060182_5729.jpg"
-                                alt="Heartbreak Hits"
-                                title="Heartbreak Hits"
-                            />
-                        </picture>
-                    </div>
-                </a>
-            </li>
-
-            <li className="slide animate">
-                <a className="_a default_bg" aria-label="banner images" href="/playlist/gaana-dj-big-hits-punjabi">
-                    <div className="LazyLoad is-visible">
-                        <picture>
-                            <source
-                                srcSet="https://a10.gaanacdn.com/gn_img/showcase/qaLKY23pO4/qaLKYowWpO/size_l_1658294601.webp"
-                                media="(min-width: 1420px)"
-                            />
-                            <source
-                                srcSet="https://a10.gaanacdn.com/gn_img/showcase/qaLKY23pO4/qaLKYowWpO/size_m_1658294601.webp"
-                                media="(min-width: 992px)"
-                            />
-                            <source srcSet="https://a10.gaanacdn.com/gn_img/showcase/qaLKY23pO4/qaLKYowWpO/size_s_1658294601.webp" />
-                            <img
-                                srcSet="https://a10.gaanacdn.com/images/showcase/1658294601_140.jpg"
-                                alt="Big Hits - Punjabi"
-                                title="Big Hits - Punjabi"
-                            />
-                        </picture>
-                    </div>
-                </a>
-            </li>
-        </ul>
-    )
-
+    const a = [
+        { cover: 'cover/size_l_1641541612.webp' },
+        { cover: 'cover/size_l_1657699648.webp' },
+        { cover: 'cover/size_l_1658294455.webp' },
+        { cover: 'cover/size_l_1662536030.webp' },
+        { cover: 'cover/size_l_1663939695.webp' },
+        { cover: 'cover/size_l_1664259579.webp' },
+    ]
     return (
         <div className="container">
             <ul className="flex item-category ">
@@ -323,15 +142,27 @@ const HomePage = () => {
                 <Swiper
                     // install Swiper modules
                     modules={[Navigation, A11y]}
-                    spaceBetween={50}
-                    slidesPerView={3}
+                    spaceBetween={0}
+                    breakpoints={{
+                        1200: {
+                            slidesPerView: 2,
+                        },
+                        768: {
+                            slidesPerView: 1,
+                        },
+                    }}
+                    slidesPerView={1}
                     navigation
                     // scrollbar={{ draggable: true }}
                     // onSwiper={(swiper) => console.log(swiper)}
                     // onSlideChange={() => console.log('slide change')}>
                 >
-                    {a.props.children.map((ch) => (
-                        <SwiperSlide>{ch}</SwiperSlide>
+                    {a.map((ch) => (
+                        <SwiperSlide>
+                            <div>
+                                <img className="w-full" src={staticPath(ch.cover)} alt="" />
+                            </div>
+                        </SwiperSlide>
                     ))}
                 </Swiper>
             </div>

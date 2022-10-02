@@ -137,3 +137,26 @@
   }
 
 }
+
+.next-song-label{
+    box-sizing: border-box;
+    margin-left: 30px;
+
+    li{
+        align-items: center;
+        column-gap: 30px;
+        box-sizing: border-box;
+    }
+    svg{
+        width: 10px;
+    }
+    h4{
+        color: #424242;
+        font-size: 14px;
+        line-height: 0.9;
+    }
+    span{
+        font-size: 12px;
+        color: #7e7e7e;
+    }
+}

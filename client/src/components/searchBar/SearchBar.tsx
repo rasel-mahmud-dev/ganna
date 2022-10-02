@@ -4,9 +4,14 @@ import { BiSearch, MdClear } from 'react-icons/all'
 import './searchBar.scss'
 import api from '../../axios'
 import staticPath from '../../utils/staticPath'
+import { Link } from 'react-router-dom'
+import { ACTION_TYPES } from '../../store/types'
+import useStore from '../../store/useStore'
 
 const SearchBar = () => {
     const timeOutRef = useRef<number>()
+    const inputRef = useRef<HTMLInputElement>(null)
+    const [_, dispatch] = useStore()
 
     const [state, setState] = useState({
         open: false,
@@ -22,6 +27,13 @@ const SearchBar = () => {
         setState((prevState) => ({
             ...prevState,
             searchValue: (e.target as HTMLInputElement).value,
+        }))
+    }
+
+    function clearValue() {
+        setState((prevState) => ({
+            ...prevState,
+            searchValue: '',
         }))
     }
 
@@ -85,8 +97,6 @@ const SearchBar = () => {
         })
     }
 
-    const inputRef = useRef<HTMLInputElement>(null)
-
     function handleClickOnSearch() {
         setState({
             ...state,
@@ -101,6 +111,31 @@ const SearchBar = () => {
             ...state,
             open: false,
         })
+    }
+
+    function searchWith(value: string) {
+        api.post('/api/v1/songs/search', { text: value }).then(({ data, status }) => {
+            if (status === 200) {
+                setState((prevState) => ({
+                    ...prevState,
+                    result: data,
+                    searchValue: value,
+                }))
+            }
+        })
+    }
+
+    function preparedMusicForPlay(itemIndex: number) {
+        if (state.result.songs) {
+            dispatch({
+                type: ACTION_TYPES.SET_PREPARE_PLAYLIST,
+                payload: {
+                    playlistName: 'Search Music',
+                    items: state.result.songs,
+                    playIndex: itemIndex ? itemIndex : 0,
+                },
+            })
+        }
     }
 
     return (
@@ -125,19 +160,22 @@ const SearchBar = () => {
                             />
 
                             <div className={`search-input-control ${state.open ? 'search-input-control--open' : ''}`}>
-                                <span className="search-reset">Clear</span>
+                                <span className="search-reset" onClick={clearValue}>
+                                    Clear
+                                </span>
                                 <MdClear onClick={handleCloseSearchMenu} className="search-clear" />
                             </div>
                         </div>
 
+                        {/********** search result output **************/}
                         <div className={`search-content ${state.open ? 'search-content-open' : ''}`}>
                             <div className="search-result-out">
                                 {/******** result for songs *********/}
                                 <div>
                                     <h4 className="search-result-label">Songs</h4>
                                     {state.result?.songs ? (
-                                        state.result?.songs.map((song: any) => (
-                                            <div>
+                                        state.result?.songs.map((song: any, index: number) => (
+                                            <div onClick={() => preparedMusicForPlay(index)}>
                                                 <h4 className="">{song.title}</h4>
                                             </div>
                                         ))
@@ -153,8 +191,13 @@ const SearchBar = () => {
                                         {state.result?.artists ? (
                                             state.result?.artists.map((artist: any) => (
                                                 <div className="search-artist">
-                                                    <img src={staticPath(artist.avatar)} alt="" />
-                                                    <h4 className="artist-name">{artist.name}</h4>
+                                                    <Link
+                                                        to={`/artists/${artist.name}`}
+                                                        onClick={handleCloseSearchMenu}
+                                                    >
+                                                        <img src={staticPath(artist.avatar)} alt="" />
+                                                        <h4 className="artist-name">{artist.name}</h4>
+                                                    </Link>
                                                 </div>
                                             ))
                                         ) : (
@@ -183,7 +226,7 @@ const SearchBar = () => {
                                             <div>
                                                 {state.recentSearch.map((search: any) => (
                                                     <div className="recent-search-keyword">
-                                                        <li>{search}</li>
+                                                        <li onClick={() => searchWith(search)}>{search}</li>
                                                     </div>
                                                 ))}
                                             </div>

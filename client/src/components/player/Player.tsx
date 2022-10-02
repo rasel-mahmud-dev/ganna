@@ -1,12 +1,21 @@
 import React, { SyntheticEvent, useEffect, useRef, useState } from 'react'
 
 import './style.scss'
-import { AiFillSound, BsVolumeMute, CgHeart, CgPlayTrackNext, CgPlayTrackPrev, FaEllipsisV } from 'react-icons/all'
+import {
+    AiFillSound,
+    BsVolumeMute,
+    CgHeart,
+    CgPlayTrackNext,
+    CgPlayTrackPrev,
+    FaAngleUp,
+    FaEllipsisV,
+} from 'react-icons/all'
 
 import useStore from '../../store/useStore'
 import staticPath from '../../utils/staticPath'
 import api, { backend } from '../../axios'
 import { ACTION_TYPES } from '../../store/types'
+import { Link } from 'react-router-dom'
 
 const Player = () => {
     const [{ musicDetail, favorites, player }, dispatch] = useStore()
@@ -383,6 +392,23 @@ const Player = () => {
                             <AiFillSound className="sound-icon" onClick={toggleMute} />
                         )}
 
+                        {/*<div className="volume-bar">*/}
+                        {/*  <div className="range" ref={volumeBarRef} onClick={volumeChangeHandler} >*/}
+                        {/*    <div className="current" style={{height: state.volume  + "px"}}></div>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
+                    </li>
+                </div>
+
+                <div className="next-song-label">
+                    <li className="relative flex items-center">
+                        <div>
+                            <span>Up Next</span>
+                            <h4>Shu Thayo</h4>
+                        </div>
+                        <Link to="/player">
+                            <FaAngleUp />
+                        </Link>
                         {/*<div className="volume-bar">*/}
                         {/*  <div className="range" ref={volumeBarRef} onClick={volumeChangeHandler} >*/}
                         {/*    <div className="current" style={{height: state.volume  + "px"}}></div>*/}

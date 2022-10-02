@@ -6,29 +6,6 @@ import api from '../../axios'
 import { useParams } from 'react-router-dom'
 
 const AddSong = () => {
-    const age = '234'
-    // console.log(age)
-
-    function getName(name: string) {
-        console.log(name)
-    }
-
-    getName('SAD')
-
-    const btn = document.querySelector('.btn')
-    let count = 0
-
-    function render(num: number) {
-        console.log(num)
-    }
-
-    btn.addEventListener('click', () => {
-        // if count 1 then fire render function
-        if (count == 1) {
-            render(count)
-        }
-    })
-
     const params = useParams()
 
     const [songDetail, setSongDetail] = useState(null)
