@@ -4,3 +4,10 @@
   }
 }
 
+
+@mixin getUp($px){
+  @media (min-width: $px){
+    @content;
+  }
+}
+

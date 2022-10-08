@@ -4,7 +4,7 @@ import Navigation from './components/navigation/Navigation'
 import HomePage from './pages/homePage/HomePage'
 import Player from './components/player/Player'
 import LoginPage from './pages/login/LoginPage'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import { loginWihToken } from './store/actions/userAction'
 import useStore from './store/useStore'
 import AddSong from './pages/admin/AddSong'
@@ -31,6 +31,7 @@ import NewSongs from './pages/new-songs/NewSongs'
 
 function App() {
     const [{ auth, alertMessage }, dispatch] = useStore()
+    const location = useLocation()
 
     useEffect(() => {
         loginWihToken(dispatch)
@@ -84,7 +85,7 @@ function App() {
                     <Footer />
                 </div>
 
-                <Player />
+                {/*<Player />*/}
             </div>
         </div>
     )

@@ -1,3 +1,4 @@
+@import "src/sass/-mixin";
 
 .navigation {
     background: #f5f5f5;
@@ -15,6 +16,10 @@
         grid-template-columns: repeat(3, 2fr);
         justify-content: space-between;
         padding: 15px 30px;
+        @include getDown(600px){
+            grid-template-columns: repeat(2, 2fr);
+            padding: 15px 0px;
+        }
     }
 
     .logo-menu {
@@ -56,4 +61,21 @@
 
 .spaceH {
     height: 64px;
+}
+.icon-login{
+    @include getUp(600px){
+        display: none
+    }
+    font-size: 20px;
+}
+
+.text-login{
+    @include getDown(600px){
+        display: none
+    }
+}
+.mobile-search-btn{
+    margin: auto;
+    font-size: 20px;
+    margin-right: 10px;
 }

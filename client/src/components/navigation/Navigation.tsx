@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './styles.scss'
 
-import { AiFillDashboard, BiUser, FaBars, FaSignOutAlt } from 'react-icons/all'
+import { AiFillDashboard, BiSearch, BiUser, FaBars, FaSignOutAlt } from 'react-icons/all'
 import { Link, NavLink } from 'react-router-dom'
 import useStore from '../../store/useStore'
 import staticPath from '../../utils/staticPath'
@@ -45,6 +45,7 @@ const Navigation = () => {
                                 </NavLink>
                             </div>
                         </div>
+
                         <div className="searchbar-container">
                             <SearchBar />
                         </div>
@@ -84,9 +85,19 @@ const Navigation = () => {
                                     </Dropdown>
                                 </li>
                             ) : (
-                                <li>
-                                    <Link to="/auth/login">Log In / Sign Up</Link>
-                                </li>
+                                <div className="flex ">
+                                    <li className="text-login">
+                                        <Link to="/auth/login">Log In / Sign Up</Link>
+                                    </li>
+                                    <div className="mobile-search-btn">
+                                        <BiSearch />
+                                    </div>
+                                    <li className="icon-login">
+                                        <Link to="/auth/login">
+                                            <BiUser />
+                                        </Link>
+                                    </li>
+                                </div>
                             )}
                         </div>
                     </div>

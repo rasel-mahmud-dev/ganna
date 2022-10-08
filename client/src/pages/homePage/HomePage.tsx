@@ -138,7 +138,7 @@ const HomePage = () => {
 
     return (
         <div className="container">
-            <ul className="flex item-category ">
+            <ul className="flex item-category flex-wrap ">
                 {items.map((item) => (
                     <li onClick={() => changeCategory(item)} className={`${activeCat === item.name ? 'active' : ''}`}>
                         {item.name}
