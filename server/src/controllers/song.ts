@@ -15,6 +15,11 @@ export async function getSongController(req: Request, res: Response, next: NextF
             let sql = `SELECT * FROM hit_songs JOIN songs ON songs.songId = hit_songs.songId ORDER BY views DESC LIMIT 20`;
             const [result] = await database.query<any>(sql);
             res.status(200).json({ songs: result });
+        } else if (id === "New-Releases") {
+            const database = await connectDatabase();
+            let sql = `SELECT * FROM songs ORDER BY createdAt LIMIT 30 `;
+            const [result] = await database.query<any>(sql);
+            res.status(200).json({ songs: result });
         } else {
             const song = await Song.findOne<Song>({ songId: id });
 
