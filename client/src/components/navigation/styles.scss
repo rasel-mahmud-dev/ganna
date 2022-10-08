@@ -28,8 +28,13 @@
         }
 
         .logo {
-            svg {
-                margin-left: 10px;
+            margin-left: 5px;
+            .img-1{
+                width: 20px;
+            }
+            .img-2{
+                width: 100px;
+                margin-left: 3px;
             }
         }
     }
