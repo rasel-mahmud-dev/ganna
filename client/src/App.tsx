@@ -26,6 +26,7 @@ import Geners from './pages/genres/Geners'
 import PlayList from './pages/playList/PlayList'
 import RegistrationPage from './pages/registration/Registration'
 import CurrentPlayQueue from './pages/currentPlayQueue/CurrentPlayQueue'
+import TrendingSongs from './pages/trending-songs/TrendingSongs'
 
 function App() {
     const [count, setCount] = useState(0)
@@ -70,6 +71,7 @@ function App() {
                             <Route path="genres" element={<Geners />} />
                         </Route>
                         <Route path="/artists" element={<Artists />} />
+                        <Route path="/trending-songs" element={<TrendingSongs />} />
                         <Route path="/artists/:name" element={<Details />} />
                         <Route path="/favorite" element={<FavoriteMusic />} />
                         <Route path="albums" element={<AlbumList />} />

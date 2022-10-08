@@ -8,13 +8,21 @@ import Album from "../models/Album";
 
 export async function getSongController(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
-    try {
-        const song = await Song.findOne<Song>({ songId: id });
 
-        if (song) {
-            return res.status(200).json({ song: song });
+    try {
+        if (id === "Trending-Songs") {
+            const database = await connectDatabase();
+            let sql = `SELECT * FROM hit_songs JOIN songs ON songs.songId = hit_songs.songId ORDER BY views DESC LIMIT 20`;
+            const [result] = await database.query<any>(sql);
+            res.status(200).json({ songs: result });
         } else {
-            return res.status(404).json({ song: null });
+            const song = await Song.findOne<Song>({ songId: id });
+
+            if (song) {
+                return res.status(200).json({ song: song });
+            } else {
+                return res.status(404).json({ song: null });
+            }
         }
     } catch (ex) {
         next(ex);

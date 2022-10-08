@@ -14,8 +14,12 @@ import 'swiper/css/scrollbar'
 import api from '../../axios'
 import { Link, useNavigate } from 'react-router-dom'
 import Song from '../../components/song/Song'
+import useStore from '../../store/useStore'
+import { ACTION_TYPES } from '../../store/types'
 
 const HomePage = () => {
+    const [{ sectionData }, dispatch] = useStore()
+
     const items = [
         { name: 'All' },
         { name: 'Trending Songs' },
@@ -100,13 +104,16 @@ const HomePage = () => {
         { label: 'Top Playlists', filterBy: 'view_playlist' },
         { label: 'Popular In Hindi' },
     ]
-    const [sectionData, setSectionData] = useState({})
 
     useEffect(() => {
         api.post('/api/v1/songs/filter', { filter: sections })
             .then((res) => {
                 if (res.status === 200) {
-                    setSectionData(res.data.result)
+                    dispatch({
+                        type: ACTION_TYPES.SET_SECTION_SONGS,
+                        payload: res.data.result,
+                    })
+                    // setSectionData(res.data.result)
                 }
             })
             .catch((ex) => {

@@ -27,7 +27,7 @@ const LeftSidebar = (props) => {
     }
 
     const q = [
-        { label: 'Trending Songs', to: '' },
+        { label: 'Trending Songs', to: '/trending-songs' },
         { label: 'New Songs', to: '' },
         { label: 'Old Songs', to: '' },
         { label: 'Album', to: '/albums' },

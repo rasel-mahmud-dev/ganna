@@ -1,4 +1,4 @@
-import React, { ComponentType, FC, useReducer } from 'react'
+import React, { ComponentType, useReducer } from 'react'
 import AppContext from './AppContext'
 import { ACTION_TYPES } from './types'
 
@@ -27,6 +27,13 @@ export interface AppContextInterface {
     isPlay: boolean
     alertMessage?: string
     artists: any[] | null
+    sectionData: {
+        'Trending Songs': []
+        'New Releases': []
+        'Top Searched Artists': []
+        'Top Playlists': []
+        'Popular In Hindi': []
+    }
 }
 
 const sampleAppContext: AppContextInterface = {
@@ -35,6 +42,7 @@ const sampleAppContext: AppContextInterface = {
     isOpenLeftSidebar: false,
     isPlay: false,
     artists: null,
+    sectionData: {},
     player: {
         playlistName: '',
         items: [],
@@ -109,6 +117,12 @@ function reducer(state: AppContextInterface, action: { type: any; payload: any }
             return {
                 ...state,
                 favorites: action.payload,
+            }
+
+        case ACTION_TYPES.SET_SECTION_SONGS:
+            return {
+                ...state,
+                sectionData: action.payload,
             }
 
         default:
