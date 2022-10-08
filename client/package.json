@@ -16,7 +16,7 @@
         "react-ga": "^3.3.1",
         "react-icon": "^1.0.0",
         "react-icons": "^4.4.0",
-        "react-router-dom": "^6.4.0",
+        "react-router-dom": "^6.4.2",
         "sass": "^1.54.9",
         "swiper": "^8.4.2"
     },
@@ -26,6 +26,7 @@
         "@vitejs/plugin-react": "^2.1.0",
         "prettier": "2.7.1",
         "typescript": "^4.6.4",
-        "vite": "^3.1.0"
+        "vite": "^3.1.0",
+        "vite-plugin-no-fallback": "^0.2.2"
     }
 }
