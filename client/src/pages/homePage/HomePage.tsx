@@ -135,6 +135,7 @@ const HomePage = () => {
         { cover: 'cover/size_l_1663939695.webp' },
         { cover: 'cover/size_l_1664259579.webp' },
     ]
+
     return (
         <div className="container">
             <ul className="flex item-category ">
@@ -178,6 +179,7 @@ const HomePage = () => {
                 <div className="section">
                     <h3 className="section-name mb-2">{section.label}</h3>
                     {/*<div className="flex song-list">*/}
+                    {/* @ts-ignore */}
                     {renderItem(section.label, sectionData[section.label])}
                     {/*</div>*/}
                 </div>

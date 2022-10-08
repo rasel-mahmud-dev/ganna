@@ -3,7 +3,7 @@ import api from '../../axios'
 import staticPath from '../../utils/staticPath'
 
 import './style.scss'
-import { ACTION_TYPES } from '../../store/types'
+import { ACTION_TYPES, Song } from '../../store/types'
 import useStore from '../../store/useStore'
 
 const FavoriteMusic = () => {
@@ -11,7 +11,7 @@ const FavoriteMusic = () => {
 
     useEffect(() => {}, [])
 
-    function handlePlayPrepare(song: any, index: number, list: any) {
+    function handlePlayPrepare(song: Song, index: number, list: any) {
         let playlistName = 'Favorites'
 
         dispatch({

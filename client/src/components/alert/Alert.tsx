@@ -3,7 +3,7 @@ import './style.scss'
 import { dispatch } from '../../store/AppProvider'
 import { ACTION_TYPES } from '../../store/types'
 
-const Alert = (props) => {
+const Alert = (props: { message: string }) => {
     const { message } = props
     let timerId = useRef<number>()
 

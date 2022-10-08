@@ -4,7 +4,7 @@ import api from '../../axios'
 import { dispatch } from '../../store/AppProvider'
 import { ACTION_TYPES } from '../../store/types'
 
-const SongDetail = (props) => {
+const SongDetail = () => {
     const params = useParams()
 
     const [songDetail, setSongDetail] = useState<any>(null)

@@ -30,8 +30,7 @@ import TrendingSongs from './pages/trending-songs/TrendingSongs'
 import NewSongs from './pages/new-songs/NewSongs'
 
 function App() {
-    const [count, setCount] = useState(0)
-    const [{ isOpenLeftSidebar, auth, alertMessage }, dispatch] = useStore()
+    const [{ auth, alertMessage }, dispatch] = useStore()
 
     useEffect(() => {
         loginWihToken(dispatch)
@@ -53,7 +52,7 @@ function App() {
             <Navigation />
 
             <div className="app-root">
-                <LeftSidebar auth={auth} onClose={handleCloseSidebar} isOpenLeftSidebar={isOpenLeftSidebar} />
+                <LeftSidebar auth={auth} onClose={handleCloseSidebar} />
 
                 <div className="app-content">
                     <Routes>

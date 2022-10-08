@@ -1,14 +1,19 @@
-import React, { SyntheticEvent, useEffect, useState } from 'react'
+import React, { FC, SyntheticEvent, useEffect, useState } from 'react'
 
 import './style.scss'
 import { BiUser } from 'react-icons/all'
 import { Link, useLocation } from 'react-router-dom'
 import staticPath from '../../utils/staticPath'
 
-const LeftSidebar = (props) => {
+interface Props {
+    auth: any
+    onClose: () => any
+}
+
+const LeftSidebar: FC<Props> = (props) => {
     const location = useLocation()
 
-    const { isOpenLeftSidebar, auth, onClose } = props
+    const { auth, onClose } = props
     const [isAdminRoute, setAdminRoute] = useState(false)
 
     useEffect(() => {

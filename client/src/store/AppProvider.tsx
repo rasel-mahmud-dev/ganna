@@ -1,6 +1,6 @@
 import React, { ComponentType, useReducer } from 'react'
 import AppContext from './AppContext'
-import { ACTION_TYPES } from './types'
+import { ACTION_TYPES, Song } from './types'
 
 export let dispatch: React.Dispatch<any>
 
@@ -15,7 +15,10 @@ export interface AppContextInterface {
         role?: string
     } | null
 
-    musicDetail: null | object
+    musicDetail: null | {
+        url: string
+        songId: number
+    }
     isOpenLeftSidebar: boolean
     player: {
         playlistName: string
@@ -28,11 +31,11 @@ export interface AppContextInterface {
     alertMessage?: string
     artists: any[] | null
     sectionData: {
-        'Trending Songs': []
-        'New Releases': []
-        'Top Searched Artists': []
-        'Top Playlists': []
-        'Popular In Hindi': []
+        'Trending Songs': Song[] | null
+        'New Releases': Song[] | null
+        'Top Searched Artists': Song[] | null
+        'Top Playlists': Song[] | null
+        'Popular In Hindi': Song[] | null
     }
 }
 
@@ -42,7 +45,13 @@ const sampleAppContext: AppContextInterface = {
     isOpenLeftSidebar: false,
     isPlay: false,
     artists: null,
-    sectionData: {},
+    sectionData: {
+        'Trending Songs': null,
+        'New Releases': null,
+        'Top Searched Artists': null,
+        'Top Playlists': null,
+        'Popular In Hindi': null,
+    },
     player: {
         playlistName: '',
         items: [],

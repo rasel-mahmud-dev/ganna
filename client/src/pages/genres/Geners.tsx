@@ -1,7 +1,5 @@
 import React, { SyntheticEvent, useEffect, useState } from 'react'
 import api from '../../axios'
-import staticPath from '../../utils/staticPath'
-import { Link, useParams } from 'react-router-dom'
 import Modal from '../../components/modal/Modal'
 import InputGroup from '../../components/inputGroup/InputGroup'
 import { BiPen, BiTrash } from 'react-icons/all'

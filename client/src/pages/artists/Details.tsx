@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import api from '../../axios'
 import staticPath from '../../utils/staticPath'
-import { CgHeart, FaHeart, FaPause, FaPlay, MdAlbum } from 'react-icons/all'
+import { FaHeart, FaPause, FaPlay, MdAlbum } from 'react-icons/all'
 import { ACTION_TYPES } from '../../store/types'
 import useStore from '../../store/useStore'
 
-const Details = (props) => {
+const Details = () => {
     const [{ isPlay }, dispatch] = useStore()
 
     const params = useParams()

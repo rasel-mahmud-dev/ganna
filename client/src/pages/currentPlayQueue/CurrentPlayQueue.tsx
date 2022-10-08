@@ -5,8 +5,6 @@ import staticPath from '../../utils/staticPath'
 const CurrentPlayQueue = () => {
     const [{ player }] = useStore()
 
-    console.log(player)
-
     return (
         <div className="mx-4">
             <h1>{player.playlistName}</h1>

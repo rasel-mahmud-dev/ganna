@@ -108,12 +108,12 @@ const Footer = () => {
                 <div className="border-b"></div>
 
                 <div className="footer-category-list mt-5">
-                    {sections.map((section) => (
+                    {sections.map((section: any) => (
                         <div className="flex">
-                            {Object.keys(section).map((key) => (
+                            {Object.keys(section).map((key: any) => (
                                 <div>
                                     <span className="list-label">{key}</span>
-                                    {section[key]?.map((item) => (
+                                    {section[key]?.map((item: any) => (
                                         <div>
                                             <span className="list-item">
                                                 {key === 'Artists' ? (

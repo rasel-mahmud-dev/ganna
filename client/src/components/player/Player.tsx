@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import './style.scss'
 import {
@@ -14,7 +14,7 @@ import {
 import useStore from '../../store/useStore'
 import staticPath from '../../utils/staticPath'
 import api, { backend } from '../../axios'
-import { ACTION_TYPES } from '../../store/types'
+import { ACTION_TYPES, Song } from '../../store/types'
 import { Link } from 'react-router-dom'
 
 const Player = () => {
@@ -22,24 +22,32 @@ const Player = () => {
 
     let [music, setMusic] = useState<HTMLAudioElement>()
 
-    let intervalRef = useRef()
+    let intervalRef = useRef<Number>()
     let volumeBarRef = useRef<HTMLDivElement>(null)
 
-    const [state, setState] = useState({
+    const [state, setState] = useState<{
+        song: Song | null
+        isPlaying: boolean
+        mute: boolean
+        duration: number
+        volume: number
+        pause: boolean
+        currentTime: number
+    }>({
         isPlaying: false,
         mute: false,
         duration: 0,
         volume: 0.5,
         pause: false,
         currentTime: 0,
-        song: {},
+        song: null,
     })
 
     function progressInterval() {
         if (music) {
             intervalRef.current = setInterval(() => {
                 if (music.duration <= music.currentTime) {
-                    clearInterval(intervalRef.current)
+                    clearInterval(intervalRef.current as number)
                 }
 
                 setState((prevState) => {
@@ -56,7 +64,7 @@ const Player = () => {
         if (music && state.isPlaying) {
             progressInterval()
         }
-        return () => clearInterval(intervalRef.current)
+        return () => clearInterval(intervalRef.current as number)
     }, [state.isPlaying])
 
     useEffect(() => {
@@ -180,7 +188,7 @@ const Player = () => {
             updateState.currentTime = music.currentTime
         }
 
-        clearInterval(intervalRef.current)
+        clearInterval(intervalRef.current as number)
         progressInterval()
         updateState.isPlaying = true
         updateState.pause = false
@@ -234,7 +242,7 @@ const Player = () => {
     function handlePause() {
         let updateState = { ...state }
         if (music) {
-            clearInterval(intervalRef.current)
+            clearInterval(intervalRef.current as number)
             updateState.pause = true
             music?.pause()
         }
@@ -281,8 +289,12 @@ const Player = () => {
 
     const time = parseTime(state.currentTime)
 
-    function isFavorites(songId: string) {
-        return favorites.findIndex((f: any) => f.songId === songId) !== -1
+    function isFavorites(song?: Song) {
+        if (song && song.songId) {
+            return favorites.findIndex((f: any) => f.songId === song.songId) !== -1
+        } else {
+            return false
+        }
     }
 
     function progressWidth() {
@@ -291,7 +303,7 @@ const Player = () => {
     }
 
     function seekPosition(e: any) {
-        clearInterval(intervalRef.current)
+        clearInterval(intervalRef.current as number)
         // console.log(px1 , state.duration)
         // 1200px = 5s
         // 1px    = 5/1200s/px
@@ -310,7 +322,7 @@ const Player = () => {
         }
     }
 
-    function volumeChangeHandler(e) {
+    function volumeChangeHandler(e: any) {
         e.stopPropagation()
 
         if (!volumeBarRef.current) return
@@ -357,7 +369,7 @@ const Player = () => {
                     </div>
                     <div className="user-action flex items-center">
                         <CgHeart
-                            className={`fav-icon ${isFavorites(song.songId) ? 'text-primary' : ''}`}
+                            className={`fav-icon ${isFavorites(song) ? 'text-primary' : ''}`}
                             onClick={() => addToFavorite(true)}
                         />
                         <FaEllipsisV />

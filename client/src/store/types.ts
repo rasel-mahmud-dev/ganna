@@ -9,3 +9,18 @@ export enum ACTION_TYPES {
     SET_ARTISTS = 'SET_ARTISTS',
     SET_SECTION_SONGS = 'SET_SECTION_SONGS',
 }
+
+// interface define only datatype of property and method in object. it is not declare implementation
+export interface Song {
+    songId?: number
+    title: string
+    duration: number
+    categoryAlbumId?: string
+    albumId?: string
+    artistId?: string
+    createdAt?: string | Date
+    updatedAt?: string | Date
+    cover?: string
+    url?: string
+    genreId?: string
+}

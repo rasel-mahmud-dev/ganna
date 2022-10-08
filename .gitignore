@@ -28,3 +28,6 @@ server/node_modules
 server/.idea
 server/.env
 server/src/static/songs
+
+# Local Netlify folder
+.netlify

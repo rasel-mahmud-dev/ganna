@@ -13,11 +13,21 @@ const SearchBar = () => {
     const inputRef = useRef<HTMLInputElement>(null)
     const [_, dispatch] = useStore()
 
-    const [state, setState] = useState({
+    const [state, setState] = useState<{
+        open: boolean
+        searchValue?: string
+        result: {
+            songs: any
+            albums: any
+            artists: any
+        }
+        recentSearch: any
+    }>({
         open: false,
         searchValue: '',
         result: {
             songs: [],
+            albums: [],
             artists: [],
         },
         recentSearch: null,
