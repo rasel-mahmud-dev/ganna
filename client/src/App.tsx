@@ -30,7 +30,7 @@ import TrendingSongs from './pages/trending-songs/TrendingSongs'
 import NewSongs from './pages/new-songs/NewSongs'
 
 function App() {
-    const [{ auth, alertMessage }, dispatch] = useStore()
+    const [{ auth, isOpenLeftSidebar, alertMessage }, dispatch] = useStore()
     const location = useLocation()
 
     useEffect(() => {
@@ -53,7 +53,7 @@ function App() {
             <Navigation />
 
             <div className="app-root">
-                <LeftSidebar auth={auth} onClose={handleCloseSidebar} />
+                <LeftSidebar auth={auth} onClose={handleCloseSidebar} isOpenLeftSidebar={isOpenLeftSidebar} />
 
                 <div className="app-content">
                     <Routes>
@@ -85,7 +85,7 @@ function App() {
                     <Footer />
                 </div>
 
-                {/*<Player />*/}
+                <Player />
             </div>
         </div>
     )

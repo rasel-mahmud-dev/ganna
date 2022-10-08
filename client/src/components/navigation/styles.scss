@@ -30,6 +30,10 @@
         .menu-bar {
             color: #818181;
             font-size: 18px;
+            display: none;
+            @include getDown(600px){
+                display: block;
+            }
         }
 
         .logo {

@@ -16,14 +16,17 @@ import staticPath from '../../utils/staticPath'
 import api, { backend } from '../../axios'
 import { ACTION_TYPES, Song } from '../../store/types'
 import { Link } from 'react-router-dom'
+import GetScreenWidth from '../../hooks/GetScreenWidth'
 
-const Player = () => {
+const Player = (props: { screenWidth: number }) => {
     const [{ musicDetail, favorites, player }, dispatch] = useStore()
 
     let [music, setMusic] = useState<HTMLAudioElement>()
 
     let intervalRef = useRef<Number>()
     let volumeBarRef = useRef<HTMLDivElement>(null)
+
+    let isMobile = props.screenWidth <= 600
 
     const [state, setState] = useState<{
         song: Song | null
@@ -349,98 +352,107 @@ const Player = () => {
     const nextSong = getNextSong()
 
     return (
-        <div className="player-container">
+        <div className={`player-container ${isMobile ? 'mobile-view' : ''}`}>
             <div className="player-root">
                 <div onClick={seekPosition} className="seekbar">
                     <div className="seekbar_progress" style={{ width: progressWidth() }}></div>
                 </div>
 
-                <div className="flex items-center  player-song-info">
-                    <div className="song-thumb">
-                        <img
-                            src={staticPath(
-                                song
-                                    ? song.cover
-                                    : 'https://a10.gaanacdn.com/gn_img/albums/ZaP37RKDy7/P37OlNeX3D/size_m.webp'
-                            )}
-                            alt=""
-                        />
-                        <p className="song-title">{song ? song.title : 'select music'} </p>
-                    </div>
-                    <div className="user-action flex items-center">
-                        <CgHeart
-                            className={`fav-icon ${isFavorites(song) ? 'text-primary' : ''}`}
-                            onClick={() => addToFavorite(true)}
-                        />
-                        <FaEllipsisV />
-                        <div className="play-time">
-                            {song ? (
-                                <div className="music-time">
-                                    <span className="hour">{time.h}</span>
-                                    <span className="mx-1">
-                                        :<span className="min">{time.min < 10 ? '0' + time.min : time.min}</span>
-                                    </span>
-                                    <span className="mx-1">
-                                        :
-                                        <span className="second">
-                                            {time.second < 10 ? '0' + time.second : time.second}
-                                        </span>
-                                    </span>
-                                    / {song?.duration}
-                                    {/*{song && song?.duration.toString().includes(".") ? song.duration : song.duration + ":00"}*/}
+                <div className="player-root__items">
+                    <div className="flex items-center  player-song-info">
+                        <div className="song-thumb">
+                            <img
+                                src={staticPath(
+                                    song
+                                        ? song.cover
+                                        : 'https://a10.gaanacdn.com/gn_img/albums/ZaP37RKDy7/P37OlNeX3D/size_m.webp'
+                                )}
+                                alt=""
+                            />
+                            <p className="song-title">{song ? song.title : 'select music'} </p>
+                        </div>
+                        {!isMobile && (
+                            <div className="user-action flex items-center">
+                                <CgHeart
+                                    className={`fav-icon ${isFavorites(song) ? 'text-primary' : ''}`}
+                                    onClick={() => addToFavorite(true)}
+                                />
+                                <FaEllipsisV />
+                                <div className="play-time">
+                                    {song ? (
+                                        <div className="music-time">
+                                            <span className="hour">{time.h}</span>
+                                            <span className="mx-1">
+                                                :
+                                                <span className="min">{time.min < 10 ? '0' + time.min : time.min}</span>
+                                            </span>
+                                            <span className="mx-1">
+                                                :
+                                                <span className="second">
+                                                    {time.second < 10 ? '0' + time.second : time.second}
+                                                </span>
+                                            </span>
+                                            / {song?.duration}
+                                            {/*{song && song?.duration.toString().includes(".") ? song.duration : song.duration + ":00"}*/}
+                                        </div>
+                                    ) : (
+                                        '00/00.00'
+                                    )}
                                 </div>
-                            ) : (
-                                '00/00.00'
-                            )}
-                        </div>
-                    </div>
-                </div>
-
-                <div className="flex items-center player-control">
-                    <li>
-                        <CgPlayTrackPrev onClick={playPrevSong} />
-                        {state.isPlaying && !state.pause ? <PlayPauseCircle /> : <PlayCircle />}
-                        <CgPlayTrackNext onClick={playNextSong} />
-                    </li>
-                </div>
-
-                <div>
-                    <li className="relative">
-                        {state.mute ? (
-                            <BsVolumeMute className="sound-icon" onClick={toggleMute} />
-                        ) : (
-                            <AiFillSound className="sound-icon" onClick={toggleMute} />
+                            </div>
                         )}
+                    </div>
 
-                        {/*<div className="volume-bar">*/}
-                        {/*  <div className="range" ref={volumeBarRef} onClick={volumeChangeHandler} >*/}
-                        {/*    <div className="current" style={{height: state.volume  + "px"}}></div>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
-                    </li>
-                </div>
+                    <div className="flex items-center player-control">
+                        <li>
+                            {!isMobile && <CgPlayTrackPrev onClick={playPrevSong} />}
+                            {state.isPlaying && !state.pause ? <PlayPauseCircle /> : <PlayCircle />}
+                            {!isMobile && <CgPlayTrackNext onClick={playNextSong} />}
+                        </li>
+                    </div>
 
-                <div className="next-song-label">
-                    <li className="relative flex items-center">
+                    {!isMobile && (
                         <div>
-                            <span>Up Next</span>
-                            <h4 className={`${nextSong ? '' : 'disable-text'}`}>
-                                {nextSong ? nextSong.title : 'No song next'}
-                            </h4>
+                            <li className="relative">
+                                {state.mute ? (
+                                    <BsVolumeMute className="sound-icon" onClick={toggleMute} />
+                                ) : (
+                                    <AiFillSound className="sound-icon" onClick={toggleMute} />
+                                )}
+
+                                {/*<div className="volume-bar">*/}
+                                {/*  <div className="range" ref={volumeBarRef} onClick={volumeChangeHandler} >*/}
+                                {/*    <div className="current" style={{height: state.volume  + "px"}}></div>*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
+                            </li>
                         </div>
-                        <Link to="/player">
-                            <FaAngleUp />
-                        </Link>
-                        {/*<div className="volume-bar">*/}
-                        {/*  <div className="range" ref={volumeBarRef} onClick={volumeChangeHandler} >*/}
-                        {/*    <div className="current" style={{height: state.volume  + "px"}}></div>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
-                    </li>
+                    )}
+
+                    <div className="next-song-label">
+                        <li className="relative flex items-center">
+                            {!isMobile && (
+                                <div>
+                                    <span>Up Next</span>
+                                    <h4 className={`${nextSong ? '' : 'disable-text'}`}>
+                                        {nextSong ? nextSong.title : 'No song next'}
+                                    </h4>
+                                </div>
+                            )}
+                            <Link to="/player">
+                                <FaAngleUp />
+                            </Link>
+                            {/*<div className="volume-bar">*/}
+                            {/*  <div className="range" ref={volumeBarRef} onClick={volumeChangeHandler} >*/}
+                            {/*    <div className="current" style={{height: state.volume  + "px"}}></div>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
+                        </li>
+                    </div>
                 </div>
             </div>
         </div>
     )
 }
 
-export default Player
+export default GetScreenWidth(Player)

@@ -1,3 +1,4 @@
+@import "src/sass/-mixin";
 
 .footer{
   background: #fafafb;
@@ -14,9 +15,16 @@
     padding-top: 30px;
   }
 }
+
 .footer-category-list{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+    @include getDown(1000px){
+        grid-template-columns: repeat(3, 1fr)
+    }
+    @include getDown(600px){
+        grid-template-columns: repeat(2, 1fr)
+    }
 
   .list-label{
     font-size: 16px;

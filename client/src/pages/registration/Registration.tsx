@@ -51,7 +51,7 @@ const RegistrationPage = () => {
     }
 
     return (
-        <div className="login-form">
+        <div className="login-form px-4">
             <h1 className="mt-5">Registration form </h1>
             <form onSubmit={handleSubmit} className="mt-5">
                 <InputGroup

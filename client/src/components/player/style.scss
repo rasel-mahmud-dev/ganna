@@ -9,15 +9,18 @@
   z-index: 1001
 }
 
+
+
+.mobile-view{
+    .player-root .player-control{
+        flex: none;
+    }
+}
+
+
+
+
 .player-root{
-  width: 100%;
-  padding: 0 0px;
-  box-sizing: border-box;
-  border-top: 1px solid #c7c7c7;
-  box-shadow: 1px 3px 14px 0 #8b8b8bd9;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 
   .seekbar{
     height: 3px;
@@ -45,6 +48,17 @@
       }
     }
   }
+
+    .player-root__items{
+        width: 100%;
+        padding: 0 16px;
+        box-sizing: border-box;
+        border-top: 1px solid #c7c7c7;
+        box-shadow: 1px 3px 14px 0 #8b8b8bd9;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
   .player-song-info{
     flex: 3;

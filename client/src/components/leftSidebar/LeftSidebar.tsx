@@ -8,6 +8,7 @@ import staticPath from '../../utils/staticPath'
 interface Props {
     auth: any
     onClose: () => any
+    isOpenLeftSidebar: boolean
 }
 
 const LeftSidebar: FC<Props> = (props) => {
@@ -51,7 +52,7 @@ const LeftSidebar: FC<Props> = (props) => {
     ]
 
     return (
-        <div>
+        <div className={`${props.isOpenLeftSidebar ? 'mobile-left-sidebar' : 'asd'}`}>
             <div className="left-sidebar__backdrop" onClick={clickOnBackdrop}></div>
             <div className="left-sidebar">
                 <div className="sidebar-content">

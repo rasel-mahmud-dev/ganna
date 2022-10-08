@@ -28,6 +28,9 @@ p,h1,h3,h2,h4{
 .mr-1{margin-right: 5px}
 .p-4{
   padding: 16px;
+}.px-4{
+  padding-left: 16px;
+    padding-right: 16px;
 }
 .gap-x-4{column-gap: 16px}
 .flex-col{flex-direction: column}
@@ -67,6 +70,7 @@ li, ul{
 
   @include getDown(700px){
     margin-left: 0;
+    //padding: 15px;
   }
 }
 
