@@ -48,7 +48,9 @@ const AlbumList = () => {
         let payload: { [key: string]: any } = {}
 
         for (dataKey in data) {
-            if (dataKey === 'artistIds') {
+            if (dataKey === 'cover') {
+                payload[dataKey] = data[dataKey]
+            } else if (dataKey === 'artistIds') {
                 // this is store multiple ids;
                 if (data[dataKey] && data[dataKey].length) {
                     payload[dataKey] = data[dataKey].map((val: any) => val.artistId)

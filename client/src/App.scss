@@ -180,9 +180,13 @@ li, ul{
   overflow: hidden;
   //min-width: 150px;
   background: WHITE;
-  img{
-    display: flex
-  }
+    .card-image {
+        img {
+            display: flex ;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+        }
+    }
 }
 
 .btn{

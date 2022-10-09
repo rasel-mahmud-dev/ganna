@@ -16,7 +16,6 @@ const ArtistList: FC<Props> = (props) => {
 
     const [data, setData] = useState({
         name: '',
-        email: '',
         avatar: '',
     })
 
@@ -26,27 +25,10 @@ const ArtistList: FC<Props> = (props) => {
     useEffect(() => {
         api.get('api/v1/artists').then(({ data, status }) => {
             if (status === 200) {
-                observationHandler()
                 setArtist(data.artists)
             }
         })
     }, [])
-
-    function observationHandler() {
-        const images = document.querySelectorAll('.lazy')
-        let lazyImageObserver = new IntersectionObserver(function (entries, observer) {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('lazy-loaded')
-                    const img = entry.target.children[0] as HTMLImageElement
-                    img.setAttribute('src', img.dataset.source ? img.dataset.source : '')
-                    img.removeAttribute('data-source')
-                }
-            })
-        })
-
-        images.forEach((image) => lazyImageObserver.observe(image))
-    }
 
     function handleOpenUpdateForm(ar: any) {
         setOpenModal(true)
@@ -72,7 +54,7 @@ const ArtistList: FC<Props> = (props) => {
     function handleSubmit(e: React.SyntheticEvent) {
         e.preventDefault()
         let errorMessage = ''
-        let dataKey: keyof { email: string; name: string; avatar: string }
+        let dataKey: keyof { name: string; avatar: string }
 
         for (dataKey in data) {
             if (!data[dataKey]) {
@@ -123,14 +105,6 @@ const ArtistList: FC<Props> = (props) => {
                                 handleChange={handleChange}
                             />
                             <InputGroup
-                                type="email"
-                                data={data}
-                                name="email"
-                                label="Artist email"
-                                placeholder="Artist email"
-                                handleChange={handleChange}
-                            />
-                            <InputGroup
                                 data={data}
                                 name="avatar"
                                 label="Artist avatar"
@@ -171,10 +145,10 @@ const ArtistList: FC<Props> = (props) => {
 
             <div className="mt-10 flex flex-wrap gap-25">
                 {artist.map((ar: any) => (
-                    <div className="artist-item flex justify-between flex-col items-center">
+                    <div className="flex justify-between flex-col items-center">
                         <div className="">
                             <div className="lazy artist-image">
-                                <img className="w-full" data-source={staticPath(ar.avatar)} src="/bitmap.png" alt="" />
+                                <img className="w-full" src={staticPath(ar.avatar)} alt="" />
                             </div>
                         </div>
                         <div className="">

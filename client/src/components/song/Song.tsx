@@ -15,7 +15,9 @@ const Song: FC<Props> = ({ title, cover, onClickPlay }) => {
         <div className="song">
             <div className="song-item ">
                 <div className="card relative">
-                    <img src={staticPath(cover)} alt={title} title={title} />
+                    <div className="card-image">
+                        <img src={staticPath(cover)} alt={title} title={title} />
+                    </div>
                     <div className="card-overlay">
                         <div className="play-btn" onClick={onClickPlay}>
                             <FaPlay />

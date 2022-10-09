@@ -30,7 +30,7 @@ const SongList = () => {
                 {songs.map((ar: any) => (
                     <div className="flex justify-between items-center">
                         <div>
-                            <img src={staticPath(ar.cover)} alt="" />
+                            <img className="w-3/12" src={staticPath(ar.cover)} alt="" />
                         </div>
                         <div className="flex justify-between items-center w-full">
                             <h4>{ar.title}</h4>
