@@ -17,7 +17,7 @@ router.use("/api/v1/genres", genreRoute);
 
 router.get("/", async (req, res, next) => {
     try {
-        res.send("hi");
+        res.send("hisd");
     } catch (ex) {
         next(ex);
     }
