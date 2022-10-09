@@ -2,9 +2,14 @@ import React, { useEffect } from 'react'
 import useStore from '../../store/useStore'
 import api from '../../axios'
 import { ACTION_TYPES } from '../../store/types'
+import SongSkeleton from '../../components/skeleton/Song.Skeleton'
+import Song from '../../components/song/Song'
+import { useNavigate } from 'react-router-dom'
 
 const TrendingSongs = () => {
     const [{ sectionData }, dispatch] = useStore()
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (!sectionData['Trending Songs']) {
@@ -20,16 +25,20 @@ const TrendingSongs = () => {
         }
     }, [])
 
-    console.log(sectionData['Trending Songs'])
-
     return (
-        <div>
-            <h1>Trending songs</h1>
-            {sectionData['Trending Songs']?.map((song) => (
-                <div>
-                    <h4>{song.title}</h4>
-                </div>
-            ))}
+        <div className="mx-4">
+            <h2 className="h2">Trending songs</h2>
+            <div className="flex song-list flex-wrap mt-5">
+                {sectionData['Trending Songs']
+                    ? sectionData['Trending Songs']?.map((song) => (
+                          <Song
+                              onClickPlay={() => navigate(`/song/${song.slug}`)}
+                              cover={song.cover}
+                              title={song.title}
+                          />
+                      ))
+                    : new Array(15).fill(1).map((item) => <SongSkeleton />)}
+            </div>
         </div>
     )
 }

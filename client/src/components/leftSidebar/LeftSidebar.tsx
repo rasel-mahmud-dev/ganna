@@ -53,7 +53,7 @@ const LeftSidebar: FC<Props> = (props) => {
 
     return (
         <div className={`${props.isOpenLeftSidebar ? 'mobile-left-sidebar' : 'asd'}`}>
-            <div className="left-sidebar__backdrop" onClick={clickOnBackdrop}></div>
+            {props.isOpenLeftSidebar && <div className="left-sidebar__backdrop" onClick={clickOnBackdrop}></div>}
             <div className="left-sidebar">
                 <div className="sidebar-content">
                     <div className="first-section">

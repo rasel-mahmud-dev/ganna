@@ -49,7 +49,7 @@ const router = createHashRouter([
             { path: 'albums', element: <AlbumList /> },
             { path: '/genres', element: <Geners /> },
             { path: '/playlist', element: <PlayList /> },
-            { path: '/song/:title', element: <SongDetail /> },
+            { path: '/song/:slug', element: <SongDetail /> },
             { path: '/player', element: <CurrentPlayQueue /> },
         ],
     },

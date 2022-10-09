@@ -16,7 +16,7 @@ function connectDatabase() {
                 password: "12345",
                 insecureAuth: true,
                 database: "ganna",
-                connectionLimit: 1,
+                // connectionLimit: 1,
             } as any);
 
             await connection.connect();

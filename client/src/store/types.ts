@@ -13,7 +13,8 @@ export enum ACTION_TYPES {
 // interface define only datatype of property and method in object. it is not declare implementation
 export interface Song {
     songId?: number
-    title: string
+    title?: string
+    slug?: string
     duration: number
     categoryAlbumId?: string
     albumId?: string
@@ -23,4 +24,6 @@ export interface Song {
     cover?: string
     url?: string
     genreId?: string
+    lyrics?: string
+    released?: string
 }

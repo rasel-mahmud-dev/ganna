@@ -4,6 +4,7 @@ import InputGroup from '../../components/inputGroup/InputGroup'
 import SelectGroup from '../../components/selectGroup/SelectGroup'
 import api from '../../axios'
 import { useParams } from 'react-router-dom'
+import TextareaGroup from '../../components/textareaGroup/TextareaGroup'
 
 const AddSong = () => {
     const params = useParams()
@@ -11,6 +12,7 @@ const AddSong = () => {
     const [songDetail, setSongDetail] = useState(null)
     const [songData, setSongData] = useState<any>({
         title: 'Text',
+        slug: '',
         duration: 3.3,
         categoryAlbumId: [], // multiple ids
         artistId: [], // multiple ids
@@ -18,6 +20,8 @@ const AddSong = () => {
         genreId: [],
         url: 'sad',
         cover: '34',
+        released: '',
+        tuneComposition: '',
     })
 
     const [artists, setArtist] = React.useState([])
@@ -80,6 +84,10 @@ const AddSong = () => {
                 albumId: [findAlbumId],
                 genreId: [findGenreId],
                 url: item.url,
+                released: item.released,
+                slug: item.slug,
+                tuneComposition: item.tuneComposition,
+                lyrics: item.lyrics,
                 cover: item.cover,
             })
         })()
@@ -113,8 +121,12 @@ const AddSong = () => {
 
         let payload: any = {}
 
+        let optionsFields = ['lyrics', 'slug', 'released', 'tuneComposition']
+
         for (songDataKey in songData) {
-            if (songDataKey === 'genreId' || songDataKey === 'albumId') {
+            if (optionsFields.includes(songDataKey)) {
+                payload[songDataKey] = songData[songDataKey]
+            } else if (songDataKey === 'genreId' || songDataKey === 'albumId') {
                 // this are store single id;
                 if (songData[songDataKey] && songData[songDataKey].length) {
                     payload[songDataKey] = songData[songDataKey].map((val: any) => val[songDataKey])
@@ -176,6 +188,7 @@ const AddSong = () => {
                     placeholder="Enter song title"
                     handleChange={handleChange}
                 />
+                <InputGroup data={songData} name="slug" label="Slug" placeholder="slug" handleChange={handleChange} />
                 <InputGroup
                     data={songData}
                     name="cover"
@@ -248,6 +261,28 @@ const AddSong = () => {
                     name="url"
                     label="Song URL"
                     placeholder="Enter song url"
+                    handleChange={handleChange}
+                />
+                <InputGroup
+                    data={songData}
+                    name="tuneComposition"
+                    label="tuneComposition "
+                    placeholder="tuneComposition "
+                    handleChange={handleChange}
+                />
+                <InputGroup
+                    data={songData}
+                    name="released"
+                    label="Release Year"
+                    placeholder="Release year"
+                    handleChange={handleChange}
+                />
+
+                <TextareaGroup
+                    data={songData}
+                    name="lyrics"
+                    label="Song Lyrics"
+                    placeholder="Lyrics"
                     handleChange={handleChange}
                 />
 

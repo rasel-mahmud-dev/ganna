@@ -64,7 +64,7 @@ const HomePage = () => {
                         {data
                             ? data.map((a) => (
                                   <Song
-                                      onClickPlay={() => navigate(`/song/${a.title}`)}
+                                      onClickPlay={() => navigate(`/song/${a.slug}`)}
                                       cover={a.cover}
                                       title={a.title}
                                   />
@@ -78,7 +78,7 @@ const HomePage = () => {
                     <div className="flex gap-25 flex-wrap">
                         {data
                             ? data.map((a) => (
-                                  <Link to={`artists/${a.name}`}>
+                                  <Link to={`artists/${a.slug}`}>
                                       <div className="artist-item">
                                           <div className="artist-image cursor-pointer">
                                               <img
@@ -113,10 +113,10 @@ const HomePage = () => {
         api.post('/api/v1/songs/filter', { filter: sections })
             .then((res) => {
                 if (res.status === 200) {
-                    // dispatch({
-                    //     type: ACTION_TYPES.SET_SECTION_SONGS,
-                    //     payload: res.data.result,
-                    // })
+                    dispatch({
+                        type: ACTION_TYPES.SET_SECTION_SONGS,
+                        payload: res.data.result,
+                    })
                     // setSectionData(res.data.result)
                 }
             })

@@ -1,0 +1,16 @@
+@import "src/sass/-mixin";
+
+.lyrics{
+    white-space: pre-line;
+}
+
+.detail-layout{
+    display: grid;
+    grid-template-columns: 4fr 4fr;
+    @include getDown(600px){
+        grid-template-columns: 1fr;
+        .song-info{
+            margin-top: 20px;
+        }
+    }
+}

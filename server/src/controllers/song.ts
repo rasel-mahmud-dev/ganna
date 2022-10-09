@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import Song from "../models/Song";
+const slugify = require("slugify");
 
 import songValidator from "../validator/song";
 import connectDatabase from "../services/mysql";
@@ -35,9 +36,9 @@ export async function getSongController(req: Request, res: Response, next: NextF
 }
 
 export async function getSongByFieldController(req: Request, res: Response, next: NextFunction) {
-    const { title } = req.query;
+    const { title, slug } = req.query;
     try {
-        const song = await Song.findOne<Song>({ title: title });
+        const song = await Song.findOne<Song>({ slug: slug });
 
         if (song) {
             return res.status(200).json({ song: song });
@@ -89,7 +90,19 @@ export async function getAllSongController(req: Request, res: Response, next: Ne
 }
 
 export async function addSongController(req: Request, res: Response, next: NextFunction) {
-    const { title, albumId, artistId, categoryAlbumId, cover, duration, url, genreId } = req.body;
+    const {
+        title,
+        albumId,
+        artistId,
+        categoryAlbumId,
+        cover,
+        duration,
+        url,
+        genreId,
+        released,
+        tuneComposition,
+        lyrics = "",
+    } = req.body;
 
     try {
         const data = {
@@ -114,7 +127,10 @@ export async function addSongController(req: Request, res: Response, next: NextF
             ...data,
             albumId: data.albumId[0],
             genreId: data.genreId[0],
-
+            slug: slugify(title),
+            lyrics,
+            tuneComposition,
+            released,
             artistId: JSON.stringify(data.artistId),
             categoryAlbumId: JSON.stringify(data.categoryAlbumId),
         });
@@ -135,7 +151,20 @@ export async function addSongController(req: Request, res: Response, next: NextF
 export async function updateSongController(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
 
-    const { title, albumId, artistId, categoryAlbumId, cover, duration, url, genreId } = req.body;
+    const {
+        title,
+        albumId,
+        artistId,
+        categoryAlbumId,
+        cover,
+        duration,
+        url,
+        genreId,
+        slug,
+        released,
+        tuneComposition,
+        lyrics = "",
+    } = req.body;
 
     try {
         const data = {
@@ -155,9 +184,19 @@ export async function updateSongController(req: Request, res: Response, next: Ne
             return res.status(409).json({ message: result.error.details[0].message });
         }
 
+        let postSlug = "";
+        if (slug) {
+            postSlug = slugify(slug);
+        } else {
+            postSlug = slugify(title);
+        }
         const song = new Song({
             ...data,
             albumId: data.albumId[0],
+            slug: postSlug,
+            released,
+            tuneComposition,
+            lyrics: lyrics,
             genreId: data.genreId[0],
             artistId: JSON.stringify(data.artistId),
             categoryAlbumId: JSON.stringify(data.categoryAlbumId),
