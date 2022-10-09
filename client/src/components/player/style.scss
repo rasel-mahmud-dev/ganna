@@ -112,17 +112,41 @@
   }
 }
 
+.disable-icons{
+    svg{
+        fill: #dedede;
+        cursor: auto !important;
+        color: #dedede;
+    }
+}
 
 .pause-icon, .play-icon{
   width: 36px;
   font-size: 20px;
+    color: var(--primary-color)
 }
+
 .fav-icon{
   font-size: 20px;
   display: block;
   &:hover{
     color: var(--primary-color)
   }
+}
+.play-loading{
+    width: 28px;
+    height: 28px;
+    border: 3px solid  var(--primary-color);
+    border-bottom-color: transparent;
+    //border-left-color: transparent;
+    border-right-color: transparent;
+    box-sizing: border-box;
+    border-radius: 50%;
+    animation: spin .3s linear infinite;
+}
+@keyframes spin {
+    0%{rotate: 0deg}
+    100%{rotate: 360deg}
 }
 .music-time{
   .second, .min, .hour{

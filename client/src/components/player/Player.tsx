@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-
 import './style.scss'
 import {
     AiFillSound,
@@ -13,10 +12,11 @@ import {
 
 import useStore from '../../store/useStore'
 import staticPath from '../../utils/staticPath'
-import api, { backend } from '../../axios'
+import api, { backend, base } from '../../axios'
 import { ACTION_TYPES, Song } from '../../store/types'
 import { Link } from 'react-router-dom'
 import GetScreenWidth from '../../hooks/GetScreenWidth'
+import parseTime from '../../utils/parseTime'
 
 const Player = (props: { screenWidth: number }) => {
     const [{ musicDetail, favorites, player }, dispatch] = useStore()
@@ -36,6 +36,7 @@ const Player = (props: { screenWidth: number }) => {
         volume: number
         pause: boolean
         currentTime: number
+        loading: boolean
     }>({
         isPlaying: false,
         mute: false,
@@ -44,6 +45,7 @@ const Player = (props: { screenWidth: number }) => {
         pause: false,
         currentTime: 0,
         song: null,
+        loading: false,
     })
 
     function progressInterval() {
@@ -90,7 +92,7 @@ const Player = (props: { screenWidth: number }) => {
 
     function initiateMusic() {
         if (musicDetail.url) {
-            const musicDir = `${backend}/songs/${musicDetail.url}`
+            const musicDir = `${base}/songs/${musicDetail.url}`
             let newMusic = new Audio(musicDir)
             setMusic(newMusic)
             newMusic.play().then((_) => {
@@ -114,7 +116,8 @@ const Player = (props: { screenWidth: number }) => {
         if (player && player.items.length) {
             let playSong = player.items[player.playIndex]
             if (playSong.url) {
-                const musicDir = `${backend}/songs/${playSong.url}`
+                setState((prevState) => ({ ...prevState, loading: true }))
+                const musicDir = audioURL(playSong.url)
                 let newMusic = new Audio(musicDir)
                 setMusic(newMusic)
                 newMusic
@@ -127,6 +130,7 @@ const Player = (props: { screenWidth: number }) => {
                             isPlaying: true,
                             duration: newMusic.duration,
                             pause: false,
+                            loading: false,
                             currentTime: 0,
                         })
                     })
@@ -198,41 +202,6 @@ const Player = (props: { screenWidth: number }) => {
         setState(updateState)
     }
 
-    function parseTime(count: number) {
-        let h = 0
-        let min = 0
-        let second = 0
-        let remain = 0
-
-        if (count >= 3600) {
-            h = count / 3600
-            remain = count % 3600
-
-            if (remain > 60) {
-                // remain minutes
-                min = remain / 60
-                // remain second
-                remain = remain % 60
-                second = remain
-            } else {
-                second = remain
-            }
-        } else if (count >= 60) {
-            // remain minutes
-            min = count / 60
-            // remain second
-            remain = remain % 60
-            second = remain
-        } else {
-            second = count
-        }
-        return {
-            second: Math.round(second),
-            min: Math.round(min),
-            h,
-        }
-    }
-
     // toggle volume mute
     function toggleMute() {
         if (music) {
@@ -268,15 +237,19 @@ const Player = (props: { screenWidth: number }) => {
     }
     const { song } = state
 
-    const PlayCircle = () => (
+    const PlayCircle = ({ className }: { className: string }) => (
         <svg
-            className={`play-icon ${song && song.url ? 'text-primary' : ''}`}
+            className={`play-icon ${className} ${song && song.url ? 'text-primary' : ''}`}
             onClick={handlePlay}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"
         >
             <path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm115.7 272l-176 101c-15.8 8.8-35.7-2.5-35.7-21V152c0-18.4 19.8-29.8 35.7-21l176 107c16.4 9.2 16.4 32.9 0 42z" />
         </svg>
+    )
+
+    const PlayCircleLoading = ({ className }: { className: string }) => (
+        <div className={`play-loading ${className} ${song && song.url ? 'text-primary' : ''}`}></div>
     )
 
     const PlayPauseCircle = () => (
@@ -298,6 +271,10 @@ const Player = (props: { screenWidth: number }) => {
         } else {
             return false
         }
+    }
+
+    function audioURL(name: string) {
+        return `https://res.cloudinary.com/donw17hdr/video/upload/v1664272552/sound/${name}`
     }
 
     function progressWidth() {
@@ -404,9 +381,17 @@ const Player = (props: { screenWidth: number }) => {
                     </div>
 
                     <div className="flex items-center player-control">
-                        <li>
+                        <li className={`flex items-center ${!state.isPlaying ? 'disable-icons' : ''}`}>
                             {!isMobile && <CgPlayTrackPrev onClick={playPrevSong} />}
-                            {state.isPlaying && !state.pause ? <PlayPauseCircle /> : <PlayCircle />}
+
+                            {state.loading ? (
+                                <PlayCircleLoading className="" />
+                            ) : state.isPlaying && !state.pause ? (
+                                <PlayPauseCircle />
+                            ) : (
+                                <PlayCircle className="" />
+                            )}
+
                             {!isMobile && <CgPlayTrackNext onClick={playNextSong} />}
                         </li>
                     </div>

@@ -1,211 +1,199 @@
 import connectDatabase from "../services/mysql";
 
-
-class Common{
-    
+class Common {
     // it overrides with extended class Model [for static method]
-    static tableName = ""
-    
+    static tableName = "";
+
     // for instance method
     tableName: string;
-    
+
     constructor(tableName: string) {
-        this.tableName = tableName
+        this.tableName = tableName;
     }
-    
+
     // find all by any field
-    static find<T>(valuesObj?: {} | any, selectFields?: string)  {
+    static find<T>(valuesObj?: {} | any, selectFields?: string) {
         return new Promise<T | null>(async (resolve, reject) => {
-            let connection
-            try{
-                connection = await connectDatabase()
-                let tableName = this.tableName
-                
-                let fieldName = ""
-                let value = ""
-                for(let key in valuesObj){
-                    fieldName = key
-                    value = valuesObj[key]
+            let connection;
+            try {
+                connection = await connectDatabase();
+                let tableName = this.tableName;
+
+                let fieldName = "";
+                let value = "";
+                for (let key in valuesObj) {
+                    fieldName = key;
+                    value = valuesObj[key];
                 }
-                
-                let sql  = `SELECT ${selectFields ? selectFields : '*' } from ${tableName}`
-                if(fieldName !== "" && value !== ""){
-                    sql += ` where ${fieldName} = "${value}"`
+
+                let sql = `SELECT ${selectFields ? selectFields : "*"} from ${tableName}`;
+                if (fieldName !== "" && value !== "") {
+                    sql += ` where ${fieldName} = "${value}"`;
                 }
-                console.log(sql)
-                let [result]: any = await connection.query(sql)
-                
-                if(result.length > 0){
-                    resolve(result)
+                console.log(sql);
+                let [result]: any = await connection.query(sql);
+
+                if (result.length > 0) {
+                    resolve(result);
                 } else {
-                    resolve(null)
+                    resolve(null);
                 }
-            } catch (ex){
-                reject(ex)
-                
+            } catch (ex) {
+                reject(ex);
             } finally {
-                connection?.end()
+                connection?.end();
             }
-        })
+        });
     }
-    
+
     // raw query
-    static query<T>(sql: string)  {
+    static query<T>(sql: string) {
         return new Promise<T | null>(async (resolve, reject) => {
-            let connection
-            try{
-                connection = await connectDatabase()
-                let [result]: any = await connection.query(sql)
-                if(result.length > 0){
-                    resolve(result)
+            let connection;
+            try {
+                connection = await connectDatabase();
+                let [result]: any = await connection.query(sql);
+                if (result.length > 0) {
+                    resolve(result);
                 } else {
-                    resolve(null)
+                    resolve(null);
                 }
-            } catch (ex){
-                reject(ex)
-                
+            } catch (ex) {
+                reject(ex);
             } finally {
-                connection?.end()
+                connection?.end();
             }
-        })
+        });
     }
-    
+
     // find one by any field
-    static findOne<T>(valuesObj: {} | any, selectFields?: string)  {
+    static findOne<T>(valuesObj: {} | any, selectFields?: string) {
         return new Promise<T | null>(async (resolve, reject) => {
-            let connection
-            try{
-                connection = await connectDatabase()
-                let tableName = this.tableName
-                
-                let fieldName = ""
-                let value = ""
-                for(let key in valuesObj){
-                    fieldName = key
-                    value = valuesObj[key]
+            let connection;
+            try {
+                connection = await connectDatabase();
+                let tableName = this.tableName;
+
+                let fieldName = "";
+                let value = "";
+                for (let key in valuesObj) {
+                    fieldName = key;
+                    value = valuesObj[key];
                 }
-                
-                let sql  = `SELECT ${selectFields ? selectFields : '*' } from ${tableName} where ${fieldName} = "${value}"  `
-              
-                let [r, _]: any = await connection.query(sql)
-                
-                if(r.length > 0){
-                    resolve(r[0])
+
+                let sql = `SELECT ${
+                    selectFields ? selectFields : "*"
+                } from ${tableName} where ${fieldName} = "${value}"  `;
+
+                let [r, _]: any = await connection.query(sql);
+
+                if (r.length > 0) {
+                    resolve(r[0]);
                 } else {
-                    resolve(null)
+                    resolve(null);
                 }
-            } catch (ex){
-                reject(ex)
-                
+            } catch (ex) {
+                reject(ex);
             } finally {
-                connection?.end()
+                connection?.end();
             }
-        })
+        });
     }
-    
+
     // delete one by any field
-    static deleteOne<T>(filter: {[key: string]: any})  {
+    static deleteOne<T>(filter: { [key: string]: any }) {
         return new Promise<T | null>(async (resolve, reject) => {
-            let connection
-            try{
-                connection = await connectDatabase()
-                let tableName = this.tableName
-                
-                let fieldName = ""
-                let value = ""
-                for(let key in filter){
-                    fieldName = key
-                    value = filter[key]
+            let connection;
+            try {
+                connection = await connectDatabase();
+                let tableName = this.tableName;
+
+                let fieldName = "";
+                let value = "";
+                for (let key in filter) {
+                    fieldName = key;
+                    value = filter[key];
                 }
-                
-                let sql  = `DELETE FROM ${tableName} WHERE ${fieldName} = ${value}`
-                let [r]: any = await connection.query(sql)
-                if(r.affectedRows){
-                    resolve(r.affectedRows)
+
+                let sql = `DELETE FROM ${tableName} WHERE ${fieldName} = ${value}`;
+                let [r]: any = await connection.query(sql);
+                if (r.affectedRows) {
+                    resolve(r.affectedRows);
                 } else {
-                    resolve(null)
+                    resolve(null);
                 }
-            } catch (ex){
-                reject(ex)
-                
+            } catch (ex) {
+                reject(ex);
             } finally {
-                connection?.end()
+                connection?.end();
             }
-        })
+        });
     }
-    
-    
-    async save(){
-        
-        let fieldName = ""
-        let values = ""
-        
-        const data = {...this}
+
+    async save() {
+        let fieldName = "";
+        let values = "";
+
+        const data = { ...this };
         for (const dataKey in data) {
             // ignore tableName field
-            if(dataKey !== "tableName") {
+            if (dataKey !== "tableName") {
                 if (!data[dataKey]) {
-                    delete data[dataKey]
+                    delete data[dataKey];
                 } else {
-                    fieldName = fieldName + ", " + dataKey
-                    values = values + `, "${data[dataKey]}"`
+                    fieldName = fieldName + ", " + dataKey;
+                    values = values + `, "${data[dataKey]}"`;
                 }
             }
         }
-        
-        try{
-    
-            let tableName = this.tableName
-            
-            let sql = `insert into ${tableName}( ${fieldName.slice(2)} ) Values(${values.slice(2)})`
-            
-            const connection = await connectDatabase()
-            let [result] = await connection.execute<any>(sql)
-            if(result["affectedRows"]){
-                return result["insertId"]
+
+        try {
+            let tableName = this.tableName;
+
+            let sql = `insert into ${tableName}( ${fieldName.slice(2)} ) Values(${values.slice(2)})`;
+
+            const connection = await connectDatabase();
+            let [result] = await connection.execute<any>(sql);
+            if (result["affectedRows"]) {
+                return result["insertId"];
             } else {
-                return null
+                return null;
             }
-        } catch (ex){
-            throw ex
+        } catch (ex) {
+            throw ex;
         }
-        
     }
-    
-    async updateOne(filter: {fieldName: string, value: any}){
-        
-        let keyValue = ""
-        
-        const data = {...this}
+
+    async updateOne(filter: { fieldName: string; value: any }) {
+        let keyValue = "";
+
+        const data = { ...this };
         for (const dataKey in data) {
             // ignore tableName field
-            if(dataKey !== "tableName" && dataKey !== "createdAt") {
-                keyValue += `${dataKey} = '${data[dataKey]}', `
+            if (dataKey !== "tableName" && dataKey !== "createdAt") {
+                keyValue += `${dataKey} = '${data[dataKey]}', `;
             }
         }
-        
-        try{
-    
+
+        try {
             // trim last comma
-            keyValue = keyValue.slice(0, -2)
-            
-            let tableName = this.tableName
-            
-            let sql = `UPDATE ${tableName} SET ${keyValue} where ${filter.fieldName} = "${filter.value}" `
-            
-            const connection = await connectDatabase()
-            let [result] = await connection.execute<any>(sql)
-            if(result["affectedRows"]){
-                return true
+            keyValue = keyValue.slice(0, -2);
+
+            let tableName = this.tableName;
+
+            let sql = `UPDATE ${tableName} SET ${keyValue} where ${filter.fieldName} = "${filter.value}" `;
+
+            const connection = await connectDatabase();
+            let [result] = await connection.execute<any>(sql);
+            if (result["affectedRows"]) {
+                return true;
             } else {
-                return null
+                return null;
             }
-        } catch (ex){
-            throw ex
+        } catch (ex) {
+            throw ex;
         }
-        
     }
-    
 }
 
-export default Common
+export default Common;

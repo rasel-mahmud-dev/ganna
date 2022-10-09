@@ -1,4 +1,4 @@
-import { createBrowserRouter, Route, RouterProvider } from 'react-router-dom'
+import { createHashRouter, Route, RouterProvider } from 'react-router-dom'
 import App from './App'
 import AddSong from './pages/admin/AddSong'
 import FavoriteMusic from './pages/favoriteMusic/FavoriteMusic'
@@ -18,7 +18,7 @@ import ArtistList from './pages/admin/ArtistList'
 import HomePage from './pages/homePage/HomePage'
 import Artists from './pages/artists/Artists'
 
-const router = createBrowserRouter([
+const router = createHashRouter([
     {
         path: '/',
         element: <App />,
