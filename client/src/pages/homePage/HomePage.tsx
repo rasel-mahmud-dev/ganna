@@ -16,6 +16,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import Song from '../../components/song/Song'
 import useStore from '../../store/useStore'
 import { ACTION_TYPES } from '../../store/types'
+import SongSkeleton from '../../components/skeleton/Song.Skeleton'
+import ArtistSkeleton from '../../components/skeleton/Artist.Skeleton'
 
 const HomePage = () => {
     const [{ sectionData }, dispatch] = useStore()
@@ -59,36 +61,38 @@ const HomePage = () => {
             case 'New Releases':
                 return (
                     <div className="flex  song-list flex-wrap">
-                        {data &&
-                            data.map((a) => (
-                                <Song
-                                    onClickPlay={() => navigate(`/song/${a.title}`)}
-                                    cover={a.cover}
-                                    title={a.title}
-                                />
-                            ))}
+                        {data
+                            ? data.map((a) => (
+                                  <Song
+                                      onClickPlay={() => navigate(`/song/${a.title}`)}
+                                      cover={a.cover}
+                                      title={a.title}
+                                  />
+                              ))
+                            : new Array(15).fill(1).map((item) => <SongSkeleton />)}
                     </div>
                 )
 
             case 'Top Searched Artists':
                 return (
                     <div className="flex gap-25 flex-wrap">
-                        {data &&
-                            data.map((a) => (
-                                <Link to={`artists/${a.name}`}>
-                                    <div className="artist-item">
-                                        <div className="artist-image cursor-pointer">
-                                            <img
-                                                className="w-full"
-                                                src={staticPath(a.avatar)}
-                                                alt="Pani Di Gal"
-                                                title="Pani Di Gal"
-                                            />
-                                        </div>
-                                        <p className="song-name cursor-pointer text-center">{a.name}</p>
-                                    </div>
-                                </Link>
-                            ))}
+                        {data
+                            ? data.map((a) => (
+                                  <Link to={`artists/${a.name}`}>
+                                      <div className="artist-item">
+                                          <div className="artist-image cursor-pointer">
+                                              <img
+                                                  className="w-full"
+                                                  src={staticPath(a.avatar)}
+                                                  alt="Pani Di Gal"
+                                                  title="Pani Di Gal"
+                                              />
+                                          </div>
+                                          <p className="song-name cursor-pointer text-center">{a.name}</p>
+                                      </div>
+                                  </Link>
+                              ))
+                            : new Array(20).fill(1).map((item) => <ArtistSkeleton />)}
                     </div>
                 )
 
@@ -109,10 +113,10 @@ const HomePage = () => {
         api.post('/api/v1/songs/filter', { filter: sections })
             .then((res) => {
                 if (res.status === 200) {
-                    dispatch({
-                        type: ACTION_TYPES.SET_SECTION_SONGS,
-                        payload: res.data.result,
-                    })
+                    // dispatch({
+                    //     type: ACTION_TYPES.SET_SECTION_SONGS,
+                    //     payload: res.data.result,
+                    // })
                     // setSectionData(res.data.result)
                 }
             })

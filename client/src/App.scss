@@ -17,6 +17,7 @@ p,h1,h3,h2,h4{
   display: flex;
 }
 .mx-1{margin-left: 1px;margin-right: 1px;}
+.mx-auto{margin-left: auto;margin-right: auto;}
 .mx-4{margin-left: 16px;margin-right: 16px;}
 .ml-4{margin-left: 4px}
 .mt-10{margin-top: 50px}
@@ -47,6 +48,11 @@ p,h1,h3,h2,h4{
 .text-primary{
   fill: var(--primary-color);
   color: var(--primary-color);
+}
+.h2{
+    font-size: 30px;
+    font-weight: 600;
+    color: #3f3f3f;
 }
 
 .gap-25{gap: 25px}
@@ -191,6 +197,9 @@ li, ul{
   &:hover{
     background: #6250e7;
   }
+}
+.rounded-full{
+    border-radius: 30px;
 }
 
 
