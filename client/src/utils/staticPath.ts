@@ -1,4 +1,4 @@
-import { backend, base } from '../axios'
+import { base } from '../axios'
 
 export default function staticPath(link?: string) {
     if (!link) {
@@ -7,10 +7,6 @@ export default function staticPath(link?: string) {
     if (link.startsWith('http')) {
         return link
     } else {
-        if (import.meta.env.DEV) {
-            return base + '/' + link
-        } else {
-            return backend + '/' + link
-        }
+        return base + '/' + link
     }
 }

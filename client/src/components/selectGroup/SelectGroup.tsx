@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, SyntheticEvent, useEffect, useState } from 'react'
 import './style.scss'
 
 interface Props {
@@ -12,10 +12,12 @@ interface Props {
     dataLabel: string
     dataIndex: string
     renderOptions: (click: any) => React.ReactNode
+    onClick?: () => void
 }
 
 const SelectGroup: FC<Props> = (props) => {
     const {
+        onClick,
         name,
         value,
         dataLabel,
@@ -37,7 +39,7 @@ const SelectGroup: FC<Props> = (props) => {
     }, [value?.length !== selectedOptions.length])
 
     // toggle items
-    function onClick(item: any) {
+    function handleSelectItem(item: any) {
         let updateState = [...selectedOptions]
         const index = updateState.findIndex((i: any) => i[dataIndex] === item[dataIndex])
 
@@ -62,14 +64,27 @@ const SelectGroup: FC<Props> = (props) => {
         handleChange({ target: { name, value: remain } })
     }
 
+    function handleToggleOption2() {
+        onClick && onClick()
+        setOpen(!open)
+    }
+
+    function handleToggleOption(e: SyntheticEvent) {
+        e.stopPropagation()
+        if ((e.target as HTMLDivElement).dataset.id === 'placeholder') {
+            onClick && onClick()
+            setOpen(!open)
+        }
+    }
+
     const icon = (
         <div>
             {open ? (
-                <svg onClick={() => setOpen(!open)} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
+                <svg onClick={handleToggleOption2} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
                     <path d="M119.5 326.9L3.5 209.1c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0L128 287.3l100.4-102.2c4.7-4.7 12.3-4.7 17 0l7.1 7.1c4.7 4.7 4.7 12.3 0 17L136.5 327c-4.7 4.6-12.3 4.6-17-.1z" />
                 </svg>
             ) : (
-                <svg onClick={() => setOpen(!open)} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
+                <svg onClick={handleToggleOption2} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
                     <path d="M136.5 185.1l116 117.8c4.7 4.7 4.7 12.3 0 17l-7.1 7.1c-4.7 4.7-12.3 4.7-17 0L128 224.7 27.6 326.9c-4.7 4.7-12.3 4.7-17 0l-7.1-7.1c-4.7-4.7-4.7-12.3 0-17l116-117.8c4.7-4.6 12.3-4.6 17 .1z" />
                 </svg>
             )}
@@ -88,9 +103,9 @@ const SelectGroup: FC<Props> = (props) => {
                 {label}
             </label>
             <div className="my-input" id={name} placeholder={placeholder} onChange={handleChange}>
-                <div className="custom-placeholder">
+                <div className="custom-placeholder" data-id="placeholder" onClick={handleToggleOption}>
                     {selectedOptions.length ? (
-                        <div className="selected-list-root">
+                        <div className="selected-list-root" data-id="placeholder">
                             <div className="selected-list">
                                 {selectedOptions.map((selected: any) => (
                                     <div className="selected">
@@ -102,8 +117,8 @@ const SelectGroup: FC<Props> = (props) => {
                             {icon}
                         </div>
                     ) : (
-                        <div className="flex justify-between items-center w-full">
-                            <span onClick={() => setOpen(!open)} className="custom-placeholder-text">
+                        <div className="flex justify-between items-center w-full" data-id="placeholder">
+                            <span className="custom-placeholder-text" data-id="placeholder">
                                 {placeholder}
                             </span>
                             {icon}
@@ -112,7 +127,7 @@ const SelectGroup: FC<Props> = (props) => {
                 </div>
 
                 {/* options jsx render */}
-                {open && <div className="select-options">{renderOptions(onClick)}</div>}
+                {open && <div className="select-options">{renderOptions(handleSelectItem)}</div>}
             </div>
         </div>
     )

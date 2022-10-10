@@ -13,7 +13,8 @@
   -webkit-text-size-adjust: 100%;
 
   --primary-color: #796de5;
-    --header-height: 70px
+    --header-height: 70px;
+    -webkit-tap-highlight-color: transparent;
 }
 
 a {

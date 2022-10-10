@@ -29,9 +29,7 @@ export async function getArtistDetailsController(req: Request, res: Response, ne
         artist = artist[0];
 
         sql = `SELECT s.*, a.name as artistName FROM songs s
-
              JOIN artists a on JSON_CONTAINS(s.artistId, CAST(a.artistId as JSON))
-             
                 WHERE JSON_CONTAINS(s.artistId, CAST(${artist.artistId} as JSON))`;
 
         const songs: any = await Song.query(sql);

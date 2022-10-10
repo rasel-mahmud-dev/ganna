@@ -12,6 +12,7 @@ const NewSongs = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
+        scroll({ top: 0, behavior: 'smooth' })
         if (!sectionData['New Releases']) {
             api.get('/api/v1/songs/New-Releases').then(({ data, status }) => {
                 if (status === 200) {

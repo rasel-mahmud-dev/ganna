@@ -83,7 +83,7 @@ const Navigation = (props: { screenWidth: number }) => {
                                                 alt=""
                                             />
                                         </div>
-                                        <span>{state.auth.firstName}</span>
+                                        <span className="auth-username">{state.auth.firstName}</span>
                                     </span>
                                     <Dropdown isOpen={openDropdown === 'auth'} onClose={() => setOpenDropdown('')}>
                                         <div className="flex flex-col">

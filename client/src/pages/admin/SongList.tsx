@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import api from '../../axios'
-import { BiPen, FiDelete } from 'react-icons/all'
+import { AiFillDelete, BiPen, BsPencilSquare, FiDelete } from 'react-icons/all'
 import { Link } from 'react-router-dom'
 import staticPath from '../../utils/staticPath'
 
@@ -29,16 +29,18 @@ const SongList = () => {
             <div className="mt-5">
                 {songs.map((ar: any) => (
                     <div className="flex justify-between items-center">
-                        <div>
+                        <div className="thumb-80">
                             <img className="w-3/12" src={staticPath(ar.cover)} alt="" />
                         </div>
                         <div className="flex justify-between items-center w-full">
                             <h4>{ar.title}</h4>
-                            <div>
-                                <Link to={`/admin/update-song/${ar.songId}`}>
-                                    <BiPen />
+                            <div className="flex gap-x-2 items-center  ">
+                                <Link to={`/admin/update-song/${ar.songId}`} className="circle-icon">
+                                    <BsPencilSquare />
                                 </Link>
-                                <FiDelete className="" onClick={() => handleDelete(ar.songId)} />
+                                <span className="circle-icon">
+                                    <AiFillDelete className="" onClick={() => handleDelete(ar.songId)} />
+                                </span>
                             </div>
                         </div>
                     </div>

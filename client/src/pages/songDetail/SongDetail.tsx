@@ -14,10 +14,12 @@ const SongDetail = () => {
     const [expandLyric, setExpandLyric] = useState(false)
 
     useEffect(() => {
+        scroll({ top: 0, behavior: 'smooth' })
         api.get(`/api/v1/songs/find-by-field?slug=${params.slug}`)
             .then(({ status, data }) => {
                 if (status === 200) {
                     setSongDetail(data.song)
+                    scroll({ top: 0, behavior: 'smooth' })
                 }
             })
             .catch((ex) => {
@@ -36,27 +38,35 @@ const SongDetail = () => {
         })
     }
 
+    function toggleLyrics(state: boolean) {
+        setExpandLyric(state)
+        scroll({ top: 0, behavior: 'smooth' })
+    }
+
     return (
         <div className="container">
             <h1>{params.title}</h1>
             {songDetail && (
                 <div className="detail-layout">
                     <div>
-                        <img src={songDetail.cover} alt={songDetail.title} />
+                        <img className="w-full" src={songDetail.cover} alt={songDetail.title} />
                         <div className="lyrics mt-5">
                             <h4>Lyrics </h4>
                             <p>
                                 {expandLyric ? (
                                     <div>
                                         <span>{songDetail.lyrics}</span>
-                                        <span onClick={() => setExpandLyric(false)} className="sm-text cursor-pointer">
+                                        <span onClick={() => toggleLyrics(false)} className="sm-text cursor-pointer">
                                             Show Less
                                         </span>
                                     </div>
                                 ) : (
                                     <div>
-                                        <span>{songDetail.lyrics.substring(0, 100) + '...'}</span>
-                                        <span onClick={() => setExpandLyric(true)} className="sm-text cursor-pointer">
+                                        <span>{songDetail.lyrics.substring(0, 100) + '... '} </span>
+                                        <span
+                                            onClick={() => toggleLyrics(true)}
+                                            className="sm-text mt-5 cursor-pointer"
+                                        >
                                             Show more
                                         </span>
                                     </div>

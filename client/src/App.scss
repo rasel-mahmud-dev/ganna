@@ -34,6 +34,7 @@ p,h1,h3,h2,h4{
     padding-right: 16px;
 }
 .gap-x-4{column-gap: 16px}
+.gap-x-2{column-gap: 8px}
 .flex-col{flex-direction: column}
 .relative{position: relative}
 .items-center{align-items: center}
@@ -256,4 +257,25 @@ li, ul{
   img{
     width: 100%;
   }
+}
+.rounded{border-radius: 5px}
+.thumb-80{
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    img{
+        width: 100%;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+    }
+}
+.thumb-40{
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    img{
+        width: 100%;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+    }
 }

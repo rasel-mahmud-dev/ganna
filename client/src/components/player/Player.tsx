@@ -95,23 +95,40 @@ const Player = (props: { screenWidth: number }) => {
             const musicDir = `${base}/songs/${musicDetail.url}`
             let newMusic = new Audio(musicDir)
             setMusic(newMusic)
-            newMusic.play().then((_) => {
-                setState({
-                    ...state,
-                    isPlaying: true,
-                    pause: false,
-                    duration: newMusic.duration,
-                    currentTime: 0,
+            newMusic
+                .play()
+                .then((_) => {
+                    setState((prevState) => ({
+                        ...prevState,
+                        isPlaying: true,
+                        pause: false,
+                        duration: newMusic.duration,
+                        currentTime: 0,
+                    }))
                 })
-            })
+                .catch((ex) => {
+                    setState((prevState) => ({
+                        ...prevState,
+                        isPlaying: false,
+                        pause: false,
+                        duration: 0,
+                        currentTime: 0,
+                    }))
+                    dispatch({
+                        type: ACTION_TYPES.SET_ALERT_MESSAGE,
+                        payload: { message: ex.message, status: 500 },
+                    })
+                })
             return newMusic
         }
     }
 
     useEffect(() => {
         // music = document.createElement("audio")
-        music?.pause()
-        music?.remove()
+        if (music) {
+            music?.pause()
+            music?.remove()
+        }
 
         if (player && player.items.length) {
             let playSong = player.items[player.playIndex]
@@ -120,36 +137,52 @@ const Player = (props: { screenWidth: number }) => {
                 const musicDir = audioURL(playSong.url)
                 let newMusic = new Audio(musicDir)
                 setMusic(newMusic)
+
                 newMusic
                     .play()
                     .then((r) => {
                         newMusic.currentTime = 0
-                        setState({
-                            ...state,
+                        setState((prevState) => ({
+                            ...prevState,
                             song: playSong,
                             isPlaying: true,
                             duration: newMusic.duration,
                             pause: false,
                             loading: false,
                             currentTime: 0,
-                        })
+                        }))
                     })
                     .catch((ex) => {
                         dispatch({
                             type: ACTION_TYPES.SET_ALERT_MESSAGE,
-                            payload: ex.message,
+                            payload: { message: ex.message, status: 500 },
                         })
 
-                        setState({
-                            ...state,
+                        setState((prevState) => ({
+                            ...prevState,
                             song: playSong,
                             isPlaying: false,
                             duration: 0,
                             pause: false,
                             currentTime: 0,
-                        })
+                        }))
                     })
+            } else {
+                playFail()
             }
+        } else {
+            playFail()
+        }
+
+        function playFail() {
+            setState((prevState) => ({
+                ...prevState,
+                song: null,
+                isPlaying: false,
+                duration: 0,
+                pause: false,
+                currentTime: 0,
+            }))
         }
     }, [player])
 
@@ -191,7 +224,15 @@ const Player = (props: { screenWidth: number }) => {
         if (!music) {
             initiateMusic()
         } else {
-            music.play()
+            music
+                .play()
+                .then(() => {})
+                .catch((ex) => {
+                    dispatch({
+                        type: ACTION_TYPES.SET_ALERT_MESSAGE,
+                        payload: { message: ex.message, status: 500 },
+                    })
+                })
             updateState.currentTime = music.currentTime
         }
 

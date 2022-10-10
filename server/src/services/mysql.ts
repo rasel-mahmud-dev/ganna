@@ -6,18 +6,19 @@ function connectDatabase() {
     return new Promise<mysql.Connection>(async (resolve, reject) => {
         try {
             let connection;
-
-            // connection = await mysql.createConnection(DATABASE_URL);
-
-            connection = await mysql.createConnection({
-                host: "localhost",
-                port: "3306",
-                user: "root",
-                password: "12345",
-                insecureAuth: true,
-                database: "ganna",
-                // connectionLimit: 1,
-            } as any);
+            if (process.env.NODE_ENV === "development") {
+                connection = await mysql.createConnection({
+                    host: "localhost",
+                    port: "3306",
+                    user: "root",
+                    password: "12345",
+                    insecureAuth: true,
+                    database: "gungun",
+                    // connectionLimit: 1,
+                } as any);
+            } else {
+                connection = await mysql.createConnection(DATABASE_URL);
+            }
 
             await connection.connect();
             resolve(connection);

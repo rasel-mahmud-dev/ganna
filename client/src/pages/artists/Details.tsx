@@ -42,7 +42,7 @@ const Details = () => {
                 <div className="artist-detail">
                     <div className="flex artist-detail-info">
                         <div className="artist-photo">
-                            <img className="" src={staticPath(artistDetail.artist.avatar)} />
+                            <img className="w-full" src={staticPath(artistDetail.artist.avatar)} />
                         </div>
 
                         <div>
@@ -55,15 +55,6 @@ const Details = () => {
                                 Aliquam animi fuga impedit maxime molestias repellendus sunt totam, unde. Ad blanditiis,
                                 dolore ea eaque enim eveniet in ipsa laudantium maxime neque quae quaerat ut voluptatem!
                                 Ab animi atque, autem beatae delectus dolore dolores earum eveniet ex, explicabo fugiat
-                                impedit in inventore ipsum maiores minus molestias, necessitatibus nesciunt nisi
-                                reiciendis rerum saepe sint tempore tenetur vitae voluptate voluptatem! Beatae
-                                cupiditate et fugiat, id in iste iure iusto laboriosam, laborum maxime necessitatibus
-                                obcaecati placeat praesentium qui quis reiciendis rem repellat? A commodi dolore ducimus
-                                earum enim, error explicabo fuga illum maiores maxime nam nisi obcaecati odit
-                                perspiciatis quas quidem rerum sequi soluta ut voluptatem. Accusamus amet assumenda
-                                autem doloremque eum fugit magni, officiis qui. Asperiores assumenda expedita quam
-                                tempora tempore. Amet consequuntur corporis cumque ea impedit iste magni quod rerum sed
-                                veritatis? Ea fugiat nisi quibusdam!
                             </p>
                             <div className="flex items-center artist-meta">
                                 <span className="flex items-center artist-meta-span ">
@@ -99,7 +90,7 @@ const Details = () => {
                     </div>
 
                     <div className="mt-10">
-                        <table className="w-full">
+                        <table className="w-full artist-songs-table">
                             <thead>
                                 <tr>
                                     <th className="text-start">Track</th>
@@ -111,10 +102,12 @@ const Details = () => {
                             <tbody>
                                 {artistDetail.songs.map((song: any, index: number) => (
                                     <tr>
-                                        <td>
+                                        <td className="cover-td">
                                             <div className="flex items-center">
                                                 <div className="relative cover-root">
-                                                    <img src={staticPath(song.cover)} alt="" />
+                                                    <div className="thumb-40 rounded">
+                                                        <img src={staticPath(song.cover)} alt="" />
+                                                    </div>
                                                     <div
                                                         className="circle-icon icon-in-cover"
                                                         onClick={() => togglePlaySong(index)}

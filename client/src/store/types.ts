@@ -8,6 +8,9 @@ export enum ACTION_TYPES {
     SET_ALERT_MESSAGE = 'SET_ALERT_MESSAGE',
     SET_ARTISTS = 'SET_ARTISTS',
     SET_SECTION_SONGS = 'SET_SECTION_SONGS',
+    FETCH_ALBUMS_LIST = 'FETCH_ALBUMS_LIST',
+    FETCH_GENRES = 'FETCH_GENRES',
+    FETCH_CATEGORY_ALBUMS = 'FETCH_CATEGORY_ALBUMS',
 }
 
 // interface define only datatype of property and method in object. it is not declare implementation

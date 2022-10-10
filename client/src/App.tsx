@@ -15,7 +15,7 @@ import { fetchFavoriteListAction } from './store/actions/songAction'
 import Alert from './components/alert/Alert'
 
 function App() {
-    const [{ auth, isOpenLeftSidebar, alertMessage }, dispatch] = useStore()
+    const [{ auth, isOpenLeftSidebar, alertMessage, alertStatus }, dispatch] = useStore()
     const location = useLocation()
 
     useEffect(() => {
@@ -34,7 +34,7 @@ function App() {
 
     return (
         <div className="App">
-            {alertMessage && <Alert message={alertMessage} />}
+            {alertMessage && <Alert message={alertMessage} status={alertStatus} />}
             <Navigation />
 
             <div className="app-root">

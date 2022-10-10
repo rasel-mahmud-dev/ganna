@@ -29,6 +29,7 @@ export interface AppContextInterface {
     favorites: any[]
     isPlay: boolean
     alertMessage?: string
+    alertStatus?: 200 | 500
     artists: any[] | null
     sectionData: {
         'Trending Songs': Song[] | null
@@ -37,6 +38,9 @@ export interface AppContextInterface {
         'Top Playlists': Song[] | null
         'Popular In Hindi': Song[] | null
     }
+    albumsList: null | object[]
+    genreList: null | object[]
+    categoryAlbumList: null | object[]
 }
 
 const sampleAppContext: AppContextInterface = {
@@ -45,6 +49,9 @@ const sampleAppContext: AppContextInterface = {
     isOpenLeftSidebar: false,
     isPlay: false,
     artists: null,
+    genreList: null,
+    albumsList: null,
+    categoryAlbumList: null,
     sectionData: {
         'Trending Songs': null,
         'New Releases': null,
@@ -59,6 +66,7 @@ const sampleAppContext: AppContextInterface = {
         isPlaying: false,
     },
     alertMessage: '',
+    alertStatus: 200,
     favorites: [],
 }
 
@@ -107,9 +115,17 @@ function reducer(state: AppContextInterface, action: { type: any; payload: any }
             }
 
         case ACTION_TYPES.SET_ALERT_MESSAGE:
+            if (!action.payload) {
+                return {
+                    ...state,
+                    alertMessage: '',
+                    alertStatus: 200,
+                }
+            }
             return {
                 ...state,
-                alertMessage: action.payload,
+                alertMessage: action.payload.message,
+                alertStatus: action.payload.status,
             }
 
         case ACTION_TYPES.SET_PREPARE_PLAYLIST:
@@ -126,6 +142,23 @@ function reducer(state: AppContextInterface, action: { type: any; payload: any }
             return {
                 ...state,
                 favorites: action.payload,
+            }
+
+        case ACTION_TYPES.FETCH_ALBUMS_LIST:
+            return {
+                ...state,
+                albumsList: action.payload,
+            }
+
+        case ACTION_TYPES.FETCH_GENRES:
+            return {
+                ...state,
+                genreList: action.payload,
+            }
+        case ACTION_TYPES.FETCH_CATEGORY_ALBUMS:
+            return {
+                ...state,
+                categoryAlbumList: action.payload,
             }
 
         case ACTION_TYPES.SET_SECTION_SONGS:

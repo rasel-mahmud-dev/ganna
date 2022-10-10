@@ -36,7 +36,7 @@
 
     .menu-bar {
         color: #818181;
-        font-size: 18px;
+        font-size: 22px;
         display: none;
         @include getDown(992px){
             display: block;
@@ -71,8 +71,17 @@
         font-size: 12px;
 
         .auth-avatar {
-            width: 20px;
+            width: 30px;
+            height: 30px;
             border-radius: 100%;
+        }
+        .auth-username{
+            font-size: 20px;
+            font-weight: 500;
+            margin-left: 5px;
+            @include getDown(768px){
+                display: none;
+            }
         }
     }
 }

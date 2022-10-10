@@ -14,6 +14,7 @@ const Geners = () => {
     const [isOpenModal, setOpenModal] = useState(false)
 
     useEffect(() => {
+        scroll({ top: 0, behavior: 'smooth' })
         api.get('/api/v1/genres').then(({ data, status }) => {
             if (status === 200) {
                 setGenres(data.genres)

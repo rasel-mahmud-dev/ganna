@@ -12,6 +12,7 @@ const TrendingSongs = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
+        scroll({ top: 0, behavior: 'smooth' })
         if (!sectionData['Trending Songs']) {
             api.get('/api/v1/songs/Trending-Songs').then(({ data, status }) => {
                 if (status === 200) {

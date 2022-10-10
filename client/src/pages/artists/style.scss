@@ -37,6 +37,9 @@
         display: flex;
         justify-content: center;
       }
+        .artist-photo{
+            margin-right: 0;
+        }
     }
 
   }
@@ -91,14 +94,14 @@
     margin-top: 15px;
     border-radius: 50px;
     font-size: 15px;
+      @include getDown(768px){
+          margin: 20px auto;
+      }
   }
-
 }
 
+
 .cover-root{
-  width: 80px;
-  height: 80px;
-  background-color: red;
   .icon-in-cover{
     position: absolute;
     left: 50%;
@@ -124,3 +127,30 @@
   }
 }
 
+
+.artist-songs-table{
+    display: block;
+    thead{
+        display: none;
+    }
+    tbody{
+        display: block;
+        tr{
+            display: flex;
+            flex-direction: column;
+        }
+        .cover-td{
+            & > div{
+                align-items: flex-start;
+            }
+            display: block;
+            .thumb-40 {
+                width: 30px;
+                img {
+                    //width: 10px;
+                }
+            }
+        }
+    }
+
+}

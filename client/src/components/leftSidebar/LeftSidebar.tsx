@@ -28,6 +28,11 @@ const LeftSidebar: FC<Props> = (props) => {
     function clickOnBackdrop(e: SyntheticEvent) {
         let el = e.target as HTMLDivElement
         if (el.classList.contains('left-sidebar__backdrop')) {
+            handleCloseSidebar()
+        }
+    }
+    function handleCloseSidebar() {
+        if (window.innerWidth <= 768) {
             onClose()
         }
     }
@@ -78,7 +83,10 @@ const LeftSidebar: FC<Props> = (props) => {
                             adminItems.map((item) => (
                                 <div>
                                     <li className="section-item">
-                                        <Link to={item.to}> {item.label}</Link>
+                                        <Link onClick={handleCloseSidebar} to={item.to}>
+                                            {' '}
+                                            {item.label}
+                                        </Link>
                                     </li>
                                 </div>
                             ))}
@@ -88,10 +96,14 @@ const LeftSidebar: FC<Props> = (props) => {
                         <div>
                             <h4>Music</h4>
                             <li className="section-item">
-                                <Link to="/playlist">Playlist</Link>
+                                <Link onClick={handleCloseSidebar} to="/playlist">
+                                    Playlist
+                                </Link>
                             </li>
                             <li className="section-item">
-                                <Link to="/favorite">Favorite</Link>
+                                <Link onClick={handleCloseSidebar} to="/favorite">
+                                    Favorite
+                                </Link>
                             </li>
                         </div>
                     </div>
@@ -101,7 +113,9 @@ const LeftSidebar: FC<Props> = (props) => {
                             <h4> Quick Access</h4>
                             {q.map((item) => (
                                 <li className="section-item">
-                                    <Link to={`${item.to}`}>{item.label}</Link>
+                                    <Link to={`${item.to}`} onClick={handleCloseSidebar}>
+                                        {item.label}
+                                    </Link>
                                 </li>
                             ))}
                         </div>

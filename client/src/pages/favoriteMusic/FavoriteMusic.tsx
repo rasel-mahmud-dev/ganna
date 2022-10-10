@@ -27,7 +27,7 @@ const FavoriteMusic = () => {
     return (
         <div className="container">
             <div>
-                <h3>Favorite list</h3>
+                <h2 className="mt-5 mb-2">Favorite list</h2>
 
                 <table className="favorite-table">
                     <thead>
@@ -51,8 +51,10 @@ const FavoriteMusic = () => {
                                         className="flex items-center"
                                         onClick={() => handlePlayPrepare(fav, index, favorites)}
                                     >
-                                        <img src={staticPath(fav.cover)} />
-                                        <p className="track ml-4">{fav.title}</p>
+                                        <div className="thumb-40">
+                                            <img className="w-full" src={staticPath(fav.cover)} />
+                                        </div>
+                                        <p className="track ml-4 w-full">{fav.title}</p>
                                     </div>
                                 </td>
                                 <td>

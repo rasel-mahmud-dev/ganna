@@ -100,10 +100,10 @@ const Footer = () => {
     return (
         <footer className="footer">
             <div className="container">
-                <h1 className="text-center title mt-10">Bas Bajna Chahiye Gaana</h1>
+                <h1 className="text-center title mt-10">Listen free unlimited music in Gungun</h1>
                 <p className="text-center desc">
-                    Gaana is the one-stop solution for all your music needs. Gaana offers you free, unlimited access to
-                    over 30 million Hindi Songs, Bollywood Music, English MP3 songs, Regional Music & Mirchi Play.
+                    Gungun is the one-stop solution for all your music needs. Gungun offers you free, unlimited access
+                    to over 30 million Hindi Songs, Bollywood Music, English MP3 songs, Regional Music & Mirchi Play.
                 </p>
                 <div className="border-b"></div>
 
