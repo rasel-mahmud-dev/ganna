@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './styles.scss'
 
 import { AiFillDashboard, BiSearch, BiUser, FaBars, FaSignOutAlt } from 'react-icons/all'
@@ -8,8 +8,9 @@ import staticPath from '../../utils/staticPath'
 import Dropdown from '../dropdown/Dropdown'
 import { ACTION_TYPES } from '../../store/types'
 import SearchBar from '../searchBar/SearchBar'
+import GetScreenWidth from '../../hooks/GetScreenWidth'
 
-const Navigation = () => {
+const Navigation = (props: { screenWidth: number }) => {
     const [state, dispatch] = useStore()
 
     const [openDropdown, setOpenDropdown] = useState('')
@@ -17,6 +18,22 @@ const Navigation = () => {
     function handleDropDown(item: string) {
         setOpenDropdown(item)
     }
+
+    function handleChangeVar() {
+        let root = document.documentElement
+        let headerHeight = (navigationRef.current as HTMLDivElement).offsetHeight
+        root.style.setProperty('--search-panel-height', `calc(100vh - ${200}px`)
+        root.style.setProperty('--header-height', `${headerHeight}px`)
+    }
+
+    let navigationRef = useRef()
+
+    useEffect(() => {
+        // if (props.screenWidth > 91300) {
+        handleChangeVar()
+
+        // }
+    }, [props.screenWidth])
 
     function toggleLeftSidebar() {
         dispatch({
@@ -33,11 +50,12 @@ const Navigation = () => {
 
     return (
         <div>
-            <header className="navigation">
+            <header className="navigation" ref={navigationRef}>
                 <div className="container">
                     <div className="main-nav">
+                        <FaBars className="menu-bar" onClick={toggleLeftSidebar} />
+
                         <div className="logo-menu">
-                            <FaBars className="menu-bar" onClick={toggleLeftSidebar} />
                             <div className="logo">
                                 <NavLink className="flex" to="/">
                                     <img className="img-1" src="/g.svg" alt="" />
@@ -101,6 +119,7 @@ const Navigation = () => {
                             )}
                         </div>
                     </div>
+                    {/*<input type="text" className="w-full mobile-search-input" />*/}
                 </div>
             </header>
             <div className="spaceH"></div>
@@ -108,4 +127,4 @@ const Navigation = () => {
     )
 }
 
-export default Navigation
+export default GetScreenWidth(Navigation)

@@ -7,7 +7,11 @@
     left: 0;
     width: 100%;
     z-index: 1002;
+    padding: 13px 0px;
 
+    @include getDown(992px){
+        height: 70px;
+    }
     .main-nav {
         //display: flex;
         //justify-content: space-between;
@@ -15,10 +19,27 @@
         display: grid;
         grid-template-columns: repeat(3, 2fr);
         justify-content: space-between;
-        padding: 15px 30px;
-        @include getDown(600px){
-            grid-template-columns: repeat(2, 2fr);
-            padding: 15px 0px;
+        padding: 1px 30px;
+        @include getDown(992px){
+            grid-template-columns: repeat(3, 2fr);
+            padding: 0px 0px;
+        }
+    }
+
+    //.mobile-search-input{
+    //    border: 1px solid rgba(114, 114, 114, 0.67);
+    //    border-radius: 20px;
+    //    padding: 5px 10px;
+    //    box-sizing: border-box;
+    //    margin-top: 5px;
+    //}
+
+    .menu-bar {
+        color: #818181;
+        font-size: 18px;
+        display: none;
+        @include getDown(992px){
+            display: block;
         }
     }
 
@@ -27,14 +48,7 @@
         display: flex;
         align-items: center;
 
-        .menu-bar {
-            color: #818181;
-            font-size: 18px;
-            display: none;
-            @include getDown(600px){
-                display: block;
-            }
-        }
+
 
         .logo {
             margin-left: 5px;
@@ -64,7 +78,7 @@
 }
 
 .spaceH {
-    height: 64px;
+    height: var(--header-height)
 }
 .icon-login{
     @include getUp(600px){
@@ -82,4 +96,8 @@
     margin: auto;
     font-size: 20px;
     margin-right: 10px;
+    display: none;
+    @include getDown(600px){
+        display: block
+    }
 }
